@@ -1,0 +1,74 @@
+$font-stack:    Helvetica, sans-serif;
+$primary-color: grey;
+$primary-shade: white;
+$primary-light: #FAFAFA;
+$primary-dark: #E0E0E0;
+$primary-accent: #82B1FF;
+
+
+body {
+  background-color: $primary-shade;
+}
+
+.page-wrapper:after {
+  content: "";
+  display: block;
+  margin-bottom: 520px;
+}
+
+.parallax-container {
+  #parallax {
+    background: url('../img/doc-img.jpg') 50% 50% no-repeat;
+    height: 100%;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.customWidth {
+  width: 500;
+}
+.Typist {
+  .ptag {
+    text-align: center;
+    color: #FFF;
+    font-weight: 100;
+    font-size: 1.2em;
+    margin: 0 auto;
+  }
+}
+
+.footer {
+  display: flex;
+}
+
+.navbar {
+  a{
+    color: black;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+.ptag {
+  margin: 0;
+}
+
+#row-padding {
+  padding-bottom: 0px;
+  padding-top: 3px;
+}
+
+h2 {
+  font-weight: 100
+}
+
+a {
+  color: blue;
+}
