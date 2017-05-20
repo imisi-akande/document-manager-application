@@ -11,6 +11,34 @@ const secretKey = process.env.SECRET;
 // console.log(secretKey, 'where are youuuuuuuu');
 
 const UserController = {
+/**
+   * Login a user
+   * @param {Object} req - Request object
+   * @param {Object} res - Response object
+   * @returns {Object} Response object
+   */
+  login(req, res) {
+    const query = {
+      where: { email: req.body.email }
+    };
+    // finds the users record
+    db.Users.findOne(query)
+      .then((user) => {
+        if (user && user.ValidatePassword(req.body.password)) {
+          const token = jwt.sign({ userId: user.id, roleId: user.roleId },
+          secretKey, { expiresIn: '1 day' });
+          return res.status(200).send({
+            message: 'Login succesful',
+            token,
+            userId: user.id,
+            roleId: user.roleId,
+            expiresIn: '1 day',
+          });
+        }
+        return res.status(401)
+            .send({ message: 'Please enter a valid email and password to login!'});
+      });
+  },
   /**
    * Logout a user
    * @param {Object} req - Request object
