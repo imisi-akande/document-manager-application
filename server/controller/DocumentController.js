@@ -96,6 +96,33 @@ const DocumentController = {
       });
   },
   /**
+    * Get all document
+    * Route: GET: /documents/
+    * @param {Object} req request object
+    * @param {Object} res response object
+    * @returns {void} response object or void
+    */
+  listAllDocuments(req, res) {
+    req.documentFilter.attributes = Helper.getDocumentAttribute();
+    db.Documents
+      .findAndCountAll(req.documentFilter)
+      .then((documents) => {
+        const condition = {
+          count: documents.count,
+          limit: req.documentFilter.limit,
+          offset: req.documentFilter.offset
+        };
+        delete documents.count;
+        const pagination = Helper.pagination(condition);
+        res.status(200)
+          .send({
+            message: 'You have successfully retrieved all documents',
+            documents,
+            pagination
+          });
+      });
+  },
+  /**
    * retrieve -  return a role
    * @param {Object}  request request object
    * @param {Object}  response response object
