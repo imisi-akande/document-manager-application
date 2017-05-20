@@ -49,6 +49,71 @@ const DocumentController = {
       })
       .catch(error => res.status(500).send(error.errors));
   },
+  /**
+    * Get all roles
+    * Route: GET: /roles/
+    * @param {Object} req request object
+    * @param {Object} res response object
+    * @returns {void} no returns
+    */
+  getAllRoles(req, res) {
+    db.Roles
+      .findAll()
+      .then((roles) => {
+        res.status(200)
+        .send({
+          message: 'You have successfully retrieved all roles',
+          roles
+        });
+      });
+  },
+  /**
+    * Search document
+    * Route: GET: /searchs?query={}
+    * @param {Object} req request object
+    * @param {Object} res response object
+    * @returns {void|Response} response object or void
+    */
+  searchDocuments(req, res) {
+    req.documentFilter.attributes = Helper.getDocumentAttribute();
+    db.Documents
+      .findAndCountAll(req.documentFilter)
+      .then((documents) => {
+        console.log('greeeeeat', db.Documents);
+        const condition = {
+          count: documents.count,
+          limit: req.documentFilter.limit,
+          offset: req.documentFilter.offset
+        };
+        delete documents.count;
+        const pagination = Helper.pagination(condition);
+        res.status(200)
+          .send({
+            message: 'The search was successful',
+            documents,
+            pagination
+          });
+      });
+  },
+  /**
+   * retrieve -  return a role
+   * @param {Object}  request request object
+   * @param {Object}  response response object
+   * @returns {void} - returns void
+   */
+  getRoleById(req, res) {
+    db.Roles.findById(req.params.id)
+      .then((role) => {
+        if (!role) {
+          return res.status(404).send({
+            message: 'Role does not exists'
+          });
+        }
+        return res.status(200).send({
+          role
+        });
+      });
+  }
   
 };
 
