@@ -49,6 +49,13 @@ const DocumentController = {
       })
       .catch(error => res.status(500).send(error.errors));
   },
+  
+  listMyDocuments(req, res) {
+    console.log(req.params, 'hapinessssss');
+    console.log(req.decoded, 'fatherrrrrrr');
+    db.Documents.findAll({ where: { authorId: req.params.userId } })
+      .then(docs => res.status(200).send(docs));
+  },
   /**
     * Get all roles
     * Route: GET: /roles/
