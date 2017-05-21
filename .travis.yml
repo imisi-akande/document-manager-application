@@ -6,8 +6,8 @@ node_js:
 services:
   - postgresql
 before_script:
-  - psql -c 'drop database if exists travis;' -U postgres
-  - psql -c 'create database travis;' -U postgres
+  - psql -c 'create database document_management_test;' -U postgres
+  - NODE_ENV=test npm run migrate:test:db
 script:
   - npm test
 after_script:

@@ -8,17 +8,15 @@
     "webpack:dev": "webpack -w",
     "mocha": "NODE_ENV=test mocha --compilers js:babel-core/register server/tests/**/*.js --timeout 15000",
     "test": "NODE_ENV=test npm run test:scripts",
-    "test:scripts": "npm run migrate:test:db",
+    "test:scripts": "npm run migrate:test:db && npm run coverage ",
     "migrate:db": "NODE_ENV=development sequelize db:migrate",
     "db:test:seed": "NODE_ENV=test sequelize db:seed:all",
-    "coveralls": "istanbul cover mocha --captureExceptions server/tests/**/*.js",
     "db:test:development": "NODE_ENV=development sequelize db:seed:all",
     "db:test:drop": "NODE_ENV=test sequelize db:migrate:undo:all",
     "migrate:test:db": "NODE_ENV=test sequelize db:migrate",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "coverage": "babel-node ./node_modules/.bin/babel-istanbul cover  ./node_modules/.bin/_mocha  server/tests/**/**.spec.js -- --require babel-register",
     "document": "rimraf docs/ && jsdoc ./server/config/app.js -r -c ./conf.json --readme ./documentation/README.md --destination docs"
-  },
-  "keywords": [
+  },"keywords": [
     "git",
     "commit",
     "document",
