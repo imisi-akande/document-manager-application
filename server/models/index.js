@@ -1,14 +1,20 @@
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
+import fs from 'fs';
+import path from 'path';
+import Sequelize from 'sequelize';
+import configuration from '../config/config';
 
 const basename = path.basename(module.filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require('../config/config')[env];
-
+const config = configuration[env];
 const db = {};
 
-const sequelize = new Sequelize(config.url, config);
+let sequelize;
+
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable]);
+} else {
+  sequelize = new Sequelize(config.url, config);
+}
 fs
   .readdirSync(__dirname)
   .filter(file =>

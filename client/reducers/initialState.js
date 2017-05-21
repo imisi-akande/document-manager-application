@@ -1,5 +1,6 @@
 export default {
   roles: [],
   documents: [],
-  users: []
+  user: [],
+  allUsers: {}
 };

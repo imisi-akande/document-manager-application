@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, IndexRoute , match } from 'react-router';
+import { Route, browserHistory, IndexRoute , match } from 'react-router';
 import App from './container/App';
 import LandingPage from './components/LandingPage';
 import Header from './components/Header';
@@ -12,9 +12,10 @@ import ManageUserPage from './container/ManageUserPage';
 import DocumentContainer from '../client/container/DocumentContainer';
 import DocumentPage from '../client/container/DocumentPage';
 import DocumentForm from '../client/components/DocumentForm';
-import Search from '../client/components/searchDocument';
-import SearchUsers from '../client/components/searchUsers';
+import Search from '../client/components/SearchDocument';
+import SearchUsers from './components/SearchUsers';
 import OwnDocumentList from '../client/components/OwnDocumentList';
+import EditUser from '../client/components/EditUser';
 
 const logUserOut = (nextState, replace, done) => {
   localStorage.removeItem('dms-user');
@@ -30,7 +31,7 @@ export default (
     <Route path="createdoc" component={DocumentContainer} />
     <Route path="role" component={ManageRolePage} />
     <Route path="role/:id" component={ManageRolePage} />
-    <Route path="register" component={UserPage} />
+    <Route path="users" component={UserPage} />
     <Route path="signups" component={ManageUserPage} />
     <Route path="user" component={ManageUserPage} />
     <Route path="logout" onEnter={logUserOut} />
@@ -39,5 +40,6 @@ export default (
     <Route path="mydocuments" component={OwnDocumentList} />
     <Route path="search" component={Search} />
     <Route path="search/users" component={SearchUsers}/>
+    <Route path="myprofile" component={EditUser}/>
   </Route>
 );

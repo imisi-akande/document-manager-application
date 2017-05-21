@@ -13,22 +13,13 @@ const Register = (props) => {
     const userName = e.target.userName.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    const confirmPassword = e.target.confirmPassword.value
-    const user = { firstName, userName, lastName, email, password };
-    if (password === confirmPassword) {
+		const role = e.target.role.value;
+    const user = { firstName, userName, lastName, email, password, role };
     saveUser(user);
   }
-   else {
-     Materialize.toast('Password does not match', 4000, 'rounded');
-   }
-  }
-  return ( 
-  <main>
+  return ( <main>
       <center>
-        <div className="section"></div>
-        <h5 className="green-text">Create account</h5>
-        <div className="section"></div>
-
+        
         <div className="container" style={{ width: 700 }}>
           <div className="z-depth-1 grey lighten-4 row">
 
@@ -40,8 +31,9 @@ const Register = (props) => {
 
               <div className='row'>
                 <div className='input-field col s12'>
-                  <input className='validate' type='text' name='firstName' id='firstName' />
-                  <label htmlFor='email'>Enter your firstName</label>
+                  <input className='validate' type='text' name='firstName'
+									 id='firstName' />
+                  <label htmlFor='email'>firstName</label>
                 </div>
               </div>
 
@@ -49,8 +41,8 @@ const Register = (props) => {
               <div className='row'>
                 <div className='input-field col s12'>
                   <input className='validate' type='text' name='lastName' 
-                  id='lastName' />
-                  <label htmlFor='email'>Enter your lastName</label>
+									id='lastName' />
+                  <label htmlFor='email'>lastName</label>
                 </div>
               </div>
 
@@ -58,8 +50,7 @@ const Register = (props) => {
               <div className='row'>
                 <div className='input-field col s12'>
                   <input className='validate' type='text' name='userName' 
-                  id='userName' />
-                  <label htmlFor='userName'>Enter your userName</label>
+									id='userName' /><label htmlFor='userName'>userName</label>
                 </div>
               </div>
 
@@ -67,44 +58,41 @@ const Register = (props) => {
               <div className='row'>
                 <div className='input-field col s12'>
                   <input className='validate' type='email' name='email' 
-                  id='email' />
-                  <label htmlFor='email' htmlFor="email" data-error="wrong" 
-                  data-success="right">Enter your email</label>
-                </div>
-              </div>
-
-              <div className='row'>
-                <div className='input-field col s12'>
-                  <input className='validate' type='password' name='password'
-                   id='password' />
-                  <label htmlFor="password" data-error="wrong" 
-                  data-success="right" htmlFor='password'>
-                  Enter your password</label>
+									id='email' />
+                  <label htmlFor='email' htmlFor="email" data-error="wrong"
+									data-success="right">email</label>
                 </div>
               </div>
 
               <div className='row'>
                 <div className='input-field col s12'>
                   <input className='validate' type='password' 
-									name='confirmPassword' id='confirmPassword' />
+									name='password' id='password' />
                   <label htmlFor="password" data-error="wrong" 
-									data-success="right" htmlFor='password'>
-                  Confirm password</label>
+									data-success="right" htmlFor='password'>password</label>
                 </div>
               </div>
 
+              <div className='row'>
+                <div className='input-field col s12'>
+                  <input className='validate' type='text' name='role' 
+									id='role' />
+                  <label htmlFor="role" data-error="wrong" data-success="right" 
+									htmlFor='role'>role</label>
+                </div>
+
+              </div>
               <br />
               <center>
                 <div className='row'>
                   <button type='submit' name='btn_login' 
-                  className='col s12 btn btn-large waves-effect teal darken-2'>
-                  Signup</button>
+									className='col s12 btn btn-large waves-effect teal darken-2'>
+									SAVE</button>
                 </div>
               </center>
             </form>
           </div>
         </div>
-        Already a user? <a href="/login">Login</a>
       </center>
 
       <div className="section"></div>
