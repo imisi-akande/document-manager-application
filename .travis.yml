@@ -2,15 +2,15 @@ sudo: required
 dist: trusty
 language: node_js
 node_js:
-  - node
+  - "6"
 services:
   - postgresql
 before_script:
-  - psql -c 'create database travis;' -U postgres
+  - psql -c 'drop database if exists docman_test;' -U postgres
+  - psql -c 'create database docman_test;' -U postgres
 script:
   - npm test
-after_success: 'npm run coveralls'
-script: 'npm test'
-after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+after_script:
+- cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 addons:
   postgresql: "9.3"
