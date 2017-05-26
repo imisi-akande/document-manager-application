@@ -38,11 +38,11 @@ import  * as userAction from '../actions/userAction';
 
       this.props.fetchProfile(currentUser.userId)
       .then(() => {
-       newState.userId = this.props.user[0].id;
-       newState.firstName = this.props.user[0].firstName;
-       newState.lastName = this.props.user[0].lastName;
-       newState.userName = this.props.user[0].userName;
-       newState.email = this.props.user[0].email;
+       newState.userId = this.props.user[1].id;
+       newState.firstName = this.props.user[1].firstName;
+       newState.lastName = this.props.user[1].lastName;
+       newState.userName = this.props.user[1].userName;
+       newState.email = this.props.user[1].email;
        newState.roleId = currentUser.roleId;
 
         this.setState({
@@ -137,7 +137,7 @@ EditUsers.propTypes = {
 
  const mapStoreToProps = (state) => {
     return {
-      currentUser: state.setCurrentUser.user,
+      currentUser: state.user[0],
       user: state.user
     };  
   };

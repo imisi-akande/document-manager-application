@@ -5,10 +5,11 @@ import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import DocumentTitle from '../components/DocumentListTitle';
 import DocumentContent from '../components/DocumentContent';
-import  * as DocumentAction from '../actions/DocumentActions';
-import Search from '../components/searchDocument';
+import  * as DocumentAction from '../actions/documentActions';
+import Search from '../components/SearchDocument';
 import imagePath from '../img/cardReveal.jpg';
 import renderHTML from 'react-render-html';
+import Prompt from '../components/Prompt';
 
 
 class OwnDocumentList extends React.Component {
@@ -56,8 +57,8 @@ class OwnDocumentList extends React.Component {
    */
    let pagination = null;
    let doc = null;
-   if (this.props.documentDetails !== undefined && this.props.documentDetails.documents !== undefined){
-    doc = this.props.documentDetails.documents.rows;
+   if (this.props.documentDetails !== undefined && this.props.documentDetails.rows !== undefined){
+    doc = this.props.documentDetails.rows;
     pagination = this.props.documentDetails.pagination;
    }
     return (
@@ -119,13 +120,21 @@ class OwnDocumentList extends React.Component {
                   type="submit">UPDATE</Button>
                 </form>
                 </Modal>
-                <Button waves='light' onClick={(e) => 
-                  this.deleteDoc(document.id)}  className=
-                  "btn-floating btn-large red darken-2 right"><i className=
-                  "large material-icons">delete</i></Button>
+                <Prompt
+                  trigger={
+                    <Button waves='light' 
+                    className="btn-floating btn-large red darken-2 right">
+                      <i className="large material-icons">delete</i>
+                    </Button>
+                  }
+
+                  onClickFunction={
+                    (e) => {this.deleteDoc(document.id)}
+                  }
+                />
               </div>
               <Modal
-                header= {<DocumentTitle title={document.title} />}
+                header= {document.title} 
                 trigger={
                   <Button waves='light'>READ MORE</Button>
                 }>
@@ -153,6 +162,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = (state) => {
+  console.log(state.documents.documents);
   return {
     documentDetails: state.documents.documents
   };

@@ -5,12 +5,12 @@ import {Link} from 'react-router';
 import DocumentTitle from '../components/DocumentListTitle';
 import moment from 'moment';
 import DocumentContent from '../components/DocumentContent';
-import  * as DocumentAction from '../actions/DocumentActions';
+import  * as DocumentAction from '../actions/documentActions';
 import { connect } from 'react-redux';
 import imagePath from '../img/cardReveal.jpg';
-import renderHTML from 'react-render-html';
+import Prompt from '../components/Prompt';
 
-class Search extends Component {
+class SearchDocument extends Component {
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
@@ -29,29 +29,31 @@ class Search extends Component {
   }
   render() {
     let pagination = null;
+    console.log(this.props.result,'what is result');
     const mappedResults = this.props.result.map((document, index) =>
+     <div className = "row">
       <div className="col s3" key={document.id}>
         
-        <div className="card white darken-1 activator"  style={{ height: 185,  
-        backgroundImage: 'url(' + imagePath + ')' }}>
+        <div className="card white darken-1 activator"  style={{ height: 185,  backgroundImage: 'url(' + imagePath + ')' }}>
             <div className="card-image waves-effect waves-block waves-light">
               <a className = "btn activator">VIEW</a>
+              {console.log(document, 'andelaaaaaaaaa')}
           </div>
           <div className="card-reveal black-text">
             <DocumentTitle title={document.title} />
-            <DocumentContent content={renderHTML(document.content)} />
+            <DocumentContent content={document.content} />
           </div>
           <div className="card-action">
             <div className>{document.title}</div>
-            <strong><div className = "right">{document.access}
-                 </div></strong>
-            <a>Published: {moment(document.createdAt).format('MMMM Do YYYY')}</a> <br/>
+             <strong><div className = "right">{document.access}</div></strong>
+            <a>Published: {moment(document.createdAt).format('MMMM Do YYYY')}
+              </a> <br/>
             <div className="card-action">
               <Modal
                   header='Edit Document'
                   trigger={
-                  <Button className="btn-floating btn-large teal darken-2 right"
-                  ><i className="large material-icons">mode_edit</i></Button>
+                <Button className="btn-floating btn-large teal darken-2 right">
+                    <i className="large material-icons">mode_edit</i></Button>
                   }>
                   <form className="col s12" method="post" onSubmit={(e) => 
                     this.onSubmit(e)} >
@@ -84,28 +86,39 @@ class Search extends Component {
                 <Button className="teal darken-2" type="submit">UPDATE</Button>
               </form>
               </Modal>
-              <Button onClick={(e) => this.deleteDoc(document.id)}  
-              className="btn-floating btn-large red darken-2 right">
-              <i className="large material-icons">delete</i></Button>
+              <Prompt
+                  trigger={
+                    <Button waves='light' 
+                    className="btn-floating btn-large red darken-2 right">
+                      <i className="large material-icons">delete</i>
+                    </Button>
+                  }
+
+                  onClickFunction={
+                    (e) => {this.deleteDoc(document.id)}
+                  }
+                />
             </div>
             <Modal
-                header= {<DocumentTitle title={document.title} />}
+                header= {document.title} 
                 trigger={
                   <Button waves='light'>READ MORE</Button>
                 }>
-                 <DocumentContent content={renderHTML(document.content)} />
+                 <DocumentContent content={document.content} />
             </Modal>
           </div>
         </div>
       </div>
+       </div>
     );
        {pagination ? <Pagination items={pagination.page_count} activePage={2}
-        maxButtons={5} onSelect={(e)=>this.onSelect(e)}/> 
-        : '<div>Not document</div> '}
+        maxButtons={5} onSelect={(e)=>this.onSelect(e)}/> : '<div>Not document</div> '}
+     
+
+    console.log(mappedResults, 'how are u???');
 
     return (
-      <div className="row">
-        <div>
+      <div className = "row">
         <h5 className="green-text">Search for all documents Here..</h5>
       <div>
           <Input
@@ -118,13 +131,12 @@ class Search extends Component {
             className="search">
             <Icon style={{ color: 'white' }} >search</Icon>
           </Input> <br/>
-           <Button type="submit" name="action" onClick={this.onSubmit}>
-             Click Here <i className="material-icons right">send</i>
+           <Button type="submit" name="action" onClick={this.onSubmit}>Click Here
+           <i className="material-icons right">send</i>
            </Button>  <br/><br/><br/>
-          <div>
+          <ul>
             {mappedResults}
-          </div>
-          </div>
+          </ul>
           </div>
         </div>
     )
@@ -132,12 +144,12 @@ class Search extends Component {
 }
 
 function mapStateToProps(state) {
-   console.log(state.searchReducers.results, 'wherever');
+   console.log(state.search.results, 'wherever');
   return {
-    result: state.searchReducers.results,
+    result: state.search.results,
   };
 }
 function mapDispatchToProps(dispatch) {
   searchDocuments: (searchTerm) => dispatch(searchDocuments(searchTerm));
 }
-export default connect(mapStateToProps, { searchDocuments })(Search);
+export default connect(mapStateToProps, { searchDocuments })(SearchDocument);

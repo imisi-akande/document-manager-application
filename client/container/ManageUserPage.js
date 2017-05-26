@@ -1,8 +1,10 @@
+import browserHistory from 'react-router';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
 import * as userAction from '../actions/userAction';
 import UserForm from '../components/userForm';
+
 
 class ManageUserPage extends React.Component {
   constructor(props, context) {
@@ -24,7 +26,7 @@ class ManageUserPage extends React.Component {
   saveUser() {
     event.preventDefault();
     this.props.saveUser(this.state.user);
-    window.location = '/';
+    browserHistory.push('/');
     this.setState({ saving: true });
     toastr.success('User saved');
   }

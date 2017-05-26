@@ -1,4 +1,5 @@
 import request from 'superagent';
+import { browserHistory } from 'react-router';
 import * as types from './ActionTypes';
 
 /**
@@ -33,9 +34,9 @@ export const updateRoleSuccess = role => ({
  * delete from state the current selected role
  * @return {[type]} [description]
  */
-export const deleteRoleSuccess = role => ({
+export const deleteRoleSuccess = id => ({
   type: types.DELETE_ROLE_SUCCESS,
-  role
+  id
 });
 
 
@@ -60,7 +61,7 @@ export const roleSaver = (role) => {
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
         dispatch(createRoleSuccess(role));
-       browserHistory.push('/roles');
+        browserHistory.push('/roles');
         return res;
       });
   };
@@ -88,17 +89,15 @@ export const fetchRoles = () => {
  * @return {object}    api response
  */
 export const deleteRoles = (id) => {
-  console.log('DELETE', id);
   return (dispatch) => {
     const token = localStorage.getItem('dms-user');
     request
       .delete(`/api/roles/${id}`)
        .set({ 'x-access-token': token })
       .end((err, res) => {
-        console.log(res, 'hooooooooook');
         Materialize.toast(res.body.message, 4000, 'rounded');
         browserHistory.push('/roles');
-        dispatch(deleteRoleSuccess(res.body.roles));
+        dispatch(deleteRoleSuccess(id));
       });
   };
 };

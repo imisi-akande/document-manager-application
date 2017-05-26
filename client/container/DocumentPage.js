@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import * as documentAction from '../actions/DocumentActions';
+import * as documentAction from '../actions/documentActions';
 import DocumentList from '../components/DocumentList';
 
 /**

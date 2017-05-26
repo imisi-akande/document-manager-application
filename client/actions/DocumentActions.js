@@ -25,9 +25,9 @@ export const createDocument = document => ({
  * @param {any} documents  returned documents from api call
  * @returns {any} action and action types
  */
-export const getDocumentSuccess = body => ({
+export const getDocumentSuccess = documents => ({
   type: types.LOAD_DOCUMENT_SUCCESS,
-  body
+  documents
 });
 
 /**
@@ -78,7 +78,6 @@ export const fetchDocuments = (offset) => {
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
         dispatch(getDocumentSuccess(res.body));
-        console.log(res.body, 'wonderful people....//////');
       });
   };
 };
@@ -94,9 +93,7 @@ export const fetchOwnDocuments = (offset) => {
       .set({ 'x-access-token': token })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
-
-        dispatch(getDocumentSuccess(res.body));
-        console.log(res.body, 'okekeeee');
+        dispatch(getDocumentSuccess(res.body.userDocuments));
       });
   };
 };
@@ -143,7 +140,6 @@ export const updateDocument = (document) => {
 export const deleteDocument = (id) => {
   const token = localStorage.getItem('dms-user');
   return (dispatch) => {
-    // console.log(document,'aaaaaaaaaaaa');
     request
       .delete(`/api/documents/${id}`)
       // .send(document)
@@ -153,7 +149,6 @@ export const deleteDocument = (id) => {
         if (err) {
           return err;
         }
-        console.log(res.body, 'tiwasavage');
         dispatch(deleteDocumentSuccess(id));
         browserHistory.push('/documents');
       });

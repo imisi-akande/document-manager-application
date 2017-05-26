@@ -1,15 +1,15 @@
 import { combineReducers } from 'redux';
 import documents from './documentReducer';
 import roles from './roleReducer';
-import user from './userReducer';
-import searchReducers from './searchReducers';
-import setCurrentUser from '../reducers/SetCurrentUser';
+import user from './AuthReducer';
+import allUsers from './userReducer';
+import search from './SearchReducer';
 
 const rootReducer = combineReducers({
   roles,
   user,
   documents,
-  searchReducers,
-  setCurrentUser
+  search,
+  allUsers
 });
 export default rootReducer;

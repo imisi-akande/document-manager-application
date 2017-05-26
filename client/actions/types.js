@@ -12,5 +12,6 @@ export const SET_USERS = 'SET_USERS';
 export const USER_UPDATED = 'USER_UPDATED';
 export const USER_DELETED = 'USER_DELETED';
 
+
 export const SEARCH_RESULTS = 'SEARCH_RESULTS';
 

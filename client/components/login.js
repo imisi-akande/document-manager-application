@@ -64,7 +64,8 @@ className="validate" type="email"
                       name="email" id="icon_prefix"
                       onChange={this.onEmailChange}
                     />
-                    <label for="icon_prefix" data-error="wrong" data-success="right">Email</label>
+                    <label htmlFor="icon_prefix" data-error="wrong" 
+                    data-success="right">Email</label>
                   </div>
                 </div>
 
@@ -76,10 +77,10 @@ className="validate" type="password"
                       name="password" id="password"
                       onChange={this.onPasswordChange}
                     />
-                     <label for="password" data-error="wrong" data-success="right">Password</label>
+                     <label htmlFor="password" data-error="wrong" 
+                     data-success="right">Password</label>
                   </div>
                 </div>
-
                 <br />
                 <center>
                   <div className="row">

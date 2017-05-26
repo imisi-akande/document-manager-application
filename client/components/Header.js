@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link, IndexLink, match} from 'react-router';
 import jwtDecode from 'jwt-decode';
-import Search from '../components/searchDocument';
+import Search from '../components/SearchDocument';
 
 const renderIfLoggedIn = () => {
   const token = localStorage.getItem('dms-user');
@@ -22,13 +22,16 @@ const renderIfLoggedIn = () => {
 					{userRoleId===1 ?	<Link to="/roles" activeClassName="active" className="right">Roles</Link> : ''}
 				</li>
 				<li>
-				{userRoleId===1 ?	<Link to="/register" activeClassName="active" className="right">Users</Link> : ''}
+				{userRoleId===1 ?	<Link to="/users" activeClassName="active" className="right">Users</Link> : ''}
 				</li>
         <li>
 					<Link to="/documents" activeClassName="active" className="right">Documents</Link>
 				</li>
 				 <li>
 					<Link to="/mydocuments" activeClassName="active" className="right">my Documents</Link>
+				</li>
+				<li>
+					<Link to="/myprofile" activeClassName="active" className="right">My Profile</Link>
 				</li>
 		
 	  

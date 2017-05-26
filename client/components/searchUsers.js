@@ -63,7 +63,7 @@ class SearchUser extends Component {
         </table>
         </div>
       );
-    // }
+
     return (
       <div>
       <ul>
@@ -139,10 +139,10 @@ class SearchUser extends Component {
 function mapStateToProps(state) {
    console.log(state.search, 'hiiiii')
   return {
-    results: state.searchReducers.results,
+    results: state.search.results,
   };
 }
 function mapDispatchToProps(dispatch) {
-  searchDocuments: (searchTerm) => dispatch(searchDocuments(searchTerm));
+  searchUsers: (searchTerm) => dispatch(searchUsers(searchTerm));
 }
 export default connect(mapStateToProps, { searchUsers })(SearchUser);
