@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as documentAction from '../actions/documentActions';
+import * as documentAction from '../actions/DocumentActions';
 import DocumentForm from '../components/DocumentForm';
 import DocumentMarkdown from '../components/DocumentMarkDown';
 

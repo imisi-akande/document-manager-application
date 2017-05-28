@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import * as documentAction from '../actions/documentActions';
+import * as documentAction from '../actions/DocumentActions';
 import DocumentList from '../components/DocumentList';
 
 /**
@@ -54,6 +54,7 @@ class DocumentPage extends React.Component {
     );
   }
 }
+
 /**
  *
  *
@@ -65,6 +66,7 @@ const mapDispatchToProps = dispatch => ({
   fetchDocuments: () => dispatch(documentAction.fetchDocuments()),
   updateDocument: () => dispatch(documentAction.updateDocument())
 });
+
 /**
  *
  *

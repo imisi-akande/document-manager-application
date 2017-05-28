@@ -1,5 +1,5 @@
 import * as types from '../actions/ActionTypes';
-import initialState from './initialState';
+import initialState from './InitialState';
 
 const documentsReducer = (state = initialState.documents, action) => {
   switch (action.type) {

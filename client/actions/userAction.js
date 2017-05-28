@@ -40,7 +40,7 @@ export const createUserSuccess = user => ({
 /**
  * update user success
  * @param  {object} user updated user new details
- * @return {object}
+ * @return {object} json object
  */
 export const updateUserSuccess = user => ({
   type: types.UPDATE_USER_SUCCESS,
@@ -49,6 +49,7 @@ export const updateUserSuccess = user => ({
 
 /**
  * remove from state the currently selected user
+ * @param  {object} user delete user details
  * @return {object} action [description]
  */
 export const deleteUserSuccess = user => ({
@@ -85,20 +86,19 @@ export const saveUser = user => (dispatch) => {
  * @return {object}        [description]
  */
 export const fetchAllUsers = (offset) => {
-  console.log('imisi', offset);
   const token = localStorage.getItem('dms-user');
   return dispatch => new Promise((resolve) => {
     request
         .get(`/api/users?offset=${offset}`)
         .set({ 'x-access-token': token })
         .end((err, res) => {
-          console.log('ki lo de?', res.body)
           Materialize.toast(res.body.message, 4000, 'rounded');
           dispatch(getUserSuccess(res.body));
           resolve();
         });
   });
 };
+
 /**
  * login user function
  * set user token to local storage on successfull login
@@ -125,6 +125,7 @@ export const login = (userCredentials) => {
       });
   };
 };
+
 export const editUser = (userId, userData) => {
   const token = localStorage.getItem('dms-user');
   return (dispatch) => {
@@ -132,20 +133,18 @@ export const editUser = (userId, userData) => {
       .put(`/api/users/${userId}`, userData)
       .set({ 'x-access-token': token })
       .end((err, res) => {
-        // Materialize.toast(res.body.message, 4000, 'rounded');
-        console.log(res, 'graduate');
-        console.log(userId, 'userId');
-        console.log(userData, 'userData');
-        console.log(res.body.updatedUser, 'fff')
-        // if (err) {
-        //   return err;
-        // }
-        // browserHistory.push('/');
-        // dispatch(setCurrentUser(res.body.updatedUser));
         dispatch(setCurrentUser(userData));
       });
   };
 };
+
+/**
+ *
+ *
+ * @export
+ * @param {any} userId
+ * @returns {Object} userData
+ */
 export const fetchProfile = (userId) => {
   const token = localStorage.getItem('dms-user');
   return dispatch => new Promise((resolve) => {
@@ -154,7 +153,6 @@ export const fetchProfile = (userId) => {
       .set({ 'x-access-token': token })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
-        console.log(res.body, 'graduate');
         if (err) {
           return err;
         }
@@ -188,6 +186,7 @@ export const updateUser = (user) => {
       });
   };
 };
+
 /**
  *
  *
@@ -207,7 +206,6 @@ export const deleteUser = (id) => {
           return err;
         }
         dispatch(deleteUserSuccess(res.body.document));
-        browserHistory.push('/register');
       });
   };
 };

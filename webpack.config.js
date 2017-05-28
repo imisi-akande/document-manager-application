@@ -1,6 +1,23 @@
 const webpack = require('webpack');
 const path = require('path');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
+const plugins = [
+    new webpack.NoEmitOnErrorsPlugin()
+  ]
+
+if (process.env.NODE_ENV === "test") {
+  plugins.push(
+      new webpack.HotModuleReplacementPlugin()
+  )
+}
+
+if (process.env.NODE_ENV === "production") {
+    plugins.push(
+      new UglifyJSPlugin()
+    )
+  }
+  
 module.exports = {
   devtool: 'source-map',
   entry: path.join(__dirname, './client/index.js'),
@@ -31,8 +48,5 @@ module.exports = {
   resolve: {
     extensions: ['.js']
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
-  ]
+  plugins
 };

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import request from 'superagent';
-import * as userActions from '../actions/userAction';
+import * as userActions from '../actions/UserAction';
 
 
 const Register = (props) => {

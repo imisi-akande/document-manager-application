@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as roleActions from '../actions/roleAction';
+import * as roleActions from '../actions/RoleAction';
 import RoleForm from '../components/RoleForm';
 
 class ManageRolePage extends React.Component {

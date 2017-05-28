@@ -1,5 +1,5 @@
 import * as types from '../actions/ActionTypes';
-import initialState from './initialState';
+import initialState from './InitialState';
 
 export default function AuthReducer(state = initialState.user, action) {
   switch (action.type) {

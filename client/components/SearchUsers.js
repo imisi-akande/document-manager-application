@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import {Modal, Button, Row, Icon, Input, Pagination} from 'react-materialize';
-import {  searchUsers } from '../actions/searchUserAction';
+import {  searchUsers } from '../actions/SearchUserAction';
 import {Link} from 'react-router';
 import Userlist from '../components/UserList';
 import UserListRow from './UserListRow';
@@ -32,7 +32,6 @@ class SearchUser extends Component {
     event.preventDefault();
     this.props.searchUsers(this.state.search);
     this.setState({ clicked: true });
-    console.log(this.state.search,'gooooooooo');
   }
 
   onChange(event) {
@@ -81,7 +80,6 @@ class SearchUser extends Component {
 
   render() {
     let pagination = null;
-    console.log('props', this.props.results);
 
     let resultTable = null;
     let mappedResult;
@@ -137,7 +135,6 @@ class SearchUser extends Component {
   }
 }
 function mapStateToProps(state) {
-   console.log(state.search, 'hiiiii')
   return {
     results: state.search.results,
   };

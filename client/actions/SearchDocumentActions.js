@@ -1,6 +1,6 @@
 import { browserHistory } from 'react-router';
 import request from 'superagent';
-import { SEARCH_RESULTS } from './types';
+import { SEARCH_RESULTS } from './Types';
 
 
 /**
@@ -14,6 +14,7 @@ export function documentsSearched(documentSearchResult) {
     payload: documentSearchResult,
   };
 }
+
 /**
  * search document function,
  * GET /search/documents/?term={term}

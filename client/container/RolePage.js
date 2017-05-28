@@ -1,7 +1,7 @@
 import { browserHistory } from 'react-router';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import * as roleAction from '../actions/roleAction';
+import * as roleAction from '../actions/RoleAction';
 import RoleList from '../components/RoleList';
 import RoleListRow from '../components/RoleListRow';
 
@@ -38,12 +38,12 @@ class Role extends React.Component {
   componentWillMount() {
     this.props.loadRoles();
   }
-  /**
-   * 
-   * 
-   * 
-   * @memberOf Role
-   */
+/**
+ * 
+ * 
+ * 
+ * @memberOf Role
+ */
   redirectToRolePage() {
     browserHistory.push('/role');
   }

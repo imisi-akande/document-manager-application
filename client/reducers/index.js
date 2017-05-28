@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import documents from './documentReducer';
-import roles from './roleReducer';
+import documents from './DocumentReducer';
+import roles from './RoleReducer';
 import user from './AuthReducer';
-import allUsers from './userReducer';
+import allUsers from './UserReducer';
 import search from './SearchReducer';
 
 const rootReducer = combineReducers({

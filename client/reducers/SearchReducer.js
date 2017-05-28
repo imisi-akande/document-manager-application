@@ -1,4 +1,4 @@
-import { SEARCH_RESULTS } from '../actions/types';
+import { SEARCH_RESULTS } from '../actions/Types';
 
 const initialState = {
   results: [],

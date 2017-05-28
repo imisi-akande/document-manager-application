@@ -3,6 +3,7 @@ import UserListRow from './UserListRow';
 import {Pagination} from 'react-materialize';
 
 function renderList({ usersList }) {
+
   if (usersList.length === 0) {
     return (
      <div className="">
@@ -10,6 +11,7 @@ function renderList({ usersList }) {
      </div>
     );
   }
+
   return (
     <div>
    <table className="table striped">
@@ -33,11 +35,5 @@ function renderList({ usersList }) {
   </div>
   );
 }
-
-
-// const UserList = ({ usersList }) => {
-//   const users = usersList;
-//   return renderList(users);
-// };
 
 export default renderList;

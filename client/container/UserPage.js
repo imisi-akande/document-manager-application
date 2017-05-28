@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Pagination } from 'react-materialize';
 import { browserHistory } from 'react-router';
-import * as userActions from '../actions/userAction';
+import * as userActions from '../actions/UserAction';
 import UserList from '../components/UserList';
 
 class User extends React.Component {
@@ -21,7 +21,6 @@ class User extends React.Component {
   }
 
   onSelect(pageNo) {
-    console.log('=====Hello');
     const offset = (pageNo - 1) * 10;
     this.props.actions.fetchAllUsers(offset);
   }
@@ -37,7 +36,6 @@ class User extends React.Component {
 
   render() {
     const allUsers = this.props.allUsers;
-    console.log(this.state.allUsers, 'how');
     let users, pagination;
     if (allUsers && allUsers.users !== undefined) {
       users = allUsers.users.rows;
@@ -61,12 +59,6 @@ class User extends React.Component {
           users && users.length > 0 ?
           <UserList usersList={users} /> : <span>users</span>
         }
-        <input
-          type="submit"
-          value="Add new User"
-          className="btn waves-effect waves-light teal darken-2"
-          onClick={this.redirectToRolePage}
-        />
         {paginationData}
       </div>
     );

@@ -2,10 +2,15 @@ import { browserHistory } from 'react-router';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
-import * as userAction from '../actions/userAction';
-import UserForm from '../components/userForm';
+import * as userAction from '../actions/UserAction';
+import UserForm from '../components/UserForm';
 
-
+/**
+ * 
+ * 
+ * @class ManageUserPage
+ * @extends {React.Component}
+ */
 class ManageUserPage extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -17,12 +22,27 @@ class ManageUserPage extends React.Component {
     this.updateUserState = this.updateUserState.bind(this);
     this.saveUser = this.saveUser.bind(this);
   }
+
+  /**
+   *
+   *
+   * @param {any} event
+   *
+   * @memberOf ManageUserPage
+   */
   updateUserState(event) {
     const field = event.target.name;
     const user = this.state.user;
     user[field] = event.target.value;
     this.setState({ user });
   }
+
+  /**
+   *
+   *
+   *
+   * @memberOf ManageUserPage
+   */
   saveUser() {
     event.preventDefault();
     this.props.saveUser(this.state.user);
@@ -30,25 +50,32 @@ class ManageUserPage extends React.Component {
     this.setState({ saving: true });
     toastr.success('User saved');
   }
+
+  /**
+   * 
+   * 
+   * @returns
+   * 
+   * @memberOf ManageUserPage
+   */
   render() {
     return (
-			<div>
-				<center>
-					{/*<h5 className="green-text">Create account</h5>*/}
-				</center>
-				<UserForm
-					user={this.state.user}
-					onChange={this.updateUserState}
-					onSave={this.saveUser}
-					error={this.state.error} />
-			</div>
+      <div>
+        <UserForm
+          user={this.state.user}
+          onChange={this.updateUserState}
+          onSave={this.saveUser}
+          error={this.state.error}
+        />
+      </div>
     );
   }
 }
+
 /**
  *
  *
- * @param {any} state
+ * @param {any} dispatch
  * @returns {any}
  */
 const mapDispatchToProps = dispatch => ({
@@ -59,11 +86,16 @@ const mapDispatchToProps = dispatch => ({
 /**
  *
  * dispatch user actions
- * @param {any} dispatch
+ * @param {any} state
  * @returns {any}
  */
 const mapStateToProps = (state) => {
-  const user = { firstName: '', lastName: '', userName: '', email: '', password: '', roleId: '' };
+  const user = { firstName: '',
+    lastName: '',
+    userName: '',
+    email: '',
+    password: '',
+    roleId: '' };
   return {
     user
   };

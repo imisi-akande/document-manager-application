@@ -1,7 +1,7 @@
 import React, { propTypes } from 'react';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import * as roleAction from '../actions/roleAction';
+import * as roleAction from '../actions/RoleAction';
 import {Modal, Button, Row, Input} from 'react-materialize';
 import Prompt from '../components/Prompt';
 

@@ -12,7 +12,6 @@ export const createRole = role => ({
   role
 });
 
-
 /**
  * get role
  * @return {object} object of roles
@@ -30,6 +29,7 @@ export const updateRoleSuccess = role => ({
   type: types.UPDATE_ROLE_SUCCESS,
   role
 });
+
 /**
  * delete from state the current selected role
  * @return {[type]} [description]
@@ -39,7 +39,10 @@ export const deleteRoleSuccess = id => ({
   id
 });
 
-
+/**
+ * create from state the current selected role
+ * @return {[type]} [description]
+ */
 export const createRoleSuccess = role => ({
   type: types.CREATE_ROLE_SUCCESS,
   role
@@ -66,6 +69,7 @@ export const roleSaver = (role) => {
       });
   };
 };
+
 /**
  * fetch roles
  * @return {object} object of roles
@@ -82,6 +86,7 @@ export const fetchRoles = () => {
       });
   };
 };
+
 /**
  * delete role from db
  * DELETE /roles/:id

@@ -1,6 +1,7 @@
 import findIndex from 'lodash/findIndex';
 import * as types from '../actions/ActionTypes';
-import initialState from './initialState';
+import initialState from './InitialState';
+
 
 const roleReducer = (state = initialState.roles, action) => {
   switch (action.type) {

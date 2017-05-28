@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import request from 'superagent';
-import * as userActions from '../actions/userAction';
+import * as userActions from '../actions/UserAction';
 
 
 const Register = (props) => {
@@ -111,7 +111,8 @@ const Register = (props) => {
       <div className="section"></div>
     </main>
   );
-};
+ };
+
 // we map our dispatch to custom saveUser props
 const mapDispatchToProps = dispatch => ({
   saveUser: user => dispatch(userActions.saveUser(user))

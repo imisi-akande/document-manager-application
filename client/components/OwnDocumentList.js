@@ -5,10 +5,11 @@ import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import DocumentTitle from '../components/DocumentListTitle';
 import DocumentContent from '../components/DocumentContent';
-import  * as DocumentAction from '../actions/documentActions';
+import  * as DocumentAction from '../actions/DocumentActions';
 import Search from '../components/SearchDocument';
 import imagePath from '../img/cardReveal.jpg';
 import renderHTML from 'react-render-html';
+import TinyMCE from 'react-tinymce';
 import Prompt from '../components/Prompt';
 
 
@@ -95,7 +96,8 @@ class OwnDocumentList extends React.Component {
                     <form className="col s12" method="post" onSubmit={(e) => 
                       this.onSubmit(e)} >
                   <Row>
-                      <Input s={6} name = "title" value={this.state.title} 
+                      <Input s={6} name = "title" value={this.state.title === ''
+                    ? document.title : this.state.title}
                       onChange={(e) => this.fieldChange(e)}  />
                       <Input  s={6} name = "access" validate type = "select" 
                       value={this.state.access === '' ? document.access : 
@@ -103,13 +105,17 @@ class OwnDocumentList extends React.Component {
                        <option value="public">Public</option>
                        <option value="private">Private</option> 
                     </Input>
-
                   </Row>
-                   <Row>
-                  <textarea name = "content" value={this.state.content} onChange={(e) =>
-                   this.fieldChange(e)} label="Content" 
-                    className="materialize-textarea"/>
-                  </Row>
+                  <Row>
+                  <TinyMCE
+                    content={document.content}
+                    config={{
+                      plugins: 'link image preview',
+                      toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
+                    }}
+                    onChange={this.handleEditorChange}
+                    />
+                </Row>
                   <Button className="teal darken-2" waves='light' 
                   type="submit">UPDATE</Button>
                 </form>
@@ -157,7 +163,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = (state) => {
-  console.log(state.documents.documents);
   return {
     documentDetails: state.documents.documents
   };

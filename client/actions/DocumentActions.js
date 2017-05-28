@@ -66,12 +66,19 @@ export const deleteDocumentSuccess = id => ({
   id
 });
 
-
 // thunk
+/**
+ *
+ *
+ * @export
+ * @param {any} offset
+ * @param {any} limit
+ * @returns {Object}
+ */
 export const fetchDocuments = (offset) => {
   const pageOffset = offset ? offset : 0;
   const token = localStorage.getItem('dms-user');
-  
+
   return (dispatch) => {
     request
       .get(`/api/documents?offset=${pageOffset}`)
@@ -83,6 +90,15 @@ export const fetchDocuments = (offset) => {
   };
 };
 
+/**
+ *
+ *
+ * @export
+ * @param {any} id
+ * @param {number} [offset=0]
+ * @param {number} [limit=10]
+ * @returns {Object}
+ */
 export const fetchOwnDocuments = (offset) => {
   const pageOffset = offset ? offset : 0;
   const token = localStorage.getItem('dms-user');
@@ -117,7 +133,13 @@ export const documentSaver = (document) => {
   };
 };
 
-
+/**
+ *
+ *
+ * @export
+ * @param {any} document
+ * @returns {Object}
+ */
 export const updateDocument = (document) => {
   const token = localStorage.getItem('dms-user');
   return (dispatch) => {
@@ -136,8 +158,13 @@ export const updateDocument = (document) => {
   };
 };
 
-
-
+/**
+ *
+ *
+ * @export
+ * @param {any} documentId
+ * @returns {Object}
+ */
 export const deleteDocument = (id) => {
   const token = localStorage.getItem('dms-user');
   return (dispatch) => {
