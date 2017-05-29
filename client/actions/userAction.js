@@ -182,6 +182,7 @@ export const updateUser = (user) => {
           return err;
         }
         browserHistory.push('/users');
+        console.log(res.body, 'mosumola');
         dispatch(updateUserSuccess(res.body.updatedUser));
       });
   };
