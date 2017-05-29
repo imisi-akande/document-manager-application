@@ -96,9 +96,8 @@ class OwnDocumentList extends React.Component {
                     <form className="col s12" method="post" onSubmit={(e) => 
                       this.onSubmit(e)} >
                   <Row>
-                      <Input s={6} name = "title" value={this.state.title === ''
-                    ? document.title : this.state.title}
-                      onChange={(e) => this.fieldChange(e)}  />
+                      <Input s={6} name = "title" defaultValue={document.title}
+                      onChange={(e) => this.fieldChange(e)} />
                       <Input  s={6} name = "access" validate type = "select" 
                       value={this.state.access === '' ? document.access : 
                       this.state.access} onChange={(e) => this.fieldChange(e)}> 

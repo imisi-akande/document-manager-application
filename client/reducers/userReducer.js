@@ -14,9 +14,9 @@ export default function userReducer(state = initialState.allUsers, action) {
 
     case types.UPDATE_USER_SUCCESS: {
       const index =
-        findIndex(state.users, { id: action.userId });
+        findIndex(state.users.rows, { id: action.user.id });
       const stateCopy = Object.assign({}, state);
-      stateCopy.users[index] = action.updatedUser;
+      stateCopy.users.rows[index] = action.user;
       return stateCopy;
     }
     case types.USER_SUCCESS:

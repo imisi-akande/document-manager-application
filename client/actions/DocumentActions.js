@@ -84,7 +84,7 @@ export const fetchDocuments = (offset) => {
       .get(`/api/documents?offset=${pageOffset}`)
       .set({ 'x-access-token': token })
       .end((err, res) => {
-        Materialize.toast(res.body.message, 4000, 'rounded');
+        // Materialize.toast(res.body.message, 4000, 'rounded');
         dispatch(getDocumentSuccess(res.body));
       });
   };

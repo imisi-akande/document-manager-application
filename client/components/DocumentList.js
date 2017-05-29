@@ -180,9 +180,8 @@ class DocumentList extends React.Component{
                   this.onSubmit(e, document.id)} >
       
                 <Row>
-                <Input s={6} name = "title" value={this.state.title === ''
-                  ? document.title : this.state.title} onChange={(e) => 
-                  this.fieldChange(e)}  />
+                <Input s={6} name = "title" defaultValue={document.title}
+                 onChange={(e) => this.fieldChange(e)}  />
                   <Input  s={6} name = "access" validate type = "select" 
                   value={this.state.access === '' ? document.access : 
                   this.state.access} onChange={(e) => this.fieldChange(e)}> 
