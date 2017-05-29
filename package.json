@@ -14,7 +14,7 @@
     "db:test:development": "NODE_ENV=development sequelize db:seed:all",
     "db:test:drop": "NODE_ENV=test sequelize db:migrate:undo:all",
     "migrate:test:db": "NODE_ENV=test sequelize db:migrate",
-    "frontend-test": "NODE_ENV=test mocha --compilers js:babel-core/register --require client/tests/component/setUp.js client/tests/**/*spec.js* ",
+    "frontend-test": "NODE_ENV=test mocha --compilers js:babel-core/register --require client/tests/components/setUp.js client/tests/**/*spec.js* ",
     "coverage": "babel-node ./node_modules/.bin/babel-istanbul cover  ./node_modules/.bin/_mocha  server/tests/**/**.spec.js -- --require babel-register",
     "document": "rimraf docs/ && jsdoc ./server/config/app.js -r -c ./conf.json --readme ./documentation/README.md --destination docs"
   },
