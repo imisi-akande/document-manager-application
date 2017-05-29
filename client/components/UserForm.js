@@ -15,7 +15,7 @@ const Register = (props) => {
     const password = e.target.password.value;
 		const role = e.target.role.value;
     const user = { firstName, userName, lastName, email, password, role };
-    saveUser(user);
+    saveUser(user, true);
   }
   return ( <main>
       <center>
@@ -80,7 +80,6 @@ const Register = (props) => {
                   <label htmlFor="role" data-error="wrong" data-success="right" 
 									htmlFor='role'>role</label>
                 </div>
-
               </div>
               <br />
               <center>
@@ -102,7 +101,7 @@ const Register = (props) => {
 };
 // we map our dispatch to custom saveUser props
 const mapDispatchToProps = dispatch => ({
-  saveUser: user => dispatch(userActions.saveUser(user))
+  saveUser: user => dispatch(userActions.saveUser(user, true))
 });
 
 const mapStateToProps = (state) => {

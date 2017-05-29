@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="1"
+            failures="1"
+            tests="1">
+
+  <testsuite name="SignUp"
+    errors="1" failures="1" hostname="" id="" package="SignUp" skipped="0"
+    tests="1" time="11.89" timestamp="Tue, 30 May 2017 21:21:00 GMT">
+  
+    <testcase name="User should be able to signup" classname="SignUp" time="11.89" assertions="2">
+
+      <failure message="Testing if element &lt;div nav div a ul li li li a&gt; contains text: &quot;Sign up&quot;. Element could not be located.">    at Object.User should be able to signup (/Users/andeladeveloper/Documents/document-manager-application/client/tests/EndToEndTest/SignUp.js:9:15)
+    at _combinedTickCallback (internal/process/next_tick.js:73:7)</failure>
+<system-out>[[ATTACHMENT|/Users/andeladeveloper/Documents/document-manager-application/screenshots/SignUp/User-should-be-able-to-signup_ERROR_May-30-2017-222112-GMT+0100.png]]</system-out>
+    
+    </testcase>
+      <system-err>
+        ERROR: Unable to locate element: &quot;div nav div a ul li li li a&quot; using: css selector
+    at command (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/api/assertions/containsText.js:46:21)
+    at module.exports.BaseAssertion._scheduleAssertion (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/assertion.js:87:17)
+    at module.exports.BaseAssertion._executeCommand (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/assertion.js:82:17)
+    at AssertionInstance.commandFn [as _commandFn] (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/assertion.js:180:21)
+    at AsyncTree.runCommand (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/queue.js:154:30)
+    at AsyncTree.runChildNode (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/queue.js:114:8)
+    at AsyncTree.walkDown (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/queue.js:80:10)
+    at AsyncTree.walkUp (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/queue.js:97:8)
+    at AsyncTree.walkDown (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/queue.js:90:12)
+    at AsyncTree.traverse (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/queue.js:73:8)
+      </system-err>
+  
+  
+  </testsuite>
+</testsuites>

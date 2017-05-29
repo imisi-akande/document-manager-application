@@ -5,13 +5,13 @@ import Helper from '../Helper/utility';
 
 const RoleController = {
 
- /**
-    * Create a new role
-    * Route: POST: /roles/
-    * @param {Object} req request object
-    * @param {Object} res response object
-    * @returns {void} no returns
-    */
+  /**
+   * Create a new role
+   * Route: POST: /roles/
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} no returns
+   */
   createRole(req, res) {
     db.Roles.create(req.body)
       .then((role) => {
@@ -23,36 +23,36 @@ const RoleController = {
       })
       .catch(error =>
         res.status(401)
-          .send({
-            errorArray: Helper.errorArray(error)
-          }));
+        .send({
+          errorArray: Helper.errorArray(error)
+        }));
   },
 
   /**
-    * Get all roles
-    * Route: GET: /roles/
-    * @param {Object} req request object
-    * @param {Object} res response object
-    * @returns {void} no returns
-    */
+   * Get all roles
+   * Route: GET: /roles/
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} no returns
+   */
   getAllRoles(req, res) {
     db.Roles
       .findAll()
       .then((roles) => {
         res.status(200)
-        .send({
-          message: 'You have successfully retrieved all roles',
-          roles
-        });
+          .send({
+            message: 'You have successfully retrieved all roles',
+            roles
+          });
       });
   },
   /**
-    * Update roles
-    * Route: PUT: /roles/:id
-    * @param {Object} req request object
-    * @param {Object} res response object
-    * @returns {void} no returns
-    */
+   * Update roles
+   * Route: PUT: /roles/:id
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} no returns
+   */
   updateRole(req, res) {
     req.roleInstance.update(req.body)
       .then((updatedRole) => {
@@ -64,20 +64,19 @@ const RoleController = {
       })
       .catch(error =>
         res.status(400)
-          .send({
-            errorArray: Helper.errorArray(error)
-          }));
+        .send({
+          errorArray: Helper.errorArray(error)
+        }));
   },
 
   /**
-    * Delete a Role
-    * Route: DELETE: /roles/:id
-    * @param {Object} req request object
-    * @param {Object} res response object
-    * @returns {void} no returns
-    */
+   * Delete a Role
+   * Route: DELETE: /roles/:id
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} no returns
+   */
   deleteRole(req, res) {
-    console.log(res, 'andelaaaa');
     req.roleInstance.destroy()
       .then((updatedRole) => {
         res.status(200)

@@ -2,7 +2,9 @@
  * Documents action, disptach action and
  * action types of each action to the reducer
  */
-import { browserHistory } from 'react-router';
+import {
+  browserHistory
+} from 'react-router';
 import request from 'superagent';
 import decode from 'jwt-decode';
 import * as types from './ActionTypes';
@@ -82,9 +84,10 @@ export const fetchDocuments = (offset) => {
   return (dispatch) => {
     request
       .get(`/api/documents?offset=${pageOffset}`)
-      .set({ 'x-access-token': token })
+      .set({
+        'x-access-token': token
+      })
       .end((err, res) => {
-        // Materialize.toast(res.body.message, 4000, 'rounded');
         dispatch(getDocumentSuccess(res.body));
       });
   };
@@ -100,14 +103,16 @@ export const fetchDocuments = (offset) => {
  * @returns {Object}
  */
 export const fetchOwnDocuments = (offset) => {
-  const pageOffset = offset ? offset : 0;
+  const pageOffset = offset || 0;
   const token = localStorage.getItem('dms-user');
   const userData = decode(token);
   const id = userData.userId;
   return (dispatch) => {
     request
       .get(`/api/users/${id}/documents/`)
-      .set({ 'x-access-token': token })
+      .set({
+        'x-access-token': token
+      })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
         dispatch(getDocumentSuccess(res.body.userDocuments));
@@ -121,7 +126,9 @@ export const documentSaver = (document) => {
     request
       .post('/api/documents')
       .send(document)
-      .set({ 'x-access-token': token })
+      .set({
+        'x-access-token': token
+      })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
         if (err) {
@@ -146,7 +153,9 @@ export const updateDocument = (document) => {
     request
       .put(`/api/documents/${document.id}`)
       .send(document)
-      .set({ 'x-access-token': token })
+      .set({
+        'x-access-token': token
+      })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
         if (err) {
@@ -170,8 +179,9 @@ export const deleteDocument = (id) => {
   return (dispatch) => {
     request
       .delete(`/api/documents/${id}`)
-      // .send(document)
-      .set({ 'x-access-token': token })
+      .set({
+        'x-access-token': token
+      })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
         if (err) {

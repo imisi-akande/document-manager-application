@@ -25,16 +25,16 @@ const authenticate = {
       request.get('Authorization') ||
       request.headers['x-access-token'];
     if (token) {
-        // If the token is valid, request is set to decoded
+      // If the token is valid, request is set to decoded
       jwt.verify(token, secretKey, (error, decoded) => {
         if (error) {
           response.status(401).send({
             message: 'Invalid token, Authentication required'
           });
         }
-          // decode token with user id
+        // decode token with user id
         request.decoded = decoded;
-          // Move to the next middleware function
+        // Move to the next middleware function
         next();
       });
     } else {
@@ -51,9 +51,11 @@ const authenticate = {
    */
   getToken(user) {
     const userToken = jwt.sign({
-      userId: user.id
-    },
-      secretKey, { expiresIn: '1d' }
+        userId: user.id
+      },
+      secretKey, {
+        expiresIn: '1d'
+      }
     );
     return userToken;
   },
@@ -82,13 +84,15 @@ const authenticate = {
         }
         if (Helper.isRegular(user.roleId) && user.id === 2) {
           return res.status(403)
-            .send({ message: 'You can not delete the default regular user' });
+            .send({
+              message: 'You can not delete the default regular user'
+            });
         }
         req.userInstance = user;
         next();
       });
   },
-   /**
+  /**
    * Validate documents input
    * @param {Object} req req object
    * @param {Object} res response object
@@ -122,8 +126,8 @@ const authenticate = {
           message: 'Please enter a valid content'
         });
     }
-    if (req.body.access
-      && !['public', 'private', 'role'].includes(req.body.access)) {
+    if (req.body.access &&
+      !['public', 'private', 'role'].includes(req.body.access)) {
       return res.status(400)
         .send({
           message: 'Access type can only be public, private or role'
@@ -138,7 +142,7 @@ const authenticate = {
     };
     next();
   },
-    /**
+  /**
    * generateToken generates token for authentication
    * @param {Object} user object
    * @returns {Object} jwt
@@ -150,7 +154,9 @@ const authenticate = {
     return jwt.sign({
       userId: user.id,
       roleId: user.roleId,
-    }, secretKey, { expiresIn: '1 day' });
+    }, secretKey, {
+      expiresIn: '1 day'
+    });
   },
   /**
    * Check for role edit and delete permission
@@ -186,7 +192,6 @@ const authenticate = {
    * @returns {void|Object} response object or void
    * */
   validateUserUpdate(req, res, next) {
-    console.log(req.decoded, 'are u ready');
     if (req.decoded.roleId === '1') {
       return res.status(403)
         .send({
@@ -282,7 +287,11 @@ const authenticate = {
         });
     }
 
-    db.Users.findOne({ where: { email: req.body.email } })
+    db.Users.findOne({
+        where: {
+          email: req.body.email
+        }
+      })
       .then((user) => {
         if (user) {
           return res.status(409)
@@ -290,7 +299,11 @@ const authenticate = {
               message: 'email already exists'
             });
         }
-        db.Users.findOne({ where: { userName: req.body.userName } })
+        db.Users.findOne({
+            where: {
+              userName: req.body.userName
+            }
+          })
           .then((newUser) => {
             if (newUser) {
               return res.status(409)
@@ -304,13 +317,19 @@ const authenticate = {
             email = req.body.email;
             password = req.body.password;
             const roleId = req.body.roleId || 2;
-            req.userInput =
-            { userName, firstName, lastName, roleId, email, password };
+            req.userInput = {
+              userName,
+              firstName,
+              lastName,
+              roleId,
+              email,
+              password
+            };
             next();
           });
       });
   },
- /**
+  /**
    * Validate user's login datas
    * @param {Object} req req object
    * @param {Object} res response object
@@ -372,8 +391,8 @@ const authenticate = {
               message: 'This document does not exist'
             });
         }
-        if (!Helper.isOwnerDoc(doc, req)
-          && !Helper.isAdmin(req.decoded.roleId)) {
+        if (!Helper.isOwnerDoc(doc, req) &&
+          !Helper.isAdmin(req.decoded.roleId)) {
           return res.status(401)
             .send({
               message: 'You are not permitted to modify this document'
@@ -424,7 +443,9 @@ const authenticate = {
     }
     query.limit = limit;
     query.offset = offset;
-    query.order = [['createdAt', order]];
+    query.order = [
+      ['createdAt', order]
+    ];
 
     if (`${req.baseUrl}${req.route.path}` === '/api/search/users') {
       if (!req.query.q) {
@@ -434,18 +455,41 @@ const authenticate = {
           });
       }
       query.where = {
-        $or: [
-          { userName: { $iLike: { $any: terms } } },
-          { firstName: { $iLike: { $any: terms } } },
-          { lastName: { $iLike: { $any: terms } } },
-          { email: { $iLike: { $any: terms } } }
+        $or: [{
+            userName: {
+              $iLike: {
+                $any: terms
+              }
+            }
+          },
+          {
+            firstName: {
+              $iLike: {
+                $any: terms
+              }
+            }
+          },
+          {
+            lastName: {
+              $iLike: {
+                $any: terms
+              }
+            }
+          },
+          {
+            email: {
+              $iLike: {
+                $any: terms
+              }
+            }
+          }
         ]
       };
     }
     if (`${req.baseUrl}${req.route.path}` === '/api/users/') {
-      query.where = Helper.isAdmin(req.decoded.roleId)
-        ? {}
-        : { id: req.decoded.userId };
+      query.where = Helper.isAdmin(req.decoded.roleId) ? {} : {
+        id: req.decoded.userId
+      };
     }
     if (`${req.baseUrl}${req.route.path}` === '/api/search/documents') {
       if (!req.query.q) {
@@ -456,23 +500,37 @@ const authenticate = {
       }
       if (Helper.isAdmin(req.decoded.roleId)) {
         query.where = {
-          $or: [
-          { title: { $iLike: { $any: terms } } },
-          { content: { $iLike: { $any: terms } } },
+          $or: [{
+              title: {
+                $iLike: {
+                  $any: terms
+                }
+              }
+            },
+            {
+              content: {
+                $iLike: {
+                  $any: terms
+                }
+              }
+            },
           ]
         };
         query.include = [{
           model: db.Users,
-          attributes: { exclude: ['password'] }
+          attributes: {
+            exclude: ['password']
+          }
         }];
-    } else {
-        console.log(Helper.likeSearch, 'is it defined');
+      } else {
         query.where = {
           $and: [Helper.documentAccess(req), Helper.likeSearch(terms)]
         };
         query.include = [{
           model: db.Users,
-          attributes: { exclude: ['password'] }
+          attributes: {
+            exclude: ['password']
+          }
         }];
       }
     }
@@ -483,15 +541,16 @@ const authenticate = {
         query.where = Helper.documentAccess(req);
         query.include = [{
           model: db.Users,
-          attributes: { exclude: ['password'] }
+          attributes: {
+            exclude: ['password']
+          }
         }];
       }
     }
     if (`${req.baseUrl}${req.route.path}` === '/api/users/:id/documents') {
-      const adminSearch = req.query.q ? Helper.likeSearch(terms) : { };
-      const userSearch = req.query.q
-        ? [Helper.documentAccess(req), Helper.likeSearch(terms)]
-        : Helper.documentAccess(req);
+      const adminSearch = req.query.q ? Helper.likeSearch(terms) : {};
+      const userSearch = req.query.q ? [Helper.documentAccess(req), Helper.likeSearch(terms)] :
+        Helper.documentAccess(req);
       if (Helper.isAdmin(req.decoded.roleId)) {
         query.where = adminSearch;
       } else {
@@ -518,9 +577,9 @@ const authenticate = {
               message: 'This document cannot be found'
             });
         }
-        if (!Helper.isPublic(document) && !Helper.isOwnerDoc(document, req)
-           && !Helper.isAdmin(req.decoded.roleId)
-           && !Helper.hasRoleAccess(document, req)) {
+        if (!Helper.isPublic(document) && !Helper.isOwnerDoc(document, req) &&
+          !Helper.isAdmin(req.decoded.roleId) &&
+          !Helper.hasRoleAccess(document, req)) {
           return res.status(401)
             .send({
               message: 'You are not permitted to view this document'
@@ -541,7 +600,9 @@ const authenticate = {
   getUser(req, res, next) {
     db.Users
       .findOne({
-        where: { id: req.params.id },
+        where: {
+          id: req.params.id
+        },
       })
       .then((user) => {
         if (!user) {
@@ -565,7 +626,9 @@ const authenticate = {
   getUserName(req, res, next) {
     db.Users
       .findOne({
-        where: { userName: req.query.q },
+        where: {
+          userName: req.query.q
+        },
       })
       .then((user) => {
         if (!user) {
@@ -581,5 +644,3 @@ const authenticate = {
   },
 };
 export default authenticate;
-
-

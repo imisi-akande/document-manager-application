@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="2">
+
+  <testsuite name="HomePage"
+    errors="0" failures="0" hostname="" id="" package="HomePage" skipped="0"
+    tests="2" time="39.89" timestamp="Tue, 30 May 2017 21:20:20 GMT">
+  
+    <testcase name="User should be able see the homepage" classname="HomePage" time="21.06" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+      <system-err>
+        ERROR: Unable to locate element: &quot;div nav div a ul li li li a&quot; using: css selector
+    at command (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/api/assertions/containsText.js:46:21)
+    at module.exports.BaseAssertion._scheduleAssertion (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/assertion.js:87:17)
+    at module.exports.BaseAssertion._executeCommand (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/assertion.js:82:17)
+    at AssertionInstance.commandFn [as _commandFn] (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/assertion.js:180:21)
+    at AsyncTree.runCommand (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/queue.js:154:30)
+    at AsyncTree.runChildNode (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/queue.js:114:8)
+    at AsyncTree.walkDown (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/queue.js:80:10)
+    at AsyncTree.walkUp (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/queue.js:97:8)
+    at AsyncTree.walkDown (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/queue.js:90:12)
+    at AsyncTree.traverse (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/queue.js:73:8)
+      </system-err>
+  
+    <testcase name="user should click" classname="HomePage" time="18.83" assertions="1">
+
+    
+    </testcase>
+      <system-err>
+        ERROR: Unable to locate element: &quot;div nav div a ul li li li a&quot; using: css selector
+    at command (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/api/assertions/containsText.js:46:21)
+    at module.exports.BaseAssertion._scheduleAssertion (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/assertion.js:87:17)
+    at module.exports.BaseAssertion._executeCommand (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/assertion.js:82:17)
+    at AssertionInstance.commandFn [as _commandFn] (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/assertion.js:180:21)
+    at AsyncTree.runCommand (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/queue.js:154:30)
+    at AsyncTree.runChildNode (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/queue.js:114:8)
+    at AsyncTree.walkDown (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/queue.js:80:10)
+    at AsyncTree.walkUp (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/queue.js:97:8)
+    at AsyncTree.walkDown (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/queue.js:90:12)
+    at AsyncTree.traverse (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/core/queue.js:73:8)
+      </system-err>
+  
+  
+  </testsuite>
+</testsuites>

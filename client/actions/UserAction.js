@@ -1,6 +1,8 @@
 import request from 'superagent';
 import jwtDecode from 'jwt-decode';
-import { browserHistory } from 'react-router';
+import {
+  browserHistory
+} from 'react-router';
 import * as types from './ActionTypes';
 import setCurrentUser from './AuthAction';
 
@@ -65,17 +67,21 @@ export const deleteUserSuccess = user => ({
  * @param {object} user
  * @returns {Object} api response
  */
-export const saveUser = user => (dispatch) => {
+export const saveUser = (user, isAdmin) => (dispatch) => {
   request
     .post('/api/users')
-     .send(user)
+    .send(user)
     .end((err, res) => {
       Materialize.toast(res.body.message, 4000, 'rounded');
       if (err) {
         return err;
       }
       dispatch(createUserSuccess(user));
-      browserHistory.push('/login');
+      if (isAdmin) {
+        browserHistory.push('/');
+      } else {
+        browserHistory.push('/login');
+      }
     });
 };
 /**
@@ -89,13 +95,15 @@ export const fetchAllUsers = (offset) => {
   const token = localStorage.getItem('dms-user');
   return dispatch => new Promise((resolve) => {
     request
-        .get(`/api/users?offset=${offset}`)
-        .set({ 'x-access-token': token })
-        .end((err, res) => {
-          Materialize.toast(res.body.message, 4000, 'rounded');
-          dispatch(getUserSuccess(res.body));
-          resolve();
-        });
+      .get(`/api/users?offset=${offset}`)
+      .set({
+        'x-access-token': token
+      })
+      .end((err, res) => {
+        Materialize.toast(res.body.message, 4000, 'rounded');
+        dispatch(getUserSuccess(res.body));
+        resolve();
+      });
   });
 };
 
@@ -118,7 +126,9 @@ export const login = (userCredentials) => {
         if (err) {
           return err;
         }
-        Object.assign({}, res.body.user, { token: res.body.token });
+        Object.assign({}, res.body.user, {
+          token: res.body.token
+        });
         localStorage.setItem('dms-user', res.body.token);
         browserHistory.push('/');
         dispatch(setCurrentUser(jwtDecode(res.body.token)));
@@ -131,7 +141,9 @@ export const editUser = (userId, userData) => {
   return (dispatch) => {
     request
       .put(`/api/users/${userId}`, userData)
-      .set({ 'x-access-token': token })
+      .set({
+        'x-access-token': token
+      })
       .end((err, res) => {
         dispatch(setCurrentUser(userData));
       });
@@ -150,7 +162,9 @@ export const fetchProfile = (userId) => {
   return dispatch => new Promise((resolve) => {
     request
       .get(`/api/users/${userId}`)
-      .set({ 'x-access-token': token })
+      .set({
+        'x-access-token': token
+      })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
         if (err) {
@@ -174,7 +188,9 @@ export const updateUser = (user) => {
   return (dispatch) => {
     request
       .put(`/api/users/${user.userId}`)
-      .set({ 'x-access-token': token })
+      .set({
+        'x-access-token': token
+      })
       .send(user)
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
@@ -182,7 +198,6 @@ export const updateUser = (user) => {
           return err;
         }
         browserHistory.push('/users');
-        console.log(res.body, 'mosumola');
         dispatch(updateUserSuccess(res.body.updatedUser));
       });
   };
@@ -200,7 +215,9 @@ export const deleteUser = (id) => {
   return (dispatch) => {
     request
       .delete(`/api/users/${id}`)
-      .set({ 'x-access-token': token })
+      .set({
+        'x-access-token': token
+      })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
         if (err) {

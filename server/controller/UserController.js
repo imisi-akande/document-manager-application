@@ -6,12 +6,12 @@ import authenticate from '../middleware/Authenticate';
 import Helpers from '../Helper/utility';
 
 dotenv.config();
-// console.log(process.env.SECRET, 'secret??');
+
 const secretKey = process.env.SECRET;
-// console.log(secretKey, 'where are youuuuuuuu');
+
 
 const UserController = {
-/**
+  /**
    * Login a user
    * @param {Object} req - Request object
    * @param {Object} res - Response object
@@ -19,14 +19,21 @@ const UserController = {
    */
   login(req, res) {
     const query = {
-      where: { email: req.body.email }
+      where: {
+        email: req.body.email
+      }
     };
     // finds the users record
     db.Users.findOne(query)
       .then((user) => {
         if (user && user.ValidatePassword(req.body.password)) {
-          const token = jwt.sign({ userId: user.id, roleId: user.roleId },
-          secretKey, { expiresIn: '1 day' });
+          const token = jwt.sign({
+              userId: user.id,
+              roleId: user.roleId
+            },
+            secretKey, {
+              expiresIn: '1 day'
+            });
           return res.status(200).send({
             message: 'Login succesful',
             token,
@@ -36,7 +43,9 @@ const UserController = {
           });
         }
         return res.status(401)
-            .send({ message: 'Please enter a valid email and password to login!'});
+          .send({
+            message: 'Please enter a valid email and password to login!'
+          });
       });
   },
   /**
@@ -47,15 +56,17 @@ const UserController = {
    */
   logout(req, res) {
     res.status(200)
-      .send({ message: 'You have Successfully logged out!' });
+      .send({
+        message: 'You have Successfully logged out!'
+      });
   },
- /**
-    * Get all users
-    * Route: GET: /users
-    * @param {Object} req request object
-    * @param {Object} res response object
-    * @returns {void} no returns
-    */
+  /**
+   * Get all users
+   * Route: GET: /users
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} no returns
+   */
   listAllUsers(req, res) {
     db.Users
       .findAndCountAll(req.documentFilter)
@@ -78,12 +89,12 @@ const UserController = {
       });
   },
   /**
-    * Get user by id
-    * Route: get: /users/:id
-    * @param {Object} req request object
-    * @param {Object} res response object
-    * @returns {void|Response} response object or void
-    */
+   * Get user by id
+   * Route: get: /users/:id
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Response} response object or void
+   */
   FindUserById(req, res) {
     return res.status(200)
       .send({
@@ -102,14 +113,17 @@ const UserController = {
     req.userInstance.update(req.body)
       .then(updatedUser =>
         res.status(200)
-          .send({
-            message: 'Your profile has been updated',
-            updatedUser
-          }))
+        .send({
+          message: 'Your profile has been updated',
+          updatedUser
+        }))
       .catch((err) => {
         if (err.errors) {
           err.errors.forEach((error) => {
-            errorArray.push({ path: error.path, message: error.message });
+            errorArray.push({
+              path: error.path,
+              message: error.message
+            });
           });
         }
         return res.status(400)
@@ -120,8 +134,8 @@ const UserController = {
   },
   /**
    * deletes a user
-   * @param {Object} request object
-   * @param {Object} response object
+   * @param {Object} req object
+   * @param {Object} res object
    * @returns {void} - returns void
    */
   DeleteUser(req, res) {
@@ -135,18 +149,17 @@ const UserController = {
       .catch(err => res.status(500).send(err.errors));
   },
   /**
-    * Search users
-    * Route: GET: /users/searchs?query=
-    * @param {Object} req request object
-    * @param {Object} res response object
-    * @returns {void|Response} response object or void
-    */
+   * Search users
+   * Route: GET: /users/searchs?query=
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Response} response object or void
+   */
   searchUser(req, res) {
     const request = req.documentFilter;
     let condition = {};
     let pagination;
     request.attributes = Helpers.getUserAttribute();
-    console.log(request.attributes, 'how are youuu');
     db.Users.findAndCountAll(request)
       .then((users) => {
         condition = {
@@ -165,12 +178,12 @@ const UserController = {
       });
   },
   /**
-    * Get all document by a user
-    * Route: GET: /users/:id/documents
-    * @param {Object} req request object
-    * @param {Object} res response object
-    * @returns {void} no returns
-    */
+   * Get all document by a user
+   * Route: GET: /users/:id/documents
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} no returns
+   */
   findUserDocuments(req, res) {
     const userDocuments = {};
     db.Users.findById(req.params.id)
@@ -205,8 +218,8 @@ const UserController = {
   },
   /**
    * Create a user
-   * @param {Object} request - Request object
-   * @param {Object} response - Response object
+   * @param {Object} req - Request object
+   * @param {Object} res - Response object
    * @returns {Object} Response object
    */
   createUser(req, res) {
@@ -224,9 +237,9 @@ const UserController = {
       })
       .catch(error =>
         res.status(400)
-          .send({
-            errorArray: Helpers.errorArray(error)
-          }));
+        .send({
+          errorArray: Helpers.errorArray(error)
+        }));
   },
 };
 

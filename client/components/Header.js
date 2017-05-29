@@ -9,7 +9,6 @@ const userRoleId = token ? jwtDecode(token).roleId : null;
 if (token) {
 	return (
 		<ul id="nav-mobile" className=" right hide-on-med-and-down">
-			
 			<li>
 				<Link to="/createdoc" activeClassName="active" 
 				className="right">Add Document</Link>
@@ -63,12 +62,13 @@ if (token) {
 				<Link to="/logout" activeClassName="active" 
 				className="right">Logout</Link>
 			</li>
+			<li><a class="dropdown-button" href="#!" data-activates="dropdown1">
+				Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
 		</ul>
 		);
 	}
 	
 		return (
-
 		<ul id="nav-mobile" className="right hide-on-med-and-down">
 			
 			<li>

@@ -17,18 +17,27 @@ const uniqueField = ['userName', 'email'];
 
 describe('User API', () => {
   before((done) => {
-    db.Roles.bulkCreate([{ title: 'admin', roleId: 1, id: 1 }, { title: 'regular', roleId: 2, id: 2 }])
-    .then((role) => {
-      console.log(helper.adminUser1, '1 user');
-      db.Users.create(helper.adminUser1)
-        .then((admin) => {
-          newAdminUser = admin.dataValues;
-          done();
-        });
-    });
+    db.Roles.bulkCreate([{
+        title: 'admin',
+        roleId: 1,
+        id: 1
+      }, {
+        title: 'regular',
+        roleId: 2,
+        id: 2
+      }])
+      .then((role) => {
+        db.Users.create(helper.adminUser1)
+          .then((admin) => {
+            newAdminUser = admin.dataValues;
+            done();
+          });
+      });
   });
   after(() => {
-    db.Roles.destroy({ where: {} });
+    db.Roles.destroy({
+      where: {}
+    });
   });
 
   describe('New Users', () => {
@@ -67,14 +76,14 @@ describe('User API', () => {
             });
         });
         it('should fail if password is less than 6', (done) => {
-        superRequest.post('/api/users')
-          .send(helper.invalidPasswordUser)
-          .end((err, res) => {
-            expect(res.status).to.equal(400);
-            expect(res.body.message)
-              .to.equal('Minimum of 6 characters is allowed for password');
-            done();
-          });
+          superRequest.post('/api/users')
+            .send(helper.invalidPasswordUser)
+            .end((err, res) => {
+              expect(res.status).to.equal(400);
+              expect(res.body.message)
+                .to.equal('Minimum of 6 characters is allowed for password');
+              done();
+            });
         });
       });
       it('should not allow admin user to sign up', (done) => {
@@ -128,7 +137,10 @@ describe('User API', () => {
       });
       it('should not allow login with invalid password', (done) => {
         superRequest.post('/api/users/login')
-          .send({ email: newAdminUser.email, password: 'invalid' })
+          .send({
+            email: newAdminUser.email,
+            password: 'invalid'
+          })
           .end((err, res) => {
             expect(res.status).to.equal(401);
             expect(res.body.message).to
@@ -140,7 +152,7 @@ describe('User API', () => {
     describe('Get all users, GET /users ', () => {
       it('should return verification failed if no token is supply', (done) => {
         superRequest.get('/api/users')
-          .set({ })
+          .set({})
           .end((err, res) => {
             expect(res.status).to.equal(401);
             expect(res.body.message).to
@@ -150,7 +162,9 @@ describe('User API', () => {
       });
       it('should return invalid token if token is invalid', (done) => {
         superRequest.get('/api/users')
-          .set({ 'x-access-token': 'document-management' })
+          .set({
+            'x-access-token': 'document-management'
+          })
           .end((err, res) => {
             expect(res.status).to.equal(401);
             expect(res.body.message).to
@@ -161,7 +175,9 @@ describe('User API', () => {
       it(`should return users own profile, 
       when the request is from a regular user`, (done) => {
         superRequest.get('/api/users')
-          .set({ 'x-access-token': regularToken })
+          .set({
+            'x-access-token': regularToken
+          })
           .end((err, res) => {
             expect(res.status).to.equal(200);
             expect(res.body.message).to
@@ -174,7 +190,9 @@ describe('User API', () => {
       it(`should return all users profile, 
       when the request is from an admin user`, (done) => {
         superRequest.get('/api/users')
-          .set({ 'x-access-token': adminToken })
+          .set({
+            'x-access-token': adminToken
+          })
           .end((err, res) => {
             expect(res.status).to.equal(200);
             expect(res.body.message).to
@@ -184,19 +202,21 @@ describe('User API', () => {
       });
       describe('Get user by Id GET /users/:id', () => {
         it('should return verification failed for unregistered user(s)',
-         (done) => {
-           superRequest.get(`/api/users/${newAdminUser.id}`)
-          .end((err, res) => {
-            expect(res.status).to.equal(401);
-            expect(res.body.message).to
-              .equal('You are not permitted to perform this action');
-            done();
+          (done) => {
+            superRequest.get(`/api/users/${newAdminUser.id}`)
+              .end((err, res) => {
+                expect(res.status).to.equal(401);
+                expect(res.body.message).to
+                  .equal('You are not permitted to perform this action');
+                done();
+              });
           });
-         });
         it('should return user\'s profile when valid user\'s id is supplied',
           (done) => {
             superRequest.get(`/api/users/${newAdminUser.id}`)
-              .set({ 'x-access-token': regularToken })
+              .set({
+                'x-access-token': regularToken
+              })
               .end((err, res) => {
                 expect(res.status).to.equal(200);
                 expect(res.body.user).to.not.equal(null);
@@ -207,12 +227,14 @@ describe('User API', () => {
           });
         it('should return not found for invalid user id', (done) => {
           superRequest.get('/api/users/9999')
-              .set({ 'x-access-token': adminToken })
-              .end((err, res) => {
-                expect(res.status).to.equal(404);
-                expect(res.body.message).to.equal('This user does not exist');
-                done();
-              });
+            .set({
+              'x-access-token': adminToken
+            })
+            .end((err, res) => {
+              expect(res.status).to.equal(404);
+              expect(res.body.message).to.equal('This user does not exist');
+              done();
+            });
         });
       });
       describe('Update user attributes PUT /users/:id', () => {
@@ -225,7 +247,9 @@ describe('User API', () => {
             };
             superRequest.put(`/api/users/${regularUser.id}`)
               .send(updateData)
-              .set({ 'x-access-token': adminToken })
+              .set({
+                'x-access-token': adminToken
+              })
               .end((err, res) => {
                 expect(res.status).to.equal(200);
                 expect(res.body.message).to.equal('Your profile has been updated');
@@ -237,8 +261,12 @@ describe('User API', () => {
         it('should return error when a user want to update id',
           (done) => {
             superRequest.put(`/api/users/${regularUser.id}`)
-              .send({ id: 10 })
-              .set({ 'x-access-token': regularToken })
+              .send({
+                id: 10
+              })
+              .set({
+                'x-access-token': regularToken
+              })
               .end((err, res) => {
                 expect(res.status).to.equal(401);
                 expect(res.body.message)
@@ -247,10 +275,15 @@ describe('User API', () => {
               });
           });
         it('should return not found for invalid user id', (done) => {
-          const data = { userName: 'Kingsley', lastname: 'Solomon' };
+          const data = {
+            userName: 'Kingsley',
+            lastname: 'Solomon'
+          };
           superRequest.put('/api/users/4562')
             .send(data)
-            .set({ 'x-access-token': adminToken })
+            .set({
+              'x-access-token': adminToken
+            })
             .end((err, res) => {
               expect(res.status).to.equal(404);
               expect(res.body.message).to.equal('This user does not exist');
@@ -259,10 +292,15 @@ describe('User API', () => {
         });
         it(`should return permission denied when regular user want to
           update another user's profile`, (done) => {
-          const data = { username: 'Kingsley', lastname: 'Solomon' };
+          const data = {
+            username: 'Kingsley',
+            lastname: 'Solomon'
+          };
           superRequest.put(`/api/users/${newAdminUser.id}`)
             .send(data)
-            .set({ 'x-access-token': regularToken })
+            .set({
+              'x-access-token': regularToken
+            })
             .end((err, res) => {
               expect(res.status).to.equal(401);
               expect(res.body.message).to
@@ -272,10 +310,15 @@ describe('User API', () => {
         });
         it('should give admin permission to update any user(s) profile',
           (done) => {
-            const data = { username: 'Kingsley', lastname: 'Solomon' };
+            const data = {
+              username: 'Kingsley',
+              lastname: 'Solomon'
+            };
             superRequest.put(`/api/users/${regularUser.id}`)
               .send(data)
-              .set({ 'x-access-token': adminToken })
+              .set({
+                'x-access-token': adminToken
+              })
               .end((err, res) => {
                 expect(res.status).to.equal(200);
                 expect(res.body.message).to
@@ -290,42 +333,48 @@ describe('User API', () => {
         let newUser, newUsersToken;
         before((done) => {
           superRequest.post('/api/users')
-          .send(helper.thirdUser)
-          .end((err, res) => {
-            newUser = res.body.user;
-            newUsersToken = res.body.token;
-            done();
-          });
+            .send(helper.thirdUser)
+            .end((err, res) => {
+              newUser = res.body.user;
+              newUsersToken = res.body.token;
+              done();
+            });
         });
         it('should return not found for invalid user id', (done) => {
           superRequest.delete('/api/users/678')
-          .set({ 'x-access-token': adminToken })
-          .end((err, res) => {
-            expect(res.body.message).to.equal('This user does not exist');
-            expect(res.status).to.equal(404);
-            done();
-          });
+            .set({
+              'x-access-token': adminToken
+            })
+            .end((err, res) => {
+              expect(res.body.message).to.equal('This user does not exist');
+              expect(res.status).to.equal(404);
+              done();
+            });
         });
         it('should fail when request is from a regular user', (done) => {
           superRequest.delete(`/api/users/${regularUser.id}`)
-          .set({ 'x-access-token': regularToken })
-          .end((err, res) => {
-            expect(res.status).to.equal(401);
-            expect(res.body.message).to
-              .equal('You are not permitted to perform this action');
-            done();
-          });
+            .set({
+              'x-access-token': regularToken
+            })
+            .end((err, res) => {
+              expect(res.status).to.equal(401);
+              expect(res.body.message).to
+                .equal('You are not permitted to perform this action');
+              done();
+            });
         });
         it('allow admin to delete a user', (done) => {
           console.log(newUser, 'dongoyaro');
           superRequest.delete(`/api/users/${newUser.id}`)
-          .set({ 'x-access-token': adminToken })
-          .end((err, res) => {
-            expect(res.status).to.equal(200);
-            expect(res.body.message).to
-              .equal('This account has been successfully deleted');
-            done();
-          });
+            .set({
+              'x-access-token': adminToken
+            })
+            .end((err, res) => {
+              expect(res.status).to.equal(200);
+              expect(res.body.message).to
+                .equal('This account has been successfully deleted');
+              done();
+            });
         });
         describe('SEARCH USERS PAGINATION', () => {
           const arrayUsers = helper.usersArray();
