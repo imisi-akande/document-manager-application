@@ -6,9 +6,7 @@ import authenticate from '../middleware/Authenticate';
 import Helpers from '../Helper/utility';
 
 dotenv.config();
-// console.log(process.env.SECRET, 'secret??');
 const secretKey = process.env.SECRET;
-// console.log(secretKey, 'where are youuuuuuuu');
 
 const UserController = {
 /**
@@ -146,7 +144,7 @@ const UserController = {
     let condition = {};
     let pagination;
     request.attributes = Helpers.getUserAttribute();
-    console.log(request.attributes, 'how are youuu');
+
     db.Users.findAndCountAll(request)
       .then((users) => {
         condition = {

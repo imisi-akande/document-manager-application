@@ -77,7 +77,6 @@ const RoleController = {
     * @returns {void} no returns
     */
   deleteRole(req, res) {
-    console.log(res, 'andelaaaa');
     req.roleInstance.destroy()
       .then((updatedRole) => {
         res.status(200)
