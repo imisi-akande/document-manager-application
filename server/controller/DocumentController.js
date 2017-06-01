@@ -16,7 +16,6 @@ const DocumentController = {
       )
       .then(document => res.status(201).send(document))
       .catch(error => res.status(400).send(error));
-        console.log(req.body, 'kkkkkkkk');
   },
  /**
     * Get all document
@@ -92,8 +91,6 @@ const DocumentController = {
       .catch(error => res.status(500).send(error.errors));
   },
   listMyDocuments(req, res) {
-    console.log(req.params, 'hapinessssss');
-    console.log(req.decoded, 'fatherrrrrrr');
     db.Documents.findAll({ where: { authorId: req.params.userId } })
       .then(docs => res.status(200).send(docs));
   },
@@ -109,7 +106,6 @@ const DocumentController = {
     db.Documents
       .findAndCountAll(req.documentFilter)
       .then((documents) => {
-        console.log('greeeeeat', db.Documents);
         const condition = {
           count: documents.count,
           limit: req.documentFilter.limit,
