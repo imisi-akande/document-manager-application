@@ -186,7 +186,6 @@ const authenticate = {
    * @returns {void|Object} response object or void
    * */
   validateUserUpdate(req, res, next) {
-    console.log(req.decoded, 'are u ready');
     if (req.decoded.roleId === '1') {
       return res.status(403)
         .send({
@@ -465,8 +464,7 @@ const authenticate = {
           model: db.Users,
           attributes: { exclude: ['password'] }
         }];
-    } else {
-        console.log(Helper.likeSearch, 'is it defined');
+      } else {
         query.where = {
           $and: [Helper.documentAccess(req), Helper.likeSearch(terms)]
         };
@@ -498,7 +496,7 @@ const authenticate = {
         query.where = userSearch;
       }
     }
-    req.documentFilter = query;
+    req.dmsFilter = query;
     next();
   },
   /**
@@ -581,5 +579,4 @@ const authenticate = {
   },
 };
 export default authenticate;
-
 

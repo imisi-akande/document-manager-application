@@ -6,9 +6,8 @@ import authenticate from '../middleware/Authenticate';
 import Helpers from '../Helper/utility';
 
 dotenv.config();
-// console.log(process.env.SECRET, 'secret??');
+
 const secretKey = process.env.SECRET;
-// console.log(secretKey, 'where are youuuuuuuu');
 
 const UserController = {
 /**
@@ -58,13 +57,13 @@ const UserController = {
     */
   listAllUsers(req, res) {
     db.Users
-      .findAndCountAll(req.documentFilter)
+      .findAndCountAll(req.dmsFilter)
       .then((users) => {
         if (users) {
           const condition = {
             count: users.count,
-            limit: req.documentFilter.limit,
-            offset: req.documentFilter.offset
+            limit: req.dmsFilter.limit,
+            offset: req.dmsFilter.offset
           };
           delete users.count;
           const pagination = Helpers.pagination(condition);
@@ -142,11 +141,10 @@ const UserController = {
     * @returns {void|Response} response object or void
     */
   searchUser(req, res) {
-    const request = req.documentFilter;
+    const request = req.dmsFilter;
     let condition = {};
     let pagination;
     request.attributes = Helpers.getUserAttribute();
-    console.log(request.attributes, 'how are youuu');
     db.Users.findAndCountAll(request)
       .then((users) => {
         condition = {
@@ -182,14 +180,14 @@ const UserController = {
             });
         }
         userDocuments.user = Helpers.getUserProfile(user);
-        req.documentFilter.where.authorId = req.params.id;
-        req.documentFilter.attributes = Helpers.getDocumentAttribute();
-        db.Documents.findAndCountAll(req.documentFilter)
+        req.dmsFilter.where.authorId = req.params.id;
+        req.dmsFilter.attributes = Helpers.getDocumentAttribute();
+        db.Documents.findAndCountAll(req.dmsFilter)
           .then((docs) => {
             const condition = {
               count: docs.count,
-              limit: req.documentFilter.limit,
-              offset: req.documentFilter.offset
+              limit: req.dmsFilter.limit,
+              offset: req.dmsFilter.offset
             };
             delete docs.count;
             const pagination = Helpers.pagination(condition);
@@ -203,10 +201,11 @@ const UserController = {
           });
       });
   },
+
   /**
    * Create a user
-   * @param {Object} request - Request object
-   * @param {Object} response - Response object
+   * @param {Object} req - Request object
+   * @param {Object} res - Response object
    * @returns {Object} Response object
    */
   createUser(req, res) {

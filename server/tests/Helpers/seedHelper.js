@@ -12,7 +12,6 @@ class SeedHelper {
   static init() {
     return db.sequelize.sync({ force: true })
     .then(() => (Promise.all([SeedHelper.populateRoleTable()])), err =>
-      console.log(err, 'this is our error'),
     );
   }
 

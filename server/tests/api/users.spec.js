@@ -19,7 +19,6 @@ describe('User API', () => {
   before((done) => {
     db.Roles.bulkCreate([{ title: 'admin', roleId: 1, id: 1 }, { title: 'regular', roleId: 2, id: 2 }])
     .then((role) => {
-      console.log(helper.adminUser1, '1 user');
       db.Users.create(helper.adminUser1)
         .then((admin) => {
           newAdminUser = admin.dataValues;
@@ -317,7 +316,6 @@ describe('User API', () => {
           });
         });
         it('allow admin to delete a user', (done) => {
-          console.log(newUser, 'dongoyaro');
           superRequest.delete(`/api/users/${newUser.id}`)
           .set({ 'x-access-token': adminToken })
           .end((err, res) => {

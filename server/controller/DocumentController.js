@@ -16,7 +16,6 @@ const DocumentController = {
       )
       .then(document => res.status(201).send(document))
       .catch(error => res.status(400).send(error));
-        console.log(req.body, 'kkkkkkkk');
   },
  /**
     * Get all document
@@ -26,14 +25,14 @@ const DocumentController = {
     * @returns {void} response object or void
     */
   listAllDocuments(req, res) {
-    req.documentFilter.attributes = Helper.getDocumentAttribute();
+    req.dmsFilter.attributes = Helper.getDocumentAttribute();
     db.Documents
-      .findAndCountAll(req.documentFilter)
+      .findAndCountAll(req.dmsFilter)
       .then((documents) => {
         const condition = {
           count: documents.count,
-          limit: req.documentFilter.limit,
-          offset: req.documentFilter.offset
+          limit: req.dmsFilter.limit,
+          offset: req.dmsFilter.offset
         };
         delete documents.count;
         const pagination = Helper.pagination(condition);
@@ -92,8 +91,6 @@ const DocumentController = {
       .catch(error => res.status(500).send(error.errors));
   },
   listMyDocuments(req, res) {
-    console.log(req.params, 'hapinessssss');
-    console.log(req.decoded, 'fatherrrrrrr');
     db.Documents.findAll({ where: { authorId: req.params.userId } })
       .then(docs => res.status(200).send(docs));
   },
@@ -105,15 +102,14 @@ const DocumentController = {
     * @returns {void|Response} response object or void
     */
   searchDocuments(req, res) {
-    req.documentFilter.attributes = Helper.getDocumentAttribute();
+    req.dmsFilter.attributes = Helper.getDocumentAttribute();
     db.Documents
-      .findAndCountAll(req.documentFilter)
+      .findAndCountAll(req.dmsFilter)
       .then((documents) => {
-        console.log('greeeeeat', db.Documents);
         const condition = {
           count: documents.count,
-          limit: req.documentFilter.limit,
-          offset: req.documentFilter.offset
+          limit: req.dmsFilter.limit,
+          offset: req.dmsFilter.offset
         };
         delete documents.count;
         const pagination = Helper.pagination(condition);

@@ -28,7 +28,7 @@ const userRoutes = express.Router();
    */
 userRoutes.route('/')
   .get(authenticate.verifyToken, authenticate.validateSearch,
-  UserController.listAllUsers)
+   UserController.listAllUsers)
     .post(authenticate.validateUserInput, UserController.createUser);
 
 // Logs a user in
@@ -187,69 +187,8 @@ userRoutes.route('/:id')
    *             $ref: '#/definitions/Update'
    */
 
-  /**
-   * @swagger
-   * /users/{id}:
-   *   put:
-   *     description: Updates the user signed in
-   *     tags:
-   *      - Update
-   *     produces:
-   *       - application/json
-   *     parameters:
-   *        - name: id
-   *          description: The user's id
-   *          in:  path
-   *          required: true
-   *          type: string
-   *        - name: x-access-token
-   *          in: header
-   *          description: an authorization header
-   *          required: true
-   *          type: string
-   *        - name: user
-   *          description: User object
-   *          in:  body
-   *          required: true
-   *          type: string
-   *          schema:
-   *            $ref: '#/definitions/NewUpdate'
-   *     responses:
-   *       200:
-   *         description: users
-   *         schema:
-   *           $ref: '#/definitions/Update'
-   */
-
-  /**
-   * @swagger
-   * /users/{id}:
-   *    delete:
-   *      description: Deletes the user with the id supplied as param
-   *      tags:
-   *        - Delete
-   *      produces:
-   *        - application/json
-   *      parameters:
-   *        - name: id
-   *          description: The user's id
-   *          in:  path
-   *          required: true
-   *          type: string
-   *        - name: x-access-token
-   *          in: header
-   *          description: an authorization header
-   *          required: true
-   *          type: string
-   *      responses:
-   *        200:
-   *          description: users
-   *          schema:
-   *            type: array
-   *            items:
-   *              $ref: '#/definitions/Update'
-   */
-.get(authenticate.verifyToken, authenticate.getUser, UserController.FindUserById)
+.get(authenticate.verifyToken, authenticate.getUser,
+UserController.FindUserById)
   .put(authenticate.verifyToken, authenticate.validateUserUpdate,
   UserController.UpdateUser)
   .delete(authenticate.verifyToken, authenticate.validateAdmin,
