@@ -3,38 +3,47 @@ const path = require('path');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const plugins = [
-    new webpack.NoEmitOnErrorsPlugin()
-  ]
+  new webpack.NoEmitOnErrorsPlugin()
+]
 
 if (process.env.NODE_ENV === "test") {
   plugins.push(
-      new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin()
   )
 }
 
 if (process.env.NODE_ENV === "production") {
-    plugins.push(
-      new UglifyJSPlugin()
-    )
-  }
-  
+  plugins.push(
+    new UglifyJSPlugin()
+  )
+}
+
 module.exports = {
   devtool: 'source-map',
-  entry: path.join(__dirname, './client/index.js'),
+  entry: path.join(__dirname, './client/index.jsx'),
   output: {
     path: path.join(__dirname, '/client/public'),
     filename: 'bundle.js'
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.(js|jsx)$/,
-        use: 'babel-loader',
+        include: path.join(__dirname, 'client'),
+        loaders: ['react-hot-loader', 'babel-loader'],
         exclude: /node_modules/,
       },
-      { test: /(\.css)$/, loaders: ['style-loader', 'css-loader'] },
-      { test: /\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader'] },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader' },
+      {
+        test: /(\.css)$/,
+        loaders: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.scss$/,
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file-loader'
+      },
       {
         test: /\.(jpg|png|svg)$/,
         loader: 'url-loader',
@@ -46,7 +55,7 @@ module.exports = {
   },
   target: 'web',
   resolve: {
-    extensions: ['.js']
+    extensions: ['.js', '.jsx']
   },
   plugins
 };

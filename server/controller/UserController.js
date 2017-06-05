@@ -24,13 +24,18 @@ const UserController = {
     db.Users.findOne(query)
       .then((user) => {
         if (user && user.ValidatePassword(req.body.password)) {
-          const token = jwt.sign({ userId: user.id, roleId: user.roleId },
+          const token = jwt.sign({ userId: user.id,
+            roleId: user.roleId,
+            username: user.userName,
+            email: user.email },
           secretKey, { expiresIn: '1 day' });
           return res.status(200).send({
             message: 'Login succesful',
             token,
             userId: user.id,
             roleId: user.roleId,
+            username: user.userName,
+            email: user.email,
             expiresIn: '1 day',
           });
         }

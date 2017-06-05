@@ -11,6 +11,7 @@
       "es6": true
     },
     "globals": {
+    "require": true,
     "localStorage": false,
     "document": false,
     "$": false,

@@ -385,16 +385,16 @@ const authenticate = {
   },
   /**
    * Validate search
+   *
    * @param {Object} req req object
    * @param {Object} res response object
    * @param {Object} next Move to next controller handler
    * @returns {void|Object} response object or void
-   *
    */
   validateSearch(req, res, next) {
     const query = {};
     const terms = [];
-    const userQuery = req.query.q; // ?
+    const userQuery = req.query.q;
     const searchArray =
       userQuery ? userQuery.toLowerCase().match(/\w+/g) : null;
     const limit = req.query.limit || 10;

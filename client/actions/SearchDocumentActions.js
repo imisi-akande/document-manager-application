@@ -1,38 +1,50 @@
 import { browserHistory } from 'react-router';
 import request from 'superagent';
+import * as types from './ActionTypes';
+import { fetchDocuments } from './DocumentActions';
 import { SEARCH_RESULTS } from './Types';
 
 
-/**
- * userSearchResult
- * @param  {object} users user reponse from api call
- * @return {object}      action type and action payload
- */
-export function documentsSearched(documentSearchResult) {
-  return {
-    type: SEARCH_RESULTS,
-    payload: documentSearchResult,
-  };
-}
+// /**
+//  * userSearchResult
+//  * @param  {object} users user reponse from api call
+//  * @return {object}      action type and action payload
+//  */
+// export function documentsSearched(documentSearchResult) {
+//   return {
+//     type: SEARCH_RESULTS,
+//     payload: documentSearchResult,
+//   };
+// }
+
+export const getDocumentSuccess = documents => ({
+  type: types.LOAD_DOCUMENT_SUCCESS,
+  documents
+});
+
 
 /**
- * search document function,
- * GET /search/documents/?term={term}
- * @param  {String} term   search term
- * @param  {number} limit  limit of records to be returned
- * @param  {numebr} offset offset of document data
- * @return {object}        reponse from the api
+ * searchDocuments - description
+ *
+ * @param  {type} queryString description
+ * @param  {type} offset = 0  description
+ * @return {type}             description
  */
-export function searchDocuments(queryString) {
+export function searchDocuments(queryString, offset = 0) {
   const token = window.localStorage.getItem('dms-user');
   return (dispatch) => {
     request
-    .get(`/api/search/documents/?q=${queryString}`)
+    .get(`/api/search/documents/?q=${queryString}&offset=${offset}`)
     .set({ 'x-access-token': token })
     .end((err, res) => {
-      Materialize.toast(res.body.message, 4000, 'rounded');
-      dispatch(documentsSearched(res.body.documents.rows));
-      browserHistory.push('/search');
+      if (queryString) {
+        dispatch(getDocumentSuccess(res.body));
+      } else {
+        dispatch(fetchDocuments());
+      }
+      // dispatch(documentsSearched(res.body.documents.rows));
+      // Materialize.toast(res.body.message, 4000, 'rounded');
+      // browserHistory.push('/search');
     });
   };
 }

@@ -10,7 +10,8 @@ const store = createStore(
       compose(
         (applyMiddleware(thunk, reduxImmutableStateInvariant())),
         window.devToolsExtension ? window.devToolsExtension() : f => f
-      ));
+      )
+    );
 
 if (localStorage['dms-user']) {
   store.dispatch(setCurrentUser(jwtDecode(localStorage['dms-user'])));
