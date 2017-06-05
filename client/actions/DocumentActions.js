@@ -2,7 +2,9 @@
  * Documents action, disptach action and
  * action types of each action to the reducer
  */
-import { browserHistory } from 'react-router';
+import {
+  browserHistory
+} from 'react-router';
 import request from 'superagent';
 import decode from 'jwt-decode';
 import * as types from './ActionTypes';
@@ -30,6 +32,16 @@ export const getDocumentSuccess = documents => ({
   documents
 });
 
+/**
+ * getdocumentsuccess
+ * @export
+ * @param {any} documents  returned documents from api call
+ * @returns {any} action and action types
+ */
+export const getOwnDocumentSuccess = documents => ({
+  type: types.LOAD_OWN_DOCUMENT_SUCCESS,
+  documents
+});
 /**
  * update documents to database using PUT api route /documents/:id
  *
@@ -76,15 +88,16 @@ export const deleteDocumentSuccess = id => ({
  * @returns {Object}
  */
 export const fetchDocuments = (offset) => {
-  const pageOffset = offset ? offset : 0;
+  const pageOffset = offset || 0;
   const token = localStorage.getItem('dms-user');
 
   return (dispatch) => {
     request
       .get(`/api/documents?offset=${pageOffset}`)
-      .set({ 'x-access-token': token })
+      .set({
+        'x-access-token': token
+      })
       .end((err, res) => {
-        // Materialize.toast(res.body.message, 4000, 'rounded');
         dispatch(getDocumentSuccess(res.body));
       });
   };
@@ -92,25 +105,24 @@ export const fetchDocuments = (offset) => {
 
 /**
  *
- *
  * @export
- * @param {any} id
  * @param {number} [offset=0]
  * @param {number} [limit=10]
- * @returns {Object}
+ * @returns {Object}object
  */
-export const fetchOwnDocuments = (offset) => {
-  const pageOffset = offset ? offset : 0;
+export const fetchOwnDocuments = () => {
   const token = localStorage.getItem('dms-user');
   const userData = decode(token);
   const id = userData.userId;
   return (dispatch) => {
     request
       .get(`/api/users/${id}/documents/`)
-      .set({ 'x-access-token': token })
+      .set({
+        'x-access-token': token
+      })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
-        dispatch(getDocumentSuccess(res.body.userDocuments));
+        dispatch(getOwnDocumentSuccess(res.body.userDocuments));
       });
   };
 };
@@ -121,7 +133,9 @@ export const documentSaver = (document) => {
     request
       .post('/api/documents')
       .send(document)
-      .set({ 'x-access-token': token })
+      .set({
+        'x-access-token': token
+      })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
         if (err) {
@@ -146,14 +160,15 @@ export const updateDocument = (document) => {
     request
       .put(`/api/documents/${document.id}`)
       .send(document)
-      .set({ 'x-access-token': token })
+      .set({
+        'x-access-token': token
+      })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
         if (err) {
           return err;
         }
-        browserHistory.push('/documents');
-        dispatch(fetchDocuments());
+        dispatch(fetchOwnDocuments());
       });
   };
 };
@@ -170,15 +185,15 @@ export const deleteDocument = (id) => {
   return (dispatch) => {
     request
       .delete(`/api/documents/${id}`)
-      // .send(document)
-      .set({ 'x-access-token': token })
+      .set({
+        'x-access-token': token
+      })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
         if (err) {
           return err;
         }
         dispatch(deleteDocumentSuccess(id));
-        browserHistory.push('/documents');
       });
   };
 };

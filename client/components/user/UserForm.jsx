@@ -13,7 +13,7 @@ const Register = (props) => {
     const userName = e.target.userName.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-		const role = e.target.role.value;
+	  const role = e.target.role.value;
     const user = { firstName, userName, lastName, email, password, role };
     saveUser(user);
   }

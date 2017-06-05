@@ -37,10 +37,10 @@ const authenticate = {
           // Move to the next middleware function
         next();
       });
-    } else {
-      response.status(401).send({
-        message: 'You are not permitted to perform this action'
-      });
+    // } else {
+    //   response.status(401).send({
+    //     message: 'You are not permitted to perform this action'
+    //   });
     }
   },
 

@@ -10,7 +10,6 @@ constructor(props) {
   this.onSearch = this.onSearch.bind(this);
 }
 onSearch(e) {
-  console.log('our event', e);
   const queryString = e.target.value;
   return this.props.searchUsers(queryString);
 }

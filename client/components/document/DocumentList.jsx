@@ -1,14 +1,12 @@
 import renderHTML from 'react-render-html';
 import TinyMCE from 'react-tinymce';
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { Modal, Button, Row, Input, Pagination } from 'react-materialize';
 import moment from 'moment';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import DocumentTitle from './DocumentListTitle';
 import DocumentContent from './DocumentContent';
 import * as DocumentAction from '../../actions/DocumentActions';
-import SearchDocument from '../../components/search/SearchDocument';
 import imagePath from '../../img/cardReveal.jpg';
 
 import Prompt from '../common/Prompt';
@@ -22,9 +20,9 @@ import { searchDocuments } from '../../actions/SearchDocumentActions';
 class DocumentList extends React.Component {
   constructor(props) {
     super(props);
-    const { updateDocument } = this.props;
-    const { deleteDocument } = this.props;
-    const { fetchDocuments } = this.props;
+    // const { updateDocument } = this.props;
+    // const { deleteDocument } = this.props;
+    // const { fetchDocuments } = this.props;
     this.state = {
       id: '',
       title: '',
@@ -40,27 +38,14 @@ class DocumentList extends React.Component {
 
   /**
    *
-   *
-   * @param {any} e
-   * @returns
-   *
-   * @memberOf DocumentList
-   */
-  fieldChange(e) {
-    return this.setState({ [e.target.name]: e.target.value, });
-  }
-
-  /**
-   *
-   *
    * @param {any} event
-   *
+   *@returns {function}
    * @memberOf DocumentList
    */
   onChange(event) {
     this.setState({
-    [event.target.name]: event.target.value
-  });
+      [event.target.name]: event.target.value
+    });
   }
 
   /**
@@ -83,9 +68,9 @@ class DocumentList extends React.Component {
    */
   onClick(event) {
     event.preventDefault();
-    this.props.deleteDocument(this.props.role.id).then(() => {
-    Materialize.toast('Document successfully deleted.', 5000);
-  });
+    this.props.deleteDocument().then(() => {
+      Materialize.toast('Document successfully deleted.', 5000);
+    });
   }
 
   /**
@@ -112,9 +97,9 @@ class DocumentList extends React.Component {
   }
 
   onSearch(e) {
-     const queryString = e.target.value;
-     return this.props.searchDocuments(queryString);
-   }
+    const queryString = e.target.value;
+    return this.props.searchDocuments(queryString);
+  }
 
   /**
    *
@@ -131,6 +116,17 @@ class DocumentList extends React.Component {
     const content = this.state.content;
     const documentDetails = { id, title, access, content };
     this.props.updateDocument(documentDetails);
+  }
+/**
+   *
+   *
+   * @param {any} e
+   * @returns
+   *
+   * @memberOf DocumentList
+   */
+  fieldChange(e) {
+    return this.setState({ [e.target.name]: e.target.value, });
   }
 
   /**
@@ -151,134 +147,157 @@ class DocumentList extends React.Component {
 
     return (
       <div>
-      <input
-        id="doc-search"
-        type="search"
-        placeholder="search for documents here..."
-        onChange={e => this.onSearch(e)} name="search"
-      />
-      { doc ?
-        <div className="row">
-          {doc.map(document =>
-          <div key={document.id}>
-            <div className="col s3">
-                <div
-className="card white darken-1 activator"
-                  style={{ height: 185, backgroundImage: `url(${  imagePath  })`
-                }}
-                >
-                  <div className="card-image waves-effect waves-block waves-light">
-                  <a className ="btn activator">VIEW</a>
-                </div>
-
-                  <div className="card-reveal black-text">
-            <DocumentTitle title={document.title} />
-            <DocumentContent content={renderHTML(document.content)} />
-          </div>
-
-                  <div className="card-action">
-            <div className>{document.title}</div>
-            <strong><div className ="right">{document.access}</div>
-              </strong>
-            <a>Published: {moment(document.createdAt).format('MMMM Do YYYY')}
-              </a> <br  />
-
-            <div className="card-action">
-                <Modal
-                  header="Edit Document"
-                  trigger={
-                    <Button
-modal= "close" waves="light"
-                    className="btn-floating btn-large teal darken-2 right"
-                  >
-                    <i className="large material-icons">mode_edit</i></Button>
-                  }
-                >
-                  <form
-className="col s12" method="post" onSubmit={e =>
-                  this.onSubmit(e, document.id)}
-                >
-
-                  <Row>
-                  <Input
-s={6} name= "title" defaultValue={document.title}
-                  onChange={e => this.fieldChange(e)} />
-                  <Input
-s={6} name ="access" validate type= "select"
-                    value={this.state.access === '' ? document.access :
-                  this.state.access} onChange={e => this.fieldChange(e)}
-                  >
-                    <option value="public">Public</option>
-                    <option value="private">Private</option>
-                  </Input>
-                </Row>
-
-                  <Row>
-                  <TinyMCE
-                    content={document.content}
-                    config={{
-                      plugins: 'link image preview',
-                      toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
+        <input
+          id="doc-search"
+          type="search"
+          placeholder="search for documents here..."
+          onChange={e => this.onSearch(e)} name="search"
+        />
+        {doc ?
+          <div className="row">
+            {doc.map(document =>
+              <div key={document.id}>
+                <div className="col s3">
+                  <div
+                    className="card white darken-1 activator"
+                    style={{
+                      height: 185, backgroundImage: `url(${imagePath})`
                     }}
-                    onChange={this.handleEditorChange}
-                  />
-                </Row>
-
-                  <Button
-modal="close" className="teal darken-2" waves="light"
-                type="submit"
-              >UPDATE</Button>
-                </form>
-                </Modal>
-                <Prompt
-                  trigger={
-                    <Button
-waves="light"
-                      className="btn-floating btn-large red darken-2 right"
+                  >
+                    <div
+                      className="card-image waves-effect
+                    waves-block waves-light"
                     >
-                      <i className="large material-icons">delete</i>
-                    </Button>
-                  }
+                      <a className="btn activator">PREVIEW</a>
+                    </div>
 
-                  onClickFunction={
-                  (e) => { this.deleteDoc(document.id); }
-                }
-                />
-              </div>
-            <Modal
-                header={document.title}
-                trigger={
-                  <Button waves="light">READ MORE</Button>
-                }
-              >
-                <DocumentContent content={renderHTML(document.content)} />
-              </Modal>
-          </div>
+                    <div className="card-reveal black-text">
+                      <DocumentTitle title={document.title} />
+                      <DocumentContent content={renderHTML(document.content)} />
+                    </div>
+
+                    <div className="card-action">
+                      <div className>{document.title}</div>
+                      <strong><div className="right">{document.access}</div>
+                      </strong>
+                      <a>Published: {moment(document.createdAt)
+                        .format('MMMM Do YYYY')}
+                      </a> <br />
+
+                      <div className="card-action">
+                        <Modal
+                          header="Edit Document"
+                          trigger={
+                            <Button
+                              modal="close" waves="light"
+                              className="btn-floating btn-large
+                              teal darken-2 right"
+                            >
+                              <i className="large material-icons">
+                                mode_edit</i></Button>
+                          }
+                        >
+
+
+                          <form
+                            className="col s12" method="post" onSubmit={e =>
+                              this.onSubmit(e, document.id)}
+                          >
+
+                            <Row>
+                              <Input
+                                s={6} name="title" defaultValue={document.title}
+                                onChange={e => this.fieldChange(e)}
+                              />
+                              <Input
+                                s={6} name="access" validate type="select"
+                                value={this.state.access === '' ?
+                                 document.access : this.state.access}
+                                onChange={e =>
+                                   this.fieldChange(e)}
+                              >
+                                <option value="public">Public</option>
+                                <option value="private">Private</option>
+                                <option value="role">role</option>
+                              </Input>
+                            </Row>
+
+                            <Row>
+                              <TinyMCE
+                                content={document.content}
+                                config={{
+                                  plugins: 'link image preview',
+                                  toolbar: 'undo redo | bold italic | alignleft aligncenter alignright' // eslint-disable-line max-len
+                                }}
+                                onChange={this.handleEditorChange}
+                              />
+                            </Row>
+
+                            <Button
+                              modal="close" className="teal darken-2"
+                              waves="light"
+                              type="submit"
+                            >UPDATE</Button>
+                          </form>
+                        </Modal>
+                        <Prompt
+                          trigger={
+                            <Button
+                              waves="light"
+                              className="btn-floating btn-large red darken-2
+                              right"
+                            >
+                              <i className="large material-icons">delete</i>
+                            </Button>
+                          }
+
+                          onClickFunction={
+                            () => { this.deleteDoc(document.id); }
+                          }
+                        />
+                      </div>
+                      <Modal
+                        header={document.title}
+                        trigger={
+                          <Button waves="light">READ MORE</Button>
+                        }
+                      >
+                        <DocumentContent
+                          content={renderHTML(document.content)}
+                        />
+                      </Modal>
+                    </div>
+                  </div>
                 </div>
               </div>
+            )}
           </div>
-        )}
-        </div>
-      : <div>No document</div> }
-      {pagination ? <Pagination
-items={pagination.page_count}
-        activePage={2} maxButtons={5} onSelect={e => this.onSelect(e)}  
-      /> : ''}
-    </div>
+          : <div>No document</div>}
+        {pagination ? <Pagination
+          items={pagination.page_count}
+          activePage={2} maxButtons={5} onSelect={e => this.onSelect(e)}
+        /> : ''}
+      </div>
     );
   }
-  }
-
+}
+DocumentList.propTypes = {
+  deleteDocument: React.PropTypes.func.isRequired,
+  fetchDocuments: React.PropTypes.func.isRequired,
+  searchDocuments: React.PropTypes.func.isRequired,
+  updateDocument: React.PropTypes.func.isRequired,
+  documentDetails: React.PropTypes.any.isRequired
+};
 const mapDispatchToProps = dispatch => ({
   updateDocument: documentDetails => dispatch(DocumentAction
-  .updateDocument(documentDetails)),
+    .updateDocument(documentDetails)),
   deleteDocument: id => dispatch(DocumentAction.deleteDocument(id)),
   fetchDocuments: offset => dispatch(DocumentAction.fetchDocuments(offset)),
   searchDocuments: queryString => dispatch(searchDocuments(queryString))
 });
 
-const mapStateToProps = (state) => ({
-    documentDetails: state.documents
-  });
+const mapStateToProps = state => ({
+  documentDetails: state.documents
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocumentList);

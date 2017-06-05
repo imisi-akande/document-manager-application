@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import * as userActions from '../../actions/UserAction';
 
@@ -58,14 +58,16 @@ class Login extends React.Component {
 
                 <div className="row">
                   <div className="input-field col s12">
-                     <i className="material-icons prefix">account_circle</i>
+                    <i className="material-icons prefix">account_circle</i>
                     <input
-className="validate" type="email"
+                      className="validate" type="email"
                       name="email" id="icon_prefix"
                       onChange={this.onEmailChange}
                     />
-                    <label htmlFor="icon_prefix" data-error="wrong" 
-                    data-success="right">Email</label>
+                    <label
+                      htmlFor="icon_prefix" data-error="wrong"
+                      data-success="right"
+                    >Email</label>
                   </div>
                 </div>
 
@@ -73,20 +75,22 @@ className="validate" type="email"
                   <div className="input-field col s12">
                     <i className="material-icons prefix">lock</i>
                     <input
-className="validate" type="password"
+                      className="validate" type="password"
                       name="password" id="password"
                       onChange={this.onPasswordChange}
                     />
-                     <label htmlFor="password" data-error="wrong" 
-                     data-success="right">Password</label>
+                    <label
+                      htmlFor="password" data-error="wrong"
+                      data-success="right"
+                    >Password</label>
                   </div>
                 </div>
                 <br />
                 <center>
                   <div className="row">
                     <button
-type="submit" name="btn_login"
-                      className="col s12 btn btn-large waves-effect teal darken-2"
+                      type="submit" name="btn_login"
+                      className="col s12 btn btn-large waves-effect teal darken-2"// eslint-disable-line max-len
                       value="save"
                       onClick={this.onClickSave}
                     >Login</button>
@@ -103,13 +107,16 @@ type="submit" name="btn_login"
     );
   }
 }
+Login.propTypes = {
+  login: React.PropTypes.func.isRequired,
+};
 const mapDispatchToProps = dispatch => ({
   login: userCredentials1 => dispatch(userActions.login(userCredentials1))
 });
 
-const mapStateToProps = (state) => ({
-    users: state.user
-  });
+const mapStateToProps = state => ({
+  users: state.user
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
 

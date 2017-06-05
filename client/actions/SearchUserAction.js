@@ -8,8 +8,8 @@ import * as types from './ActionTypes';
  * @param  {object} userSearchResult user reponse from api call
  * @return {object}      action type and action payload
  */
-export function usersSearched( userSearchResult ) {
-	return { type: SEARCH_RESULTS, payload: userSearchResult };
+export function usersSearched(userSearchResult) {
+  return { type: SEARCH_RESULTS, payload: userSearchResult };
 }
 
 /**
@@ -28,19 +28,16 @@ export const getUserSuccess = user => ({ type: types.USER_SUCCESS, user });
  * @param  {numebr} offset offset of user data
  * @return {object}        reponse from the api
  */
-export function searchUsers( queryString, offset = 0 ) {
-	const token = window.localStorage.getItem( 'dms-user' );
-	return ( dispatch ) => {
-		request.get( `/api/search/users/?q=${ queryString }&offset=${ offset }` ).set({ 'x-access-token': token }).end(( err, res ) => {
-			if ( queryString ) {
-				dispatch(getUserSuccess( res.body ));
-			} else {
-				dispatch(fetchAllUsers( ));
-			}
-			// .then((res) => {
-			//   console.log(res.body.users.rows)
-			//   dispatch(usersSearched(res.body.users.rows));
-			// });
-		});
-	};
+export function searchUsers(queryString, offset = 0) {
+  const token = window.localStorage.getItem('dms-user');
+  return (dispatch) => {
+    request.get(`/api/search/users/?q=${queryString}&offset=${offset}`)
+.set({ 'x-access-token': token }).end((err, res) => {
+  if (queryString) {
+    dispatch(getUserSuccess(res.body));
+  } else {
+    dispatch(fetchAllUsers());
+  }
+});
+  };
 }

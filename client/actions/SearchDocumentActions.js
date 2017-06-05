@@ -1,27 +1,22 @@
-import { browserHistory } from 'react-router';
 import request from 'superagent';
 import * as types from './ActionTypes';
-import { fetchDocuments } from './DocumentActions';
-import { SEARCH_RESULTS } from './Types';
-
-
-// /**
-//  * userSearchResult
-//  * @param  {object} users user reponse from api call
-//  * @return {object}      action type and action payload
-//  */
-// export function documentsSearched(documentSearchResult) {
-//   return {
-//     type: SEARCH_RESULTS,
-//     payload: documentSearchResult,
-//   };
-// }
+import { fetchDocuments, fetchOwnDocuments } from './DocumentActions';
 
 export const getDocumentSuccess = documents => ({
   type: types.LOAD_DOCUMENT_SUCCESS,
   documents
 });
 
+/**
+ * getdocumentsuccess
+ * @export
+ * @param {any} documents  returned documents from api call
+ * @returns {any} action and action types
+ */
+export const getOwnDocumentSuccess = documents => ({
+  type: types.LOAD_OWN_DOCUMENT_SUCCESS,
+  documents
+});
 
 /**
  * searchDocuments - description
@@ -42,9 +37,21 @@ export function searchDocuments(queryString, offset = 0) {
       } else {
         dispatch(fetchDocuments());
       }
-      // dispatch(documentsSearched(res.body.documents.rows));
-      // Materialize.toast(res.body.message, 4000, 'rounded');
-      // browserHistory.push('/search');
+    });
+  };
+}
+export function searchOwnDocuments(queryString, offset = 0) {
+  const token = window.localStorage.getItem('dms-user');
+  return (dispatch) => {
+    request
+     .get(`/api/search/documents/?q=${queryString}&offset=${offset}`)
+    .set({ 'x-access-token': token })
+    .end((err, res) => {
+      if (queryString) {
+        dispatch(getOwnDocumentSuccess(res.body));
+      } else {
+        dispatch(fetchOwnDocuments());
+      }
     });
   };
 }
