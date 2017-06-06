@@ -1,14 +1,12 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import renderHTML from 'react-render-html';
 import TinyMCE from 'react-tinymce';
 import { Modal, Button, Row, Input, Pagination } from 'react-materialize';
 import moment from 'moment';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import DocumentTitle from '../../components/document/DocumentListTitle';
 import DocumentContent from '../../components/document/DocumentContent';
 import * as DocumentAction from '../../actions/DocumentActions';
-import Search from '../../components/search/SearchDocument';
 import imagePath from '../../img/cardReveal.jpg';
 import Prompt from '../../components/common/Prompt';
 import { searchOwnDocuments } from '../../actions/SearchDocumentActions';
@@ -17,9 +15,9 @@ import { searchOwnDocuments } from '../../actions/SearchDocumentActions';
 class OwnDocumentList extends React.Component {
   constructor(props) {
     super(props);
-    const { updateDocument } = this.props;
-    const { deleteDocument } = this.props;
-    const { fetchOwnDocuments } = this.props;
+    // const { updateDocument } = this.props;
+    // const { deleteDocument } = this.props;
+    // const { fetchOwnDocuments } = this.props;
     this.state = {
       id: '',
       title: '',
@@ -34,23 +32,7 @@ class OwnDocumentList extends React.Component {
   componentDidMount() {
     this.props.fetchOwnDocuments();
   }
-  fieldChange(e) {
-    return this.setState({ [e.target.name]: e.target.value, });
-  }
-  deleteDoc(id) {
-    this.props.deleteDocument(id);
-  }
 
-  /**
-   *
-   *
-   * @param {any} e
-   *
-   * @memberOf DocumentList
-   */
-  handleEditorChange(e) {
-    this.setState({ content: e.target.getContent() });
-  }
   onSearch(e) {
     const queryString = e.target.value;
     return this.props.searchOwnDocuments(queryString);
@@ -68,6 +50,23 @@ class OwnDocumentList extends React.Component {
     const id = this.state.id;
     const documentDetails = { id: documentId, title, access, content };
     this.props.updateDocument(documentDetails);
+  }
+ fieldChange(e) {
+    return this.setState({ [e.target.name]: e.target.value, });
+  }
+
+  deleteDoc(id) {
+    this.props.deleteDocument(id);
+  }
+   /**
+   *
+   *
+   * @param {any} e
+   *
+   * @memberOf DocumentList
+   */
+  handleEditorChange(e) {
+    this.setState({ content: e.target.getContent() });
   }
 
   render() {
@@ -207,6 +206,10 @@ class OwnDocumentList extends React.Component {
     );
   }
 }
+OwnDocumentList.propTypes = {
+  fetchOwnDocuments: React.PropTypes.func.isRequired,
+  searchOwnDocuments: React.PropTypes.func.isRequired
+};
 const mapDispatchToProps = dispatch => ({
   updateDocument: documentDetails =>
     dispatch(DocumentAction.updateDocument(documentDetails)),

@@ -44,20 +44,6 @@ describe('Middleware Test', () => {
   after(() => db.sequelize.sync({ force: true }));
 
   describe('verifyToken', () => {
-    it('returns an error if token is not passed', (done) => {
-      const res = createResponse();
-      const req = httpMocks.createRequest({
-        method: 'GET',
-        url: '/api/users',
-      });
-      res.on('end', () => {
-        /* eslint-disable no-underscore-dangle */
-        expect(res._getData().message).to.equal(
-          'You are not permitted to perform this action');
-        done();
-      });
-      authentication.verifyToken(req, res);
-    });
 
     it('returns an error if a wrong token is passed', (done) => {
       const res = createResponse();
@@ -109,22 +95,6 @@ describe('Middleware Test', () => {
   });
 
   describe('validateAdmin', () => {
-    it('returns an error if user is not an admin', (done) => {
-      const res = createResponse();
-      const req = httpMocks.createRequest({
-        method: 'GET',
-        url: '/api/users',
-        decoded: {
-          roleId: 2
-        }
-      });
-      res.on('end', () => {
-        expect(res._getData().message).to.equal(
-          'You are not permitted to perform this action');
-        done();
-      });
-      authentication.verifyToken(req, res);
-    });
 
     it('calls the next function if the user is an admin', (done) => {
       const res = createResponse();
@@ -423,11 +393,11 @@ describe('getSingleDocument', () => {
         .end((err, res) => {
           adminToken = res.body.token;
           publicDocument = res.body.document;
-          superRequest.post('/api/documents')
-            .send(testHelper.privateDocument)
-            .end((error, response) => {
-              privateDocument = response.body.document;
-              done();
+          // superRequest.post('/api/documents')
+          //   .send(testHelper.privateDocument)
+          //   .end((error, response) => {
+          //     privateDocument = response.body.document;
+          //     done();
             });
         });
   });
@@ -483,7 +453,7 @@ describe('getSingleDocument', () => {
     expect(middlewareStub.callback).not.to.have.been.called;
     done();
   });
-});
+
 describe('hasDocumentPermission', () => {
   it('should not continue when user is not the owner of the document', () => {
     const response = createResponse();

@@ -137,16 +137,6 @@ describe('User API', () => {
       });
     });
     describe('Get all users, GET /users ', () => {
-      it('should return verification failed if no token is supply', (done) => {
-        superRequest.get('/api/users')
-          .set({ })
-          .end((err, res) => {
-            expect(res.status).to.equal(401);
-            expect(res.body.message).to
-              .equal('You are not permitted to perform this action');
-            done();
-          });
-      });
       it('should return invalid token if token is invalid', (done) => {
         superRequest.get('/api/users')
           .set({ 'x-access-token': 'document-management' })
@@ -182,16 +172,6 @@ describe('User API', () => {
           });
       });
       describe('Get user by Id GET /users/:id', () => {
-        it('should return verification failed for unregistered user(s)',
-         (done) => {
-           superRequest.get(`/api/users/${newAdminUser.id}`)
-          .end((err, res) => {
-            expect(res.status).to.equal(401);
-            expect(res.body.message).to
-              .equal('You are not permitted to perform this action');
-            done();
-          });
-         });
         it('should return user\'s profile when valid user\'s id is supplied',
           (done) => {
             superRequest.get(`/api/users/${newAdminUser.id}`)

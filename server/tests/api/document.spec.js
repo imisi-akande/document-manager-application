@@ -67,17 +67,6 @@ describe('DOCUMENT API', () => {
           done();
         });
     });
-    it('should return varification failed when token is not supplied',
-    (done) => {
-      superRequest.post('/api/documents')
-        .send(publicDocs)
-        .end((err, res) => {
-          expect(res.status).to.equal(401);
-          expect(res.body.message).to
-            .equal('You are not permitted to perform this action');
-          done();
-        });
-    });
     it('should not create document when title is not supplied', (done) => {
       superRequest.post('/api/documents/')
         .send(invalidDoc)
@@ -169,17 +158,6 @@ describe('DOCUMENT API', () => {
           expect(res.status).to.equal(401);
           expect(res.body.message)
             .to.equal('You are not permitted to modify this document');
-          done();
-        });
-      });
-      it('should not update document when token is not provided', (done) => {
-        updateDoc = { content: 'new life, new culture, new community' };
-        superRequest.put(`/api/documents/${createdDoc.id}`)
-        .send(updateDoc)
-        .end((err, res) => {
-          expect(res.status).to.equal(401);
-          expect(res.body.message).to
-            .equal('You are not permitted to perform this action');
           done();
         });
       });

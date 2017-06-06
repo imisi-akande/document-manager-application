@@ -56,17 +56,6 @@ describe('ROLE API', () => {
           done();
         });
     });
-    it('should return varification failed when no token is supplied',
-    (done) => {
-      superRequest.post('/api/roles')
-        .send(helper.guestRole1)
-        .end((err, res) => {
-          expect(res.status).to.equal(401);
-          expect(res.body.message).to
-            .equal('You are not permitted to perform this action');
-          done();
-        });
-    });
     describe('DELETE ROLE, DELETE /roles', () => {
       before((done) => {
         superRequest.post('/api/roles')
