@@ -4,9 +4,9 @@ import { Link } from 'react-router';
 const DocumentContent = ({ content }) => {
   return (
     <span>
-    {content}
+      {content}
     </span>
   );
-  };
+};
 
 export default DocumentContent;

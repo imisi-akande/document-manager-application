@@ -6,4 +6,5 @@ const DocumentTitle = ({ title }) =>
 DocumentTitle.propTypes = {
   title: React.PropTypes.string.isRequired,
 };
+
 export default DocumentTitle;

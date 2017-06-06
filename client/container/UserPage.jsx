@@ -57,7 +57,7 @@ class User extends React.Component {
       <div>
         {
           users && users.length > 0 ?
-          <UserList usersList={users} /> : <span>users</span>
+            <UserList usersList={users} /> : <span>users</span>
         }
         {paginationData}
       </div>

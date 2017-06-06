@@ -3,7 +3,19 @@ import { connect } from 'react-redux';
 import * as userActions from '../../actions/UserAction';
 
 
+/**
+ *
+ * @class Login
+ * @extends {React.Component}
+ */
 class Login extends React.Component {
+
+  /**
+   * Creates an instance of Login.
+   * @param {any} props
+   *
+   * @memberOf Login
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -15,12 +27,23 @@ class Login extends React.Component {
     this.onPasswordChange = this.onPasswordChange.bind(this);
     this.onClickSave = this.onClickSave.bind(this);
   }
+
+  /**
+   * @param {any} event
+   * @memberOf Login function
+   */
   onEmailChange(event) {
     this.setState({
       email: event.target.value
     });
   }
 
+
+  /**
+   *
+   * @param {any} event
+   * @memberOf Login
+   */
   onPasswordChange(event) {
     this.setState({
       password: event.target.value
@@ -34,11 +57,11 @@ class Login extends React.Component {
     const { login } = this.props;
     login(userCredentials);
   }
-/**
-   * renders the Login component
-   * @returns {void}
-   * @memberOf Login
-   */
+  /**
+     * renders the Login component
+     * @returns {void}
+     * @memberOf Login
+     */
   render() {
     return (
       <main>

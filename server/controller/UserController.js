@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import db from '../models';
 import UserHelper from '../ControllerHelper /UserHelper';
+import DocumentHelper from '../ControllerHelper /DocumentHelper';
 import authenticate from '../middleware/Authenticate';
 import Helpers from '../Helper/utility';
 
@@ -40,7 +41,8 @@ const UserController = {
           });
         }
         return res.status(401)
-            .send({ message: 'Please enter a valid email and password to login!'});
+            .send({ message: 'Please enter a valid email and password to login!'
+            });
       });
   },
   /**
@@ -49,7 +51,9 @@ const UserController = {
    * @param {Object} res - Response object
    * @returns {Object} Response object
    */
+
   logout(req, res) {
+    res.setHeader.Authorization = '';
     res.status(200)
       .send({ message: 'You have Successfully logged out!' });
   },
@@ -92,7 +96,7 @@ const UserController = {
     return res.status(200)
       .send({
         message: 'You have successfully retrived this user',
-        user: Helpers.getUserProfile(req.getUser)
+        user: UserHelper.getUserProfile(req.getUser)
       });
   },
   /** update
@@ -124,8 +128,8 @@ const UserController = {
   },
   /**
    * deletes a user
-   * @param {Object} request object
-   * @param {Object} response object
+   * @param {Object} req object
+   * @param {Object} res object
    * @returns {void} - returns void
    */
   DeleteUser(req, res) {
@@ -149,7 +153,7 @@ const UserController = {
     const request = req.dmsFilter;
     let condition = {};
     let pagination;
-    request.attributes = Helpers.getUserAttribute();
+    request.attributes = UserHelper.getUserAttribute();
     db.Users.findAndCountAll(request)
       .then((users) => {
         condition = {
@@ -184,9 +188,9 @@ const UserController = {
               message: 'This user does not exist'
             });
         }
-        userDocuments.user = Helpers.getUserProfile(user);
+        userDocuments.user = UserHelper.getUserProfile(user);
         req.dmsFilter.where.authorId = req.params.id;
-        req.dmsFilter.attributes = Helpers.getDocumentAttribute();
+        req.dmsFilter.attributes = DocumentHelper.getDocumentAttribute();
         db.Documents.findAndCountAll(req.dmsFilter)
           .then((docs) => {
             const condition = {
@@ -218,7 +222,7 @@ const UserController = {
       .create(req.userInput)
       .then((user) => {
         const token = authenticate.getToken(user);
-        user = Helpers.userProfile(user);
+        user = UserHelper.userProfile(user);
         return res.status(201)
           .send({
             message: 'Your account has been created successfully',

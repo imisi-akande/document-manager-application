@@ -47,11 +47,11 @@ class OwnDocumentList extends React.Component {
     const title = e.target.title.value;
     const access = e.target.access.value;
     const content = this.state.content;
-    const id = this.state.id;
+    // const id = this.state.id;
     const documentDetails = { id: documentId, title, access, content };
     this.props.updateDocument(documentDetails);
   }
- fieldChange(e) {
+  fieldChange(e) {
     return this.setState({ [e.target.name]: e.target.value, });
   }
 
@@ -101,7 +101,10 @@ class OwnDocumentList extends React.Component {
                       height: 185, backgroundImage: `url(${imagePath})`
                     }}
                   >
-                    <div className="card-image waves-effect waves-block waves-light">
+                    <div
+                      className="card-image waves-effect waves-block
+                    waves-light"
+                    >
                       <a className="btn activator">PREVIEW</a>
                     </div>
 
@@ -114,7 +117,8 @@ class OwnDocumentList extends React.Component {
                       <div className>{document.title}</div>
                       <strong><div className="right">{document.access}</div>
                       </strong>
-                      <a>Published: {moment(document.createdAt).format('MMMM Do YYYY')}
+                      <a>Published: {moment(document.createdAt)
+                        .format('MMMM Do YYYY')}
                       </a> <br />
 
                       <div className="card-action">
@@ -123,13 +127,12 @@ class OwnDocumentList extends React.Component {
                           trigger={
                             <Button
                               modal="close" waves="light"
-                              className="btn-floating btn-large teal darken-2 right"
+                              className="btn-floating  teal darken-2 left"
                             >
-                              <i className="large material-icons">mode_edit</i></Button>
+                              <i className="large material-icons">mode_edit
+                                </i></Button>
                           }
                         >
-
-
                           <form
                             className="col s12" method="post" onSubmit={e =>
                               this.onSubmit(e, document.id)}
@@ -142,8 +145,10 @@ class OwnDocumentList extends React.Component {
                               />
                               <Input
                                 s={6} name="access" validate type="select"
-                                value={this.state.access === '' ? document.access :
-                                  this.state.access} onChange={e => this.fieldChange(e)}
+                                value={this.state.access === '' ?
+                                 document.access :
+                                  this.state.access} onChange={e =>
+                                   this.fieldChange(e)}
                               >
                                 <option value="public">Public</option>
                                 <option value="private">Private</option>
@@ -155,14 +160,15 @@ class OwnDocumentList extends React.Component {
                                 content={document.content}
                                 config={{
                                   plugins: 'link image preview',
-                                  toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
+                                  toolbar: 'undo redo | bold italic | alignleft aligncenter alignright' // eslint-disable-line max-len
                                 }}
                                 onChange={this.handleEditorChange}
                               />
                             </Row>
 
                             <Button
-                              modal="close" className="teal darken-2" waves="light"
+                              modal="close" className="teal darken-2"
+                              waves="light"
                               type="submit"
                             >UPDATE</Button>
                           </form>
@@ -171,24 +177,27 @@ class OwnDocumentList extends React.Component {
                           trigger={
                             <Button
                               waves="light"
-                              className="btn-floating btn-large red darken-2 right"
+                              className="btn-floating red darken-2 left"
                             >
                               <i className="large material-icons">delete</i>
                             </Button>
                           }
 
                           onClickFunction={
-                            (e) => { this.deleteDoc(document.id); }
+                            () => { this.deleteDoc(document.id); }
                           }
                         />
                       </div>
                       <Modal
                         header={document.title}
                         trigger={
-                          <Button waves="light">READ MORE</Button>
+                          <Button className="read-more" waves="light">
+                            READ MORE</Button>
                         }
                       >
-                        <DocumentContent content={renderHTML(document.content)} />
+                        <DocumentContent
+                          content={renderHTML(document.content)}
+                        />
                       </Modal>
                     </div>
                   </div>
@@ -208,7 +217,9 @@ class OwnDocumentList extends React.Component {
 }
 OwnDocumentList.propTypes = {
   fetchOwnDocuments: React.PropTypes.func.isRequired,
-  searchOwnDocuments: React.PropTypes.func.isRequired
+  searchOwnDocuments: React.PropTypes.func.isRequired,
+  updateDocument: React.PropTypes.func.isRequired,
+  deleteDocument: React.PropTypes.func.isRequired,
 };
 const mapDispatchToProps = dispatch => ({
   updateDocument: documentDetails =>

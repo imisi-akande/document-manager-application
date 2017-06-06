@@ -1,4 +1,3 @@
-import db from '../models';
 /**
   * Controller's' helper
   */
@@ -41,68 +40,6 @@ const Helper = {
   isPublic(doc) {
     return doc.access === 'public';
   },
-  /**
-   * @param {Object} data document response from the database
-   * Get documents's attributes'
-   * @returns {Object} return user's attributes
-   */
-  getDocument(data) {
-    return {
-      id: data.userId,
-      title: data.title,
-      content: data.content,
-      access: data.access,
-      authorId: data.authorId,
-      createdAt: data.createdAt,
-      updatedAt: data.updatedAt
-    };
-  },
-  /**
-   * Get user's profile'
-   * @param {Object} data object containing user's details
-   * @returns {Object} return user's data
-   */
-  getUserProfile(data) {
-    return {
-      id: data.id,
-      userName: data.userName,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-    };
-  },
-  /**
-   * Check for document's role permission
-   * @param {Object} doc object
-   * @param {Object} req request object
-   * @returns {Boolean} true or false
-   */
-  hasRoleAccess(doc, req) {
-    return (doc.access === 'role'
-      && doc.roleId === req.decoded.roleId);
-  },
-  /**
-   * Query for document's access
-   * @param {Object} req request object
-   * @returns {Object} return access query
-   */
-  documentAccess(req) {
-    const access = {
-      $or:
-      [
-        { access: 'public' },
-        { authorId: req.decoded.userId },
-        // {
-        //   $and: [
-        //     { access: 'role' },
-        //     { roleId: req.decoded.roleId }
-        //   ]
-        // }
-      ]
-    };
-    return access;
-  },
-
 
   /**
    * Check for document's owner
@@ -113,37 +50,7 @@ const Helper = {
   isOwnerDoc(doc, req) {
     return doc.authorId === req.decoded.userId;
   },
-  // /**
-  //  * Get user's profile'
-  //  * @param {Object} data object containing user's details
-  //  * @returns {Object} return user's data
-  //  */
-  // getUserProfile(data) {
-  //   return {
-  //     id: data.id,
-  //     username: data.username,
-  //     firstName: data.firstName,
-  //     lastName: data.lastName,
-  //     email: data.email,
-  //   };
-  // },
-  /**
-   * Get user's profile'
-   * @param {Object} data object containing user's details
-   * @returns {Object} return user's data
-   */
-  userProfile(data) {
-    return {
-      id: data.id,
-      userName: data.userName,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      roleId: data.roleId,
-      createAt: data.createdAt,
-      updatedAt: data.updatedAt
-    };
-  },
+
   /**
    * Pagination
    * @param {Object} condition pagination condition
@@ -161,32 +68,7 @@ const Helper = {
       total_count: condition.count
     };
   },
-  getDocumentAttribute() {
-    return [
-      'id',
-      'title',
-      'content',
-      'access',
-      'authorId',
-      'createdAt',
-      'updatedAt'
-    ];
-  },
-  /**
-   * Get user's attributes'
-   * @returns {Array} return user's attributes
-   */
-  getUserAttribute() {
-    return [
-      'id',
-      'userName',
-      'firstName',
-      'lastName',
-      'email',
-      'roleId',
-      'createdAt',
-    ];
-  },
+
   /**
    * Query for search terms
    * @param {Array} terms array of search terms

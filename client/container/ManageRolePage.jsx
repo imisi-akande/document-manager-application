@@ -5,7 +5,7 @@ import * as roleActions from '../actions/RoleAction';
 import RoleForm from '../components/role/RoleForm';
 
 class ManageRolePage extends React.Component {
-  constructor(props, context) {
+  constructor(props) {
     super(props);
     this.state = {
       role: Object.assign({}, this.props.role),
@@ -69,4 +69,5 @@ const mapStateToProps = (state) => {
   };
 };
 
+export { ManageRolePage };
 export default connect(mapStateToProps, mapDispatchToProps)(ManageRolePage);

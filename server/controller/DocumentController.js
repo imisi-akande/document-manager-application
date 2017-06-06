@@ -1,5 +1,6 @@
 import db from '../models';
 import Helper from '../Helper/utility';
+import DocumentHelper from '../ControllerHelper /DocumentHelper';
 
 const DocumentController = {
   /**
@@ -17,15 +18,16 @@ const DocumentController = {
       .then(document => res.status(201).send(document))
       .catch(error => res.status(400).send(error));
   },
- /**
-    * Get all document
-    * Route: GET: /documents/
-    * @param {Object} req request object
-    * @param {Object} res response object
-    * @returns {void} response object or void
-    */
+  /**
+   * Get all document
+   * Route: GET: /documents/
+   *
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} response object or void
+   */
   listAllDocuments(req, res) {
-    req.dmsFilter.attributes = Helper.getDocumentAttribute();
+    req.dmsFilter.attributes = DocumentHelper.getDocumentAttribute();
     db.Documents
       .findAndCountAll(req.dmsFilter)
       .then((documents) => {
@@ -43,15 +45,17 @@ const DocumentController = {
             pagination
           });
       });
-  }, /**
-    * Get document by ID
-    * Route: GET: /documents/:id
-    * @param {Object} req request object
-    * @param {Object} res response object
-    * @returns {void|Response} response object or void
-    */
+  },
+  /**
+   * Get document by ID
+   * Route: GET: /documents/:id
+   *
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Response} response object or void
+   */
   getDocument(req, res) {
-    const document = Helper.getDocument(req.singleDocument);
+    const document = DocumentHelper.getDocument(req.singleDocument);
     return res.status(200)
       .send({
         message: 'You have successfully retrieved this document',
@@ -59,27 +63,29 @@ const DocumentController = {
       });
   },
   /**
-    * Delete document by id
-    * Route: DELETE: /documents/:id
-    * @param {Object} req request object
-    * @param {Object} res response object
-    * @returns {void} no returns
-    */
+   * Delete document by id
+   * Route: DELETE: /documents/:id
+   *
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} no returns
+   */
   deleteDocument(req, res) {
     req.docInstance.destroy()
       .then(() => res.status(200)
-         .send({
-           message: 'This document has been deleted successfully'
-         })
+        .send({
+          message: 'This document has been deleted successfully'
+        })
       );
   },
-/**
-    * Update document by id
-    * Route: PUT: /documents/:id
-    * @param {Object} req request object
-    * @param {Object} res response object
-    * @returns {void} no returns
-    */
+  /**
+   * Update document by id
+   * Route: PUT: /documents/:id
+   *
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} no returns
+   */
   updateDocuments(req, res) {
     req.docInstance.update(req.body)
       .then((updatedDocument) => {
@@ -91,18 +97,23 @@ const DocumentController = {
       .catch(error => res.status(500).send(error.errors));
   },
   listMyDocuments(req, res) {
-    db.Documents.findAll({ where: { authorId: req.params.userId } })
+    db.Documents.findAll({
+        where: {
+          authorId: req.params.userId
+        }
+      })
       .then(docs => res.status(200).send(docs));
   },
-   /**
-    * Search document
-    * Route: GET: /searchs?query={}
-    * @param {Object} req request object
-    * @param {Object} res response object
-    * @returns {void|Response} response object or void
-    */
+  /**
+   * Search document
+   * Route: GET: /searchs?query={}
+   *
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void|Response} response object or void
+   */
   searchDocuments(req, res) {
-    req.dmsFilter.attributes = Helper.getDocumentAttribute();
+    req.dmsFilter.attributes = DocumentHelper.getDocumentAttribute();
     db.Documents
       .findAndCountAll(req.dmsFilter)
       .then((documents) => {

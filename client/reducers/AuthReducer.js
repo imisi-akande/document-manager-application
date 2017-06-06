@@ -4,8 +4,6 @@ import initialState from './InitialState';
 
 /**
  *
- *
- * @export
  * @param {any} [state=initialState.user]
  * @param {any} action object
  * @returns

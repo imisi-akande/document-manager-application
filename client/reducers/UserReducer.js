@@ -12,13 +12,16 @@ export default function userReducer(state = initialState.allUsers, action) {
     case types.CREATE_USER_SUCCESS:
       return [...state, Object.assign({}, action.user)];
 
-    case types.UPDATE_USER_SUCCESS: {
-      const index =
-        findIndex(state.users.rows, { id: action.user.id });
-      const stateCopy = Object.assign({}, state);
-      stateCopy.users.rows[index] = action.user;
-      return stateCopy;
-    }
+    case types.UPDATE_USER_SUCCESS:
+      {
+        const index =
+          findIndex(state.users.rows, {
+            id: action.user.id
+          });
+        const stateCopy = Object.assign({}, state);
+        stateCopy.users.rows[index] = action.user;
+        return stateCopy;
+      }
     case types.USER_SUCCESS:
       return action.user;
     default:

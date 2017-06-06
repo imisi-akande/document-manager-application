@@ -8,6 +8,8 @@ import DocumentTitle from './DocumentListTitle';
 import DocumentContent from './DocumentContent';
 import * as DocumentAction from '../../actions/DocumentActions';
 import imagePath from '../../img/cardReveal.jpg';
+import Auth from '../../util/Auth';
+
 
 import Prompt from '../common/Prompt';
 import { searchDocuments } from '../../actions/SearchDocumentActions';
@@ -18,28 +20,32 @@ import { searchDocuments } from '../../actions/SearchDocumentActions';
  * @extends {React.Component}
  */
 class DocumentList extends React.Component {
+
+  /**
+   * Creates an instance of DocumentList.
+   * @param {any} props
+   *
+   * @memberOf DocumentList
+   */
   constructor(props) {
     super(props);
-    // const { updateDocument } = this.props;
-    // const { deleteDocument } = this.props;
-    // const { fetchDocuments } = this.props;
     this.state = {
       id: '',
       title: '',
       content: '',
       access: 'public',
       authorId: '',
+      docAccess: false
     };
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
     this.handleEditorChange = this.handleEditorChange.bind(this);
     this.onSearch = this.onSearch.bind(this);
   }
-
   /**
    *
    * @param {any} event
-   *@returns {function}
+   *@returns {function} function
    * @memberOf DocumentList
    */
   onChange(event) {
@@ -51,19 +57,8 @@ class DocumentList extends React.Component {
   /**
    *
    *
-   * @param {any} e
-   *
-   * @memberOf DocumentList
-   */
-  handleEditorChange(e) {
-    this.setState({ content: e.target.getContent() });
-  }
-
-  /**
-   *
-   *
    * @param {any} event
-   *
+   * @returns {function} function
    * @memberOf DocumentList
    */
   onClick(event) {
@@ -76,18 +71,8 @@ class DocumentList extends React.Component {
   /**
    *
    *
-   * @param {any} id
-   *
-   * @memberOf DocumentList
-   */
-  deleteDoc(id) {
-    this.props.deleteDocument(id);
-  }
-
-  /**
-   *
-   *
    * @param {any} pageNo
+   * @returns {function} function
    *
    * @memberOf DocumentList
    */
@@ -96,6 +81,14 @@ class DocumentList extends React.Component {
     this.props.fetchDocuments(offset);
   }
 
+  /**
+   *
+   *
+   * @param {any} e
+   * @returns {function} function
+   *
+   * @memberOf DocumentList
+   */
   onSearch(e) {
     const queryString = e.target.value;
     return this.props.searchDocuments(queryString);
@@ -117,14 +110,48 @@ class DocumentList extends React.Component {
     const documentDetails = { id, title, access, content };
     this.props.updateDocument(documentDetails);
   }
-/**
+
+  /**
+   * 
+   * 
+   * @param {any} user 
+   * @param {any} doc 
+   * @returns 
+   * 
+   * @memberOf DocumentList
+   */
+  docAccess(user, doc) {
+    return Auth.docAccess(user, doc);
+  }
+  /**
+     *
+     *
+     * @param {any} id
+     *
+     * @memberOf DocumentList
+     */
+  deleteDoc(id) {
+    this.props.deleteDocument(id);
+  }
+
+  /**
    *
    *
    * @param {any} e
-   * @returns
    *
    * @memberOf DocumentList
    */
+  handleEditorChange(e) {
+    this.setState({ content: e.target.getContent() });
+  }
+  /**
+     *
+     *
+     * @param {any} e
+     * @returns
+     *
+     * @memberOf DocumentList
+     */
   fieldChange(e) {
     return this.setState({ [e.target.name]: e.target.value, });
   }
@@ -139,6 +166,15 @@ class DocumentList extends React.Component {
   render() {
     let pagination = null;
     let doc = null;
+    const deleteButton = (
+      <Button waves="light" className="btn-floating red darken-2 left">
+        <i className="large material-icons">delete</i>
+      </Button>
+    );
+    const readMoreButton = (
+      <Button className="read-more" waves="light">READ MORE</Button>
+    );
+    const { docAccess } = this.state;
     if (this.props.documentDetails.documents &&
       this.props.documentDetails.documents.rows) {
       doc = this.props.documentDetails.documents.rows;
@@ -151,143 +187,149 @@ class DocumentList extends React.Component {
           id="doc-search"
           type="search"
           placeholder="search for documents here..."
-          onChange={e => this.onSearch(e)} name="search"
+          onChange={e => this.onSearch(e)}
+          name="search"
         />
-        {doc ?
-          <div className="row">
-            {doc.map(document =>
-              <div key={document.id}>
-                <div className="col s3">
-                  <div
-                    className="card white darken-1 activator"
-                    style={{
-                      height: 185, backgroundImage: `url(${imagePath})`
-                    }}
-                  >
-                    <div
-                      className="card-image waves-effect
-                    waves-block waves-light"
-                    >
-                      <a className="btn activator">PREVIEW</a>
-                    </div>
-
-                    <div className="card-reveal black-text">
-                      <DocumentTitle title={document.title} />
-                      <DocumentContent content={renderHTML(document.content)} />
-                    </div>
-
-                    <div className="card-action">
-                      <div className>{document.title}</div>
-                      <strong><div className="right">{document.access}</div>
-                      </strong>
-                      <a>Published: {moment(document.createdAt)
-                        .format('MMMM Do YYYY')}
-                      </a> <br />
-
-                      <div className="card-action">
-                        <Modal
-                          header="Edit Document"
-                          trigger={
-                            <Button
-                              modal="close" waves="light"
-                              className="btn-floating btn-large
-                              teal darken-2 right"
-                            >
-                              <i className="large material-icons">
-                                mode_edit</i></Button>
-                          }
-                        >
-
-
-                          <form
-                            className="col s12" method="post" onSubmit={e =>
-                              this.onSubmit(e, document.id)}
-                          >
-
-                            <Row>
-                              <Input
-                                s={6} name="title" defaultValue={document.title}
-                                onChange={e => this.fieldChange(e)}
-                              />
-                              <Input
-                                s={6} name="access" validate type="select"
-                                value={this.state.access === '' ?
-                                 document.access : this.state.access}
-                                onChange={e =>
-                                   this.fieldChange(e)}
-                              >
-                                <option value="public">Public</option>
-                                <option value="private">Private</option>
-                                <option value="role">role</option>
-                              </Input>
-                            </Row>
-
-                            <Row>
-                              <TinyMCE
-                                content={document.content}
-                                config={{
-                                  plugins: 'link image preview',
-                                  toolbar: 'undo redo | bold italic | alignleft aligncenter alignright' // eslint-disable-line max-len
-                                }}
-                                onChange={this.handleEditorChange}
-                              />
-                            </Row>
-
-                            <Button
-                              modal="close" className="teal darken-2"
-                              waves="light"
-                              type="submit"
-                            >UPDATE</Button>
-                          </form>
-                        </Modal>
-                        <Prompt
-                          trigger={
-                            <Button
-                              waves="light"
-                              className="btn-floating btn-large red darken-2
-                              right"
-                            >
-                              <i className="large material-icons">delete</i>
-                            </Button>
-                          }
-
-                          onClickFunction={
-                            () => { this.deleteDoc(document.id); }
-                          }
-                        />
-                      </div>
-                      <Modal
-                        header={document.title}
-                        trigger={
-                          <Button waves="light">READ MORE</Button>
-                        }
+        {
+          doc
+            ?
+              <div className="row">
+                {doc.map(document =>
+                  <div key={document.id}>
+                    <div className="col s3">
+                      <div
+                        className="card white darken-1 activator"
+                        style={{
+                          height: 185, backgroundImage: `url(${imagePath})`
+                        }}
                       >
-                        <DocumentContent
-                          content={renderHTML(document.content)}
-                        />
-                      </Modal>
+                        <div
+                          className="card-image waves-effect waves-block waves-light"
+                        >
+                          <a className="btn activator">PREVIEW</a>
+                        </div>
+
+                        <div className="card-reveal black-text">
+                          <DocumentTitle title={document.title} />
+                          <DocumentContent content={renderHTML(document.content)} />
+                        </div>
+
+                        <div className="card-action">
+                          <div className>{document.title}</div>
+                          <strong><div className="right">{document.access}</div>
+                          </strong>
+                          <a>Published: {moment(document.createdAt)
+                            .format('MMMM Do YYYY')}
+                          </a> <br />
+
+                          <div className="card-action">
+                            {this.docAccess(this.props.currentUser, document) ?
+                              <Modal
+                                header="Edit Document"
+                                trigger={
+                                  <Button
+                                    modal="close" waves="light"
+                                    className="btn-floating teal darken-2 left"
+                                  >
+                                    <i className="large material-icons">
+                                      mode_edit</i>
+                                  </Button>
+                                }
+                              >
+                                <form
+                                  className="col s12" method="post" onSubmit={e =>
+                                    this.onSubmit(e, document.id)}
+                                >
+                                  <Row>
+                                    <Input
+                                      s={6} name="title" defaultValue={document.title}
+                                      onChange={e => this.fieldChange(e)}
+                                    />
+                                    <Input
+                                      s={6}
+                                      name="access"
+                                      validate type="select"
+                                      value={document.access || this.state.access}
+                                      onChange={e =>this.fieldChange(e)}
+                                    >
+                                      <option value="public">Public</option>
+                                      <option value="private">Private</option>
+                                      <option value="role">role</option>
+                                    </Input>
+                                  </Row>
+
+                                  <Row>
+                                    <TinyMCE
+                                      content={document.content}
+                                      config={{
+                                        plugins: 'link image preview',
+                                        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright' // eslint-disable-line max-len
+                                      }}
+                                      onChange={this.handleEditorChange}
+                                    />
+                                  </Row>
+                                  <Button
+                                    modal="close" className="teal darken-2"
+                                    waves="light"
+                                    type="submit"
+                                  >UPDATE</Button>
+                                </form>
+                              </Modal> : ''
+                            }
+                            {
+                              this.docAccess(this.props.currentUser, document)
+                                ?
+                                  <Prompt
+                                    trigger={deleteButton}
+                                    onClickFunction={
+                                      () => this.deleteDoc(document.id)
+                                    }
+                                  />
+                                :
+                                  ''
+                            }
+                          </div>
+                          <Modal
+                            header={document.title}
+                            trigger={readMoreButton}
+                          >
+                            <DocumentContent
+                              content={renderHTML(document.content)}
+                            />
+                          </Modal>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
-            )}
-          </div>
-          : <div>No document</div>}
-        {pagination ? <Pagination
-          items={pagination.page_count}
-          activePage={2} maxButtons={5} onSelect={e => this.onSelect(e)}
-        /> : ''}
-      </div>
+            :
+              <div>No document</div>
+        }
+        {
+          pagination
+            ?
+              <Pagination
+                items={pagination.page_count}
+                activePage={2} maxButtons={5} onSelect={e => this.onSelect(e)}
+              />
+            :
+              ''
+        }
+      </div >
     );
   }
 }
+
 DocumentList.propTypes = {
   deleteDocument: React.PropTypes.func.isRequired,
   fetchDocuments: React.PropTypes.func.isRequired,
   searchDocuments: React.PropTypes.func.isRequired,
   updateDocument: React.PropTypes.func.isRequired,
-  documentDetails: React.PropTypes.any.isRequired
+  documentDetails: React.PropTypes.any.isRequired,
+  currentUser: React.PropTypes.object.isRequired
 };
+
 const mapDispatchToProps = dispatch => ({
   updateDocument: documentDetails => dispatch(DocumentAction
     .updateDocument(documentDetails)),
@@ -297,7 +339,10 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
+  currentUser: state.user[0],
   documentDetails: state.documents
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DocumentList);
+
+export { DocumentList };

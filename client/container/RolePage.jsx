@@ -3,11 +3,10 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as roleAction from '../actions/RoleAction';
 import RoleList from '../components/role/RoleList';
-import RoleListRow from '../components/role/RoleListRow';
 
 /**
- * 
- * 
+ *
+ *
  * @class Role
  * @extends {React.Component}
  */
@@ -20,15 +19,15 @@ class Role extends React.Component {
     this.redirectToRolePage = this.redirectToRolePage.bind(this);
   }
  /**
-  * 
-  * 
+  *
+  *
   * @param {any} id
-  * 
+  *
   * @memberOf Role
   */
-  deleteRole (id) {
-      this.props.deleteRole(id);
-    }
+  deleteRole(id) {
+    this.props.deleteRole(id);
+  }
   /**
    *
    *
@@ -39,9 +38,9 @@ class Role extends React.Component {
     this.props.loadRoles();
   }
 /**
- * 
- * 
- * 
+ *
+ *
+ *
  * @memberOf Role
  */
   redirectToRolePage() {
@@ -49,17 +48,19 @@ class Role extends React.Component {
   }
 
   /**
-   * 
-   * 
-   * @returns 
-   * 
+   *
+   *
+   * @returns
+   *
    * @memberOf Role
    */
   render() {
     const { roles } = this.props;
     return (
       <div className="container">
-        { roles ? <RoleList roles={roles} deleteRole={this.props.deleteRole} /> : ''}
+        { roles ? <RoleList
+          roles={roles} deleteRole={this.props.deleteRole}
+        /> : ''}
         <input
           type="submit"
           value="Add Role"
@@ -72,7 +73,8 @@ class Role extends React.Component {
 }
 
 Role.propTypes = {
-  roles: PropTypes.array.isRequired
+  roles: PropTypes.array.isRequired,
+  deleteRole: PropTypes.array.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({

@@ -2,6 +2,8 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import db from '../models';
 import Helper from '../Helper/utility';
+import DocumentHelper from '../ControllerHelper /DocumentHelper';
+import RoleHelper from '../ControllerHelper /RoleHelper';
 
 dotenv.config();
 const secretKey = process.env.SECRET;
@@ -442,7 +444,8 @@ const authenticate = {
       };
     }
     if (`${req.baseUrl}${req.route.path}` === '/api/users/') {
-      query.where = Helper.isAdmin(req.decoded.roleId)
+      query.where = Helper.isAdmin(req.decoded.roleId) ||
+       Helper.isRegular(req.decoded.roleId)
         ? {}
         : { id: req.decoded.userId };
     }
@@ -466,7 +469,7 @@ const authenticate = {
         }];
       } else {
         query.where = {
-          $and: [Helper.documentAccess(req), Helper.likeSearch(terms)]
+          $and: [DocumentHelper.documentAccess(req), Helper.likeSearch(terms)]
         };
         query.include = [{
           model: db.Users,
@@ -478,7 +481,7 @@ const authenticate = {
       if (Helper.isAdmin(req.decoded.roleId)) {
         query.where = {};
       } else {
-        query.where = Helper.documentAccess(req);
+        query.where = DocumentHelper.documentAccess(req);
         query.include = [{
           model: db.Users,
           attributes: { exclude: ['password'] }
@@ -488,8 +491,8 @@ const authenticate = {
     if (`${req.baseUrl}${req.route.path}` === '/api/users/:id/documents') {
       const adminSearch = req.query.q ? Helper.likeSearch(terms) : { };
       const userSearch = req.query.q
-        ? [Helper.documentAccess(req), Helper.likeSearch(terms)]
-        : Helper.documentAccess(req);
+        ? [DocumentHelper.documentAccess(req), Helper.likeSearch(terms)]
+        : DocumentHelper.documentAccess(req);
       if (Helper.isAdmin(req.decoded.roleId)) {
         query.where = adminSearch;
       } else {
@@ -518,7 +521,7 @@ const authenticate = {
         }
         if (!Helper.isPublic(document) && !Helper.isOwnerDoc(document, req)
            && !Helper.isAdmin(req.decoded.roleId)
-           && !Helper.hasRoleAccess(document, req)) {
+           && !RoleHelper.hasRoleAccess(document, req)) {
           return res.status(401)
             .send({
               message: 'You are not permitted to view this document'

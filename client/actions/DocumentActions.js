@@ -81,11 +81,10 @@ export const deleteDocumentSuccess = id => ({
 // thunk
 /**
  *
- *
  * @export
  * @param {any} offset
  * @param {any} limit
- * @returns {Object}
+ * @returns {Object}object
  */
 export const fetchDocuments = (offset) => {
   const pageOffset = offset || 0;
