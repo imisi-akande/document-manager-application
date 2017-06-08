@@ -1,10 +1,23 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import * as roleActions from '../actions/RoleAction';
 import RoleForm from '../components/role/RoleForm';
 
+
+/**
+ *
+ *
+ * @class ManageRolePage
+ * @extends {React.Component}
+ */
 class ManageRolePage extends React.Component {
+
+  /**
+   * Creates an instance of ManageRolePage.
+   * @param {any} props
+   *
+   * @memberOf ManageRolePage
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -15,6 +28,15 @@ class ManageRolePage extends React.Component {
     this.updateRoleState = this.updateRoleState.bind(this);
     this.saveRole = this.saveRole.bind(this);
   }
+
+  /**
+   *
+   *
+   * @param {any} event
+   * @returns{any} any
+   *
+   * @memberOf ManageRolePage
+   */
   updateRoleState(event) {
     const field = event.target.name;
     const role = this.state.role;
@@ -22,12 +44,27 @@ class ManageRolePage extends React.Component {
     return this.setState({ role });
   }
 
+  /**
+   *
+   *
+   * @param {any} event
+   * @returns{any} any
+   * @memberOf ManageRolePage
+   */
   saveRole(event) {
     event.preventDefault();
     this.props.saveRole(this.state.role);
     this.context.router.push('/');
     this.setState({ saving: true });
   }
+
+  /**
+   *
+   *
+   * @returns{any} any
+   *
+   * @memberOf ManageRolePage
+   */
   render() {
     return (
       <div>
@@ -36,22 +73,31 @@ class ManageRolePage extends React.Component {
           role={this.state.role}
           onChange={this.updateRoleState}
           onSave={this.saveRole}
-          error={this.state.error} />
+          error={this.state.error}
+        />
       </div>
     );
   }
 }
 
-ManageRolePage.PropTypes = {};
+ManageRolePage.PropTypes = {
+  saveRole: React.PropTypes.object,
+
+};
+
 
 ManageRolePage.contextTypes = {
   router: PropTypes.object
 };
+
+ManageRolePage.propTypes = {
+  role: React.PropTypes.object.isRequired,
+  saveRole: React.PropTypes.func.isRequired,
+};
 /**
  *
- *
- * @param {any} state
- * @returns {any}
+ * @param {any} dispatch
+ * @returns {any} any
  */
 const mapDispatchToProps = dispatch => ({
   saveRole: role => dispatch(roleActions.roleSaver(role))
@@ -59,10 +105,10 @@ const mapDispatchToProps = dispatch => ({
 /**
  *
  * dispatch document actions
- * @param {any} dispatch
- * @returns {any}
+ * @param {any} state
+ * @returns {any}any
  */
-const mapStateToProps = (state) => {
+const mapStateToProps = () => {
   const role = { id: '', title: '', createdAt: '', updatedAt: '' };
   return {
     roles: role

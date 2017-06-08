@@ -99,7 +99,7 @@ class DocumentList extends React.Component {
    *
    * @param {any} e
    * @param {any} id
-   *
+   *@returns {any} any
    * @memberOf DocumentList
    */
   onSubmit(e, id) {
@@ -112,12 +112,12 @@ class DocumentList extends React.Component {
   }
 
   /**
-   * 
-   * 
-   * @param {any} user 
-   * @param {any} doc 
-   * @returns 
-   * 
+   *
+   *
+   * @param {any} user
+   * @param {any} doc
+   * @returns {any} any
+   *
    * @memberOf DocumentList
    */
   docAccess(user, doc) {
@@ -127,7 +127,7 @@ class DocumentList extends React.Component {
      *
      *
      * @param {any} id
-     *
+     *@returns {object} object
      * @memberOf DocumentList
      */
   deleteDoc(id) {
@@ -138,7 +138,7 @@ class DocumentList extends React.Component {
    *
    *
    * @param {any} e
-   *
+   * @returns{any} any
    * @memberOf DocumentList
    */
   handleEditorChange(e) {
@@ -148,7 +148,7 @@ class DocumentList extends React.Component {
      *
      *
      * @param {any} e
-     * @returns
+     * @returns {object} object
      *
      * @memberOf DocumentList
      */
@@ -159,7 +159,7 @@ class DocumentList extends React.Component {
   /**
    *
    *
-   * @returns
+   * @returns{any} any
    *
    * @memberOf DocumentList
    */
@@ -174,7 +174,7 @@ class DocumentList extends React.Component {
     const readMoreButton = (
       <Button className="read-more" waves="light">READ MORE</Button>
     );
-    const { docAccess } = this.state;
+
     if (this.props.documentDetails.documents &&
       this.props.documentDetails.documents.rows) {
       doc = this.props.documentDetails.documents.rows;
@@ -204,19 +204,28 @@ class DocumentList extends React.Component {
                         }}
                       >
                         <div
-                          className="card-image waves-effect waves-block waves-light"
+                          className="card-image waves-effect waves-block waves-light" // eslint-disable-line max-len
                         >
                           <a className="btn activator">PREVIEW</a>
                         </div>
 
                         <div className="card-reveal black-text">
-                          <DocumentTitle title={document.title} />
-                          <DocumentContent content={renderHTML(document.content)} />
+                          <DocumentTitle
+                            title={document.title}
+                          />
+                          <DocumentContent
+                            content={renderHTML(document.content)}
+                          />
                         </div>
 
-                        <div className="card-action">
-                          <div className>{document.title}</div>
-                          <strong><div className="right">{document.access}</div>
+                        <div
+                          className="card-action"
+                        >
+                          <div
+                            className
+                          >{document.title}</div>
+                          <strong>
+                            <div className="right">{document.access}</div>
                           </strong>
                           <a>Published: {moment(document.createdAt)
                             .format('MMMM Do YYYY')}
@@ -237,20 +246,22 @@ class DocumentList extends React.Component {
                                 }
                               >
                                 <form
-                                  className="col s12" method="post" onSubmit={e =>
+                                  className="col s12" method="post"
+                                  onSubmit={e =>
                                     this.onSubmit(e, document.id)}
                                 >
                                   <Row>
                                     <Input
-                                      s={6} name="title" defaultValue={document.title}
+                                      s={6} name="title"
+                                      defaultValue={document.title}
                                       onChange={e => this.fieldChange(e)}
                                     />
                                     <Input
                                       s={6}
                                       name="access"
                                       validate type="select"
-                                      value={document.access || this.state.access}
-                                      onChange={e =>this.fieldChange(e)}
+                                      value={this.state.access}
+                                      onChange={e => this.fieldChange(e)}
                                     >
                                       <option value="public">Public</option>
                                       <option value="private">Private</option>

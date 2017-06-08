@@ -1,10 +1,11 @@
 import request from 'superagent';
 import { browserHistory } from 'react-router';
 import * as types from './ActionTypes';
+import getToken from '../actions/GetToken';
 
 /**
  * createrole action
- * @param  {object} roles [description]
+ * @param  {object} role [description]
  * @return {object}      [description]
  */
 export const createRole = role => ({
@@ -14,6 +15,7 @@ export const createRole = role => ({
 
 /**
  * get role
+ * @param {object} roles
  * @return {object} object of roles
  */
 export const getRoleSuccess = roles => ({
@@ -23,6 +25,8 @@ export const getRoleSuccess = roles => ({
 
 /**
  * update from state the current selected role
+ *
+ * @param {object} role
  * @return {[type]} [description]
  */
 export const updateRoleSuccess = role => ({
@@ -32,6 +36,8 @@ export const updateRoleSuccess = role => ({
 
 /**
  * delete from state the current selected role
+ *
+ * @param {object} id
  * @return {[type]} [description]
  */
 export const deleteRoleSuccess = id => ({
@@ -41,6 +47,8 @@ export const deleteRoleSuccess = id => ({
 
 /**
  * create from state the current selected role
+ *
+ * @param {object} role
  * @return {[type]} [description]
  */
 export const createRoleSuccess = role => ({
@@ -54,37 +62,31 @@ export const createRoleSuccess = role => ({
  * @param  {object} role role object to be svaed
  * @return {object}      response from api
  */
-export const roleSaver = (role) => {
-  return (dispatch) => {
-    const token = localStorage.getItem('dms-user');
-    request
+export const roleSaver = role => (dispatch) => {
+  request
       .post('/api/roles/')
       .send(role)
-      .set({ 'x-access-token': token })
+      .set({ 'x-access-token': getToken() })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
         dispatch(createRoleSuccess(role));
         browserHistory.push('/roles');
         return res;
       });
-  };
 };
 
 /**
  * fetch roles
  * @return {object} object of roles
  */
-export const fetchRoles = () => {
-  return (dispatch) => {
-    const token = localStorage.getItem('dms-user');
-    request
+export const fetchRoles = () => (dispatch) => {
+  request
       .get('/api/roles/')
-      .set({ 'x-access-token': token })
+      .set({ 'x-access-token': getToken() })
       .end((err, res) => {
         // Materialize.toast(res.body.message, 4000, 'rounded');
         dispatch(getRoleSuccess(res.body.roles));
       });
-  };
 };
 
 /**
@@ -93,17 +95,14 @@ export const fetchRoles = () => {
  * @param  {number} id role id
  * @return {object}    api response
  */
-export const deleteRoles = (id) => {
-  return (dispatch) => {
-    const token = localStorage.getItem('dms-user');
-    request
+export const deleteRoles = id => (dispatch) => {
+  request
       .delete(`/api/roles/${id}`)
-       .set({ 'x-access-token': token })
+       .set({ 'x-access-token': getToken() })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
         browserHistory.push('/roles');
         dispatch(deleteRoleSuccess(id));
       });
-  };
 };
 

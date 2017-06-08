@@ -4,7 +4,7 @@ import initialState from './InitialState';
 const documentsReducer = (state = initialState.documents, action) => {
   switch (action.type) {
     case types.CREATE_DOCUMENT:
-      return [...state, Object.assign({}, action.documents)];
+      return [...state, ...action.documents];
     case types.LOAD_DOCUMENT_SUCCESS:
       return action.documents;
     case types.LOAD_OWN_DOCUMENT_SUCCESS:
@@ -16,19 +16,19 @@ const documentsReducer = (state = initialState.documents, action) => {
     case types.UPDATE_OWN_DOCUMENT_SUCCESS:
       return {
         documents: {
-          rows: [...state.filter(document => document.id !== action.document.id),
-            Object.assign({}, action.document)
+          rows: [...state.filter(document =>
+          document.id !== action.document.id),
+            ...action.document
           ]
         }
       };
 
-      // return state;
-
     case types.CREATE_DOCUMENT_SUCCESS:
-      return [...state, Object.assign({}, action.document)];
+      return [...state, ...action.document];
     case types.DELETE_DOCUMENT_SUCCESS:
       {
-        return Object.assign({}, state, {
+        return {
+          ...state,
           documents: {
             rows: [
               ...state.documents.rows.filter(document =>
@@ -36,11 +36,11 @@ const documentsReducer = (state = initialState.documents, action) => {
               )
             ]
           }
-        });
+        };
       }
     case types.UPDATE_DOCUMENT_SUCCESS:
       return [...state.filter(document => document.id !== action.document.id),
-        Object.assign({}, action.document)
+        ...action.document
       ];
     default:
       return state;

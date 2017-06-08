@@ -5,11 +5,26 @@ import { connect } from 'react-redux';
 import * as UserAction from '../../actions/UserAction';
 import Prompt from '../common/Prompt';
 import { searchUsers } from '../../actions/SearchUserAction';
+import Auth from '../../util/Auth';
 
 const token = localStorage.getItem('dms-user');
 const userRoleId = token ? jwtDecode(token).roleId : null;
 
+
+/**
+ *
+ *
+ * @class UserListRow
+ * @extends {React.Component}
+ */
 class UserListRow extends React.Component {
+
+  /**
+   * Creates an instance of UserListRow.
+   * @param {any} props
+   *
+   * @memberOf UserListRow
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -18,42 +33,90 @@ class UserListRow extends React.Component {
       lastName: this.props.user.lastName,
       userName: this.props.user.userName,
       email: this.props.user.email,
-      roleId: this.props.user.roleId
+      roleId: this.props.user.roleId,
+      validateAdmin: false
     };
 
     this.onChange = this.onChange.bind(this);
     this.onSearch = this.onSearch.bind(this);
   }
+
+  /**
+   *
+   *
+   * @param {any} e
+   * @returns {any} any
+   *
+   * @memberOf UserListRow
+   */
   onChange(e) {
     return this.setState({ [e.target.name]: e.target.value });
   }
+
+  /**
+   *
+   *
+   * @param {any} e
+   * @returns{any} any
+   *
+   * @memberOf UserListRow
+   */
   onSearch(e) {
     const queryString = e.target.value;
     return this.props.searchUsers(queryString);
   }
-  onSubmit(e) { 
+
+  /**
+   *
+   *
+   * @param {any} e
+   *@returns{function} any
+   * @memberOf UserListRow
+   */
+  onSubmit(e) {
     e.preventDefault();
     const { updateUser } = this.props;
-    const { deleteUser } = this.props;
     const userId = this.props.user.id;
     const firstName = e.target.firstName.value;
     const lastName = e.target.lastName.value;
     const userName = e.target.userName.value;
     const email = e.target.email.value;
-    const roleId = e.target.roleId.value;
-    const userDetails = { firstName, lastName, userName, email, roleId };
-    console.log(userId)
+    const userDetails = { firstName, lastName, userName, email };
     updateUser(userDetails, userId);
-    deleteUser(userDetails);
   }
 
+ /**
+   *
+   *
+   * @param {any} user
+   * @param {any} doc
+   * @returns {any} any
+   *
+   * @memberOf DocumentList
+   */
+  validateAdmin(user) {
+    return Auth.validateAdmin(this.props.currentUser);
+  }
+  /**
+   *
+   *
+   * @param {any} id
+   *@returns {object} object
+   * @memberOf UserListRow
+   */
   deleteUser(id) {
     this.props.deleteUser(id);
   }
 
+  /**
+   *
+   *
+   * @returns {object} object
+   *
+   * @memberOf UserListRow
+   */
   render() {
     const user = this.props.user;
-
     return (
       <tr>
         <td>{user.firstName}</td>
@@ -62,7 +125,8 @@ class UserListRow extends React.Component {
         <td>{user.email}</td>
         <td>{user.roleId === 1 ? 'Admin' : user.roleId === 2 ?
             'regular' : 'Guest'}</td>
-        <Modal
+        {this.validateAdmin(this.props.user) ?
+          <Modal
           header="Edit User"
           trigger={
             <td><Button
@@ -77,8 +141,6 @@ class UserListRow extends React.Component {
             className="col s12" method="post" onSubmit={e =>
                 this.onSubmit(e)}
           >
-
-
             <Row>
               <Input
                 s={6} label="firstName" name="firstName"
@@ -115,20 +177,23 @@ class UserListRow extends React.Component {
               type="submit"
             >UPDATE</Button>
           </form>
-        </Modal>
-        <Prompt
-          trigger={
-            <Button
-              waves="light"
-              className="btn-floating btn-large red darken-2 right"
-            >
-              <i className="large material-icons">delete</i>
-            </Button>
-                    }
-          onClickFunction={
-                (e) => { this.deleteUser(user.id); }
-              }
-        />
+        </Modal> : ''}
+        { userRoleId === 1 ?
+          <Prompt
+            trigger={
+              <Button
+                waves="light"
+                className="btn-floating btn-large red darken-2 right"
+              >
+                <i className="large material-icons">delete</i>
+              </Button>
+                      }
+            onClickFunction={
+                  (e) => { this.deleteUser(user.id); }
+                }
+          /> :
+          ''
+        }
       </tr>
     );
   }
@@ -138,15 +203,18 @@ UserListRow.propTypes = {
   deleteUser: React.PropTypes.func.isRequired,
   searchUsers: React.PropTypes.func.isRequired,
   updateUser: React.PropTypes.func.isRequired,
+  currentUser: React.PropTypes.object.isRequired
 };
 const mapDispatchToProps = dispatch => ({
-  updateUser: (userDetails, userId) => dispatch(UserAction.updateUser(userDetails, userId)),
+  updateUser: (userDetails, userId) => dispatch(UserAction
+  .updateUser(userDetails, userId)),
   deleteUser: id => dispatch(UserAction.deleteUser(id)),
   searchUsers: queryString => dispatch(searchUsers(queryString))
 });
 
 const mapStateToProps = state => ({
-  userDetails: state.user
+  userDetails: state.user,
+  currentUser: state.user
 });
 
 

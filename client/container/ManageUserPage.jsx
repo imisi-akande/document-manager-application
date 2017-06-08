@@ -1,13 +1,13 @@
 import { browserHistory } from 'react-router';
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
 import * as userAction from '../actions/UserAction';
 import UserForm from '../components/user/UserForm';
 
 /**
- * 
- * 
+ *
+ *
  * @class ManageUserPage
  * @extends {React.Component}
  */
@@ -34,7 +34,7 @@ class ManageUserPage extends React.Component {
    *
    *
    * @param {any} event
-   *
+   *@returns {any} any
    * @memberOf ManageUserPage
    */
   updateUserState(event) {
@@ -46,11 +46,12 @@ class ManageUserPage extends React.Component {
 
   /**
    *
-   *
+   *@param {any} event
+   *@returns {any} any
    *
    * @memberOf ManageUserPage
    */
-  saveUser() {
+  saveUser(event) {
     event.preventDefault();
     this.props.saveUser(this.state.user);
     browserHistory.push('/');
@@ -59,10 +60,10 @@ class ManageUserPage extends React.Component {
   }
 
   /**
-   * 
-   * 
-   * @returns
-   * 
+   *
+   *
+   * @returns{object} object
+   *
    * @memberOf ManageUserPage
    */
   render() {
@@ -78,12 +79,15 @@ class ManageUserPage extends React.Component {
     );
   }
 }
+ManageUserPage.propTypes = {
+  user: React.PropTypes.func.isRequired,
+  saveUser: React.PropTypes.func.isRequired,
+};
 
 /**
  *
- *
  * @param {any} dispatch
- * @returns {any}
+ * @returns {any} any
  */
 const mapDispatchToProps = dispatch => ({
   saveUser: user => dispatch(userAction.saveUser(user)),
@@ -94,9 +98,9 @@ const mapDispatchToProps = dispatch => ({
  *
  * dispatch user actions
  * @param {any} state
- * @returns {any}
+ * @returns {any} any
  */
-const mapStateToProps = (state) => {
+const mapStateToProps = () => {
   const user = { firstName: '',
     lastName: '',
     userName: '',
@@ -107,5 +111,5 @@ const mapStateToProps = (state) => {
     user
   };
 };
-
+export { ManageUserPage };
 export default connect(mapStateToProps, mapDispatchToProps)(ManageUserPage);

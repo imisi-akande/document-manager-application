@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import { ManageRolePage } from '../../container/ManageRolePage';
 import RoleForm from '../../components/role/RoleForm';
@@ -66,26 +66,24 @@ describe('Role  Container  test', () => {
         wrapper.instance().updateRoleState(event);
         expect(wrapper.state('role').id).toBe(2);
         expect(wrapper.state('role').title).toBe('regular');
-        expect(wrapper.state('role').createdAt).toBe('2017-05-23T17:00:14.198Z');
-        expect(wrapper.state('role').updatedAt).toBe('2017-05-23T17:00:14.198Z');
+        expect(wrapper.state('role').createdAt)
+        .toBe('2017-05-23T17:00:14.198Z');
+        expect(wrapper.state('role').updatedAt)
+        .toBe('2017-05-23T17:00:14.198Z');
       });
       describe('saveRole State test case', () => {
-        let event;
-
         beforeEach(() => {
-          // event = { target: { id: '50' } };
           event = { target: { id: '50' }, preventDefault: () => null };
           wrapper = shallow(<ManageRolePage {...props} />, { context });
         });
 
         it('save role state with values provided in events', () => {
           wrapper.instance().saveRole(event);
-          // console.log(wrapper.state())
-          // wrapper.setState({ role: Object.assign({}, wrapper.state(), { title: 'Guest' }) });
-          // console.log(wrapper.state());
           expect(wrapper.state('role').title).toBe('regular');
-          expect(wrapper.state('role').createdAt).toBe('2017-05-23T17:00:14.198Z');
-          expect(wrapper.state('role').updatedAt).toBe('2017-05-23T17:00:14.198Z');
+          expect(wrapper.state('role').createdAt)
+          .toBe('2017-05-23T17:00:14.198Z');
+          expect(wrapper.state('role').updatedAt)
+          .toBe('2017-05-23T17:00:14.198Z');
         });
       });
     });

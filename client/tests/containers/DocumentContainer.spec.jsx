@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import DocumentForm from '../../components/document/DocumentForm';
 import DocumentMarkDown from '../../components/document/DocumentMarkDown';
@@ -31,7 +31,7 @@ describe('Document Container test', () => {
     it('initializes state correctly', () => {
       expect(wrapper.state('document').title).toBe('');
       expect(wrapper.state('document').content).toBe('');
-      expect(wrapper.state('document').access).toBe('');
+      expect(wrapper.state('document').access).toBe('public');
       expect(wrapper.state('saving')).toBe(false);
     });
 
@@ -59,7 +59,7 @@ describe('Document Container test', () => {
       const submitButton = wrapper.find('[name="btn_login"]');
       expect(submitButton).toHaveLength(1);
 
-      // const preventDefault = () => null;
+
       submitButton.simulate('click', { preventDefault: () => null });
       expect(props.documentSaver).toHaveBeenCalled();
       expect(wrapper.state('saving')).toBe(true);

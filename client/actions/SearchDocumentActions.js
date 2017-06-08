@@ -2,6 +2,8 @@ import request from 'superagent';
 import * as types from './ActionTypes';
 import { fetchDocuments, fetchOwnDocuments } from './DocumentActions';
 
+import getToken from '../actions/GetToken';
+
 export const getDocumentSuccess = documents => ({
   type: types.LOAD_DOCUMENT_SUCCESS,
   documents
@@ -26,11 +28,11 @@ export const getOwnDocumentSuccess = documents => ({
  * @return {type}             description
  */
 export function searchDocuments(queryString, offset = 0) {
-  const token = window.localStorage.getItem('dms-user');
+  getToken();
   return (dispatch) => {
     request
     .get(`/api/search/documents/?q=${queryString}&offset=${offset}`)
-    .set({ 'x-access-token': token })
+    .set({ 'x-access-token': getToken() })
     .end((err, res) => {
       if (queryString) {
         dispatch(getDocumentSuccess(res.body));
@@ -40,12 +42,20 @@ export function searchDocuments(queryString, offset = 0) {
     });
   };
 }
+
+/**
+ *
+ * @export
+ * @param {any} queryString
+ * @param {number} [offset=0]
+ * @returns {object}} object
+ */
 export function searchOwnDocuments(queryString, offset = 0) {
-  const token = window.localStorage.getItem('dms-user');
+  getToken();
   return (dispatch) => {
     request
      .get(`/api/search/documents/?q=${queryString}&offset=${offset}`)
-    .set({ 'x-access-token': token })
+    .set({ 'x-access-token': getToken() })
     .end((err, res) => {
       if (queryString) {
         dispatch(getOwnDocumentSuccess(res.body));

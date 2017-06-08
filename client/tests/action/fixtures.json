@@ -1,0 +1,62 @@
+{
+  "document": {
+    "documents": {
+      "rows": [
+        {
+          "id": 61,
+          "title": "hfgghvbnbnhh",
+          "content": "<p>thghbnnbvcbvvcbvcvbvvb</p>",
+          "access": "private",
+          "authorId": 1,
+          "createdAt": "2017-06-08T14:17:35.196Z",
+          "updatedAt": "2017-06-08T14:17:35.196Z"
+        }
+      ]
+    }
+  },
+
+  "users": {
+    "rows": [
+      {
+      "id": 15,
+      "userName": "shitta",
+      "firstName": "Shittu",
+       "lastName": "Adebayo",
+      "email": "shitu@yahoo.com",
+      "password": "$2a$08$WPYCbxR7Nve/IoDFxXgk/eCEKa4PchuemTKg8Hh3e2kmT05esADCK",
+      "roleId": 2,  
+       "createdAt": "2017-06-08T12:04:26.251Z",
+       "updatedAt": "2017-06-08T12:04:26.251Z"
+      },
+      {
+      "id": 51,
+      "userName": "trace",
+      "firstName": "Tracy",
+       "lastName": "Ezebuike",
+      "email": "tracy@yahoo.com",
+      "password": "$2a$08$WPYCbxR7Nve/IoDFxXgk/eCEKa4PchuemTKg8Hh3e2kmT05esADCK",
+      "roleId": 2,  
+       "createdAt": "2017-06-08T12:03:24.578Z",
+       "updatedAt": "2017-06-08T12:03:24.578Z"
+      },
+      {
+      "id": 21,
+      "userName": "solly",
+      "firstName": "Bidemi",
+       "lastName": "Ladoke",
+      "email": "bidemi@yahoo.com",
+      "password": "$2a$08$ViUO.zR1Gt6HKgVJXRFjUuD7G8bEydPK0VFs/bbMsQc5KyFKnWgI2",
+      "roleId": 2,  
+       "createdAt": "2017-06-08T12:03:24.578Z",
+       "updatedAt": "2017-06-08T11:55:10.474Z"
+      }
+    ]
+  },
+      "role":
+      {
+       "id": 1,
+      "title": "admin",
+      "createdAt": "2017-05-23T17:00:14.198Z",
+      "updatedAt": "2017-05-23T17:00:14.198Z"
+  }
+}

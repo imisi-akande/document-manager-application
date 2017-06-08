@@ -12,7 +12,20 @@ import Prompt from '../../components/common/Prompt';
 import { searchOwnDocuments } from '../../actions/SearchDocumentActions';
 
 
+/**
+ *
+ *
+ * @class OwnDocumentList
+ * @extends {React.Component}
+ */
 class OwnDocumentList extends React.Component {
+
+  /**
+   * Creates an instance of OwnDocumentList.
+   * @param {any} props
+   *
+   * @memberOf OwnDocumentList
+   */
   constructor(props) {
     super(props);
     // const { updateDocument } = this.props;
@@ -22,26 +35,56 @@ class OwnDocumentList extends React.Component {
       id: '',
       title: '',
       content: '',
-      access: '',
+      access: 'public',
       authorId: ''
     };
     this.handleEditorChange = this.handleEditorChange.bind(this);
     this.onSearch = this.onSearch.bind(this);
   }
 
+  /**
+   *
+   *
+   *@returns {object}object
+   * @memberOf OwnDocumentList
+   */
   componentDidMount() {
     this.props.fetchOwnDocuments();
   }
 
+  /**
+   *
+   *
+   * @param {any} e
+   * @returns {object} object
+   *
+   * @memberOf OwnDocumentList
+   */
   onSearch(e) {
     const queryString = e.target.value;
     return this.props.searchOwnDocuments(queryString);
   }
 
+  /**
+   *
+   *
+   * @param {any} pageNo
+   *@returns {object}object
+   * @memberOf OwnDocumentList
+   */
   onSelect(pageNo) {
     const offset = (pageNo - 1) * 10;
     this.props.fetchOwnDocuments(offset);
   }
+
+  /**
+   *
+   *
+   * @param {any} e
+   * @param {any} documentId
+   *@returns{object}object
+   * @memberOf OwnDocumentList
+   */
   onSubmit(e, documentId) {
     e.preventDefault();
     const title = e.target.title.value;
@@ -51,10 +94,26 @@ class OwnDocumentList extends React.Component {
     const documentDetails = { id: documentId, title, access, content };
     this.props.updateDocument(documentDetails);
   }
+
+  /**
+   *
+   *
+   * @param {any} e
+   * @returns {object}object
+   *
+   * @memberOf OwnDocumentList
+   */
   fieldChange(e) {
     return this.setState({ [e.target.name]: e.target.value, });
   }
 
+  /**
+   *
+   *
+   * @param {any} id
+   *@returns{object} object
+   * @memberOf OwnDocumentList
+   */
   deleteDoc(id) {
     this.props.deleteDocument(id);
   }
@@ -62,19 +121,21 @@ class OwnDocumentList extends React.Component {
    *
    *
    * @param {any} e
-   *
+   *@returns{object}object
    * @memberOf DocumentList
    */
   handleEditorChange(e) {
     this.setState({ content: e.target.getContent() });
   }
 
-  render() {
-    /**
-   * renders the user's Document component
-   * @returns {void}
-   * @memberOf ownDocumentList
+  /**
+   *
+   *
+   * @returns{object}object
+   *
+   * @memberOf OwnDocumentList
    */
+  render() {
     let pagination = null;
     let doc = null;
     if (this.props.documentDetails !== undefined &&
@@ -220,6 +281,7 @@ OwnDocumentList.propTypes = {
   searchOwnDocuments: React.PropTypes.func.isRequired,
   updateDocument: React.PropTypes.func.isRequired,
   deleteDocument: React.PropTypes.func.isRequired,
+  documentDetails: React.PropTypes.object.isRequired
 };
 const mapDispatchToProps = dispatch => ({
   updateDocument: documentDetails =>
@@ -233,5 +295,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   documentDetails: state.documents.documents
 });
+
+export { OwnDocumentList };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OwnDocumentList);

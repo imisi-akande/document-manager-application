@@ -1,26 +1,35 @@
-import findIndex from 'lodash/findIndex';
 import * as types from '../actions/ActionTypes';
 import initialState from './InitialState';
 
 
+/**
+ *
+ *
+ * @export
+ * @param {any} [state=initialState.allUsers]
+ * @param {any} action
+ * @returns {object} object
+ */
 export default function userReducer(state = initialState.allUsers, action) {
   switch (action.type) {
-    // case types.CREATE_USER:
-    //   return [...state, Object.assign({}, action.user)];
     case types.LOAD_USER_SUCCESS:
       return action.users;
     case types.CREATE_USER_SUCCESS:
-      return [...state, Object.assign({}, action.user)];
+      return [...state, ...action.user];
 
     case types.UPDATE_USER_SUCCESS:
       {
-        const index =
-          findIndex(state.users.rows, {
-            id: action.user.id
-          });
-        const stateCopy = Object.assign({}, state);
-        stateCopy.users.rows[index] = action.user;
-        return stateCopy;
+        const allUsers = state.users.rows
+          .filter(user => user.id !== action.user.id);
+        allUsers.push(action.user);
+
+        return {
+          ...state,
+          users: {
+            ...state.users,
+            rows: allUsers
+          }
+        };
       }
     case types.USER_SUCCESS:
       return action.user;

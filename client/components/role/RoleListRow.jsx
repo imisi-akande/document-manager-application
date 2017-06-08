@@ -16,7 +16,7 @@ const RoleListRow = (props) => {
                 
   return (
         <tr>
-            <td>{role.title}</td>
+            <td className="role-title">{role.title}</td>
             <td>{role.createdAt}</td>
             <td>{moment(role.updatedAt).format('MMMM Do YYYY')}</td>
             <td>{role.title !== 'admin' && role.title !== 'regular' ? <Prompt
@@ -44,3 +44,4 @@ const mapStateToProps =(state)=>{
 }
 
 export default connect(null, mapDispatchToProps)(RoleListRow);
+export { RoleListRow };

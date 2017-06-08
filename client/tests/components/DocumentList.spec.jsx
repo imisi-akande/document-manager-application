@@ -1,6 +1,6 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
-import { Modal, Button, Row, Input, Pagination } from 'react-materialize';
+import { shallow } from 'enzyme';
+import { Pagination } from 'react-materialize';
 
 import { DocumentList } from '../../components/document/DocumentList';
 import DocumentTitle from '../../components/document/DocumentListTitle';
@@ -10,7 +10,7 @@ import Prompt from '../../components/common/Prompt';
 
 jest.mock('../../img/cardReveal.jpg', () => 'http://doc-image.jpg');
 
-describe('Role  Container  test', () => {
+describe('Document component test', () => {
   let props;
   let wrapper;
 
@@ -111,7 +111,8 @@ describe('Role  Container  test', () => {
         props.documentDetails.documents.rows[1],
         { content: '<a>Hey world</a>' },
       );
-      const updatedDocuments = props.documentDetails.documents.rows.concat(updatedDocument);
+      const updatedDocuments = props.documentDetails.documents
+      .rows.concat(updatedDocument);
       props.documentDetails.documents.rows = updatedDocuments;
       wrapper.setProps(props);
 
@@ -122,7 +123,8 @@ describe('Role  Container  test', () => {
         'Hey world');
     });
 
-    it('does not render edit form for documents not owned by current user', () => {
+    it('does not render edit form for documents not owned by current user',
+    () => {
       expect(wrapper.find('.card').at(1).find('form')).toHaveLength(0);
     });
 
@@ -168,7 +170,8 @@ describe('Role  Container  test', () => {
       wrapper.setProps(newProps);
       const pagination = wrapper.find(Pagination);
       expect(pagination).toHaveLength(1);
-      expect(pagination.prop('items')).toBe(newDocumentDetails.pagination.page_count);
+      expect(pagination.prop('items')).toBe(newDocumentDetails
+      .pagination.page_count);
     });
 
     it('calls onSearch on entry of data to search form input', () => {
@@ -239,7 +242,7 @@ describe('Role  Container  test', () => {
   // //   let originalFunction;
 
   // //   beforeEach(() => {
-  // //     DocumentList.prototype.onSearch = 
+  // //     DocumentList.prototype.onSearch =
   // //   });
   // });
 });

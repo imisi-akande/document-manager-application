@@ -17,9 +17,11 @@ const initialState = {
 export default function search(state = initialState, action) {
   switch (action.type) {
     case SEARCH_RESULTS:
-      return Object.assign({},
-        state, { results: action.payload,
-          pagination: action.payload.pagination });
-    default: return Object.assign({}, state);
+      return {
+        ...state,
+        results: action.payload,
+        pagination: action.payload.pagination
+      };
+    default: return { ...state };
   }
 }

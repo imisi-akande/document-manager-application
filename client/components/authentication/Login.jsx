@@ -30,6 +30,7 @@ class Login extends React.Component {
 
   /**
    * @param {any} event
+   * @returns {object} object
    * @memberOf Login function
    */
   onEmailChange(event) {
@@ -42,6 +43,7 @@ class Login extends React.Component {
   /**
    *
    * @param {any} event
+   * @return {any} any
    * @memberOf Login
    */
   onPasswordChange(event) {
@@ -50,6 +52,12 @@ class Login extends React.Component {
     });
   }
 
+  /**
+   *
+   * @param {onClickSave} event
+   * @return {any} any
+   * @memberOf Login
+   */
   onClickSave() {
     const email = this.state.email;
     const password = this.state.password;
@@ -141,5 +149,6 @@ const mapStateToProps = state => ({
   users: state.user
 });
 
+export { Login };
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
 

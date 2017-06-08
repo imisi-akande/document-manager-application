@@ -37,3 +37,7 @@ Object.keys(doc.defaultView).forEach((property) => {
 global.navigator = {
   userAgent: 'node.js'
 };
+
+global.Materialize = {
+  toast: () => null,
+};
