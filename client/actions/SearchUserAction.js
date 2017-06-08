@@ -3,6 +3,8 @@ import { SEARCH_RESULTS } from './Types';
 import { fetchAllUsers } from './DocumentActions';
 import * as types from './ActionTypes';
 
+import getToken from '../actions/GetToken';
+
 /**
  * userSearchResult
  * @param  {object} userSearchResult user reponse from api call
@@ -29,10 +31,9 @@ export const getUserSuccess = user => ({ type: types.USER_SUCCESS, user });
  * @return {object}        reponse from the api
  */
 export function searchUsers(queryString, offset = 0) {
-  const token = window.localStorage.getItem('dms-user');
   return (dispatch) => {
     request.get(`/api/search/users/?q=${queryString}&offset=${offset}`)
-.set({ 'x-access-token': token }).end((err, res) => {
+.set({ 'x-access-token': getToken() }).end((err, res) => {
   if (queryString) {
     dispatch(getUserSuccess(res.body));
   } else {

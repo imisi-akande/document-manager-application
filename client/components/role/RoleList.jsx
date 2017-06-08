@@ -14,7 +14,7 @@ const RoleList = ({ roles, deleteRole }) => (<table className="striped">
   <tbody>
     {roles.map(role =>
       <RoleListRow key={role.id} role={role} deleteRole={deleteRole} />
-                )}
+    )}
 
   </tbody>
 </table>);

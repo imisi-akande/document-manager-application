@@ -1,6 +1,7 @@
 import request from 'superagent';
 import { browserHistory } from 'react-router';
 import * as types from './ActionTypes';
+import getToken from '../actions/GetToken';
 
 /**
  * createrole action
@@ -56,11 +57,10 @@ export const createRoleSuccess = role => ({
  */
 export const roleSaver = (role) => {
   return (dispatch) => {
-    const token = localStorage.getItem('dms-user');
     request
       .post('/api/roles/')
       .send(role)
-      .set({ 'x-access-token': token })
+      .set({ 'x-access-token': getToken() })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
         dispatch(createRoleSuccess(role));
@@ -76,10 +76,9 @@ export const roleSaver = (role) => {
  */
 export const fetchRoles = () => {
   return (dispatch) => {
-    const token = localStorage.getItem('dms-user');
     request
       .get('/api/roles/')
-      .set({ 'x-access-token': token })
+      .set({ 'x-access-token': getToken() })
       .end((err, res) => {
         // Materialize.toast(res.body.message, 4000, 'rounded');
         dispatch(getRoleSuccess(res.body.roles));
@@ -95,10 +94,9 @@ export const fetchRoles = () => {
  */
 export const deleteRoles = (id) => {
   return (dispatch) => {
-    const token = localStorage.getItem('dms-user');
     request
       .delete(`/api/roles/${id}`)
-       .set({ 'x-access-token': token })
+       .set({ 'x-access-token': getToken() })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
         browserHistory.push('/roles');

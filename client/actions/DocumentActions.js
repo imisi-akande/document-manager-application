@@ -9,6 +9,9 @@ import request from 'superagent';
 import decode from 'jwt-decode';
 import * as types from './ActionTypes';
 
+import getToken from '../actions/GetToken';
+
+
 /**
  * create new document success action
  *
@@ -88,13 +91,13 @@ export const deleteDocumentSuccess = id => ({
  */
 export const fetchDocuments = (offset) => {
   const pageOffset = offset || 0;
-  const token = localStorage.getItem('dms-user');
+  // const token = localStorage.getItem('dms-user');
 
   return (dispatch) => {
     request
       .get(`/api/documents?offset=${pageOffset}`)
       .set({
-        'x-access-token': token
+        'x-access-token': getToken()
       })
       .end((err, res) => {
         dispatch(getDocumentSuccess(res.body));
@@ -110,14 +113,13 @@ export const fetchDocuments = (offset) => {
  * @returns {Object}object
  */
 export const fetchOwnDocuments = () => {
-  const token = localStorage.getItem('dms-user');
-  const userData = decode(token);
+  const userData = decode(getToken());
   const id = userData.userId;
   return (dispatch) => {
     request
       .get(`/api/users/${id}/documents/`)
       .set({
-        'x-access-token': token
+        'x-access-token': getToken()
       })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
@@ -127,13 +129,12 @@ export const fetchOwnDocuments = () => {
 };
 
 export const documentSaver = (document) => {
-  const token = localStorage.getItem('dms-user');
   return (dispatch) => {
     request
       .post('/api/documents')
       .send(document)
       .set({
-        'x-access-token': token
+        'x-access-token': getToken()
       })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
@@ -154,13 +155,12 @@ export const documentSaver = (document) => {
  * @returns {Object}
  */
 export const updateDocument = (document) => {
-  const token = localStorage.getItem('dms-user');
   return (dispatch) => {
     request
       .put(`/api/documents/${document.id}`)
       .send(document)
       .set({
-        'x-access-token': token
+        'x-access-token': getToken()
       })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
@@ -180,12 +180,11 @@ export const updateDocument = (document) => {
  * @returns {Object}
  */
 export const deleteDocument = (id) => {
-  const token = localStorage.getItem('dms-user');
   return (dispatch) => {
     request
       .delete(`/api/documents/${id}`)
       .set({
-        'x-access-token': token
+        'x-access-token': getToken()
       })
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
