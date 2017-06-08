@@ -10,7 +10,7 @@ import Prompt from '../../components/common/Prompt';
 
 jest.mock('../../img/cardReveal.jpg', () => 'http://doc-image.jpg');
 
-describe('Role  Container  test', () => {
+describe('Document component test', () => {
   let props;
   let wrapper;
 

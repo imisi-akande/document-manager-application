@@ -4,14 +4,29 @@ import * as documentAction from '../actions/DocumentActions';
 import DocumentForm from '../components/document/DocumentForm';
 import DocumentMarkdown from '../components/document/DocumentMarkDown';
 
+
+/**
+ *
+ *
+ * @class DocumentContainer
+ * @extends {React.Component}
+ */
 class DocumentContainer extends React.Component {
+
+  /**
+   * Creates an instance of DocumentContainer.
+   * @param {any} props
+   * @param {any} context
+   *
+   * @memberOf DocumentContainer
+   */
   constructor(props, context) {
     super(props, context);
     this.state = {
       document: {
         title: '',
         content: '',
-        access: '',
+        access: 'public',
       },
       error: {},
       saving: false
@@ -21,18 +36,41 @@ class DocumentContainer extends React.Component {
     this.handleEditorChange = this.handleEditorChange.bind(this);
   }
 
+  /**
+   *
+   *
+   * @param {any} event
+   * @returns{function} object
+   * @memberOf DocumentContainer
+   */
   handleFormSubmit(event) {
     event.preventDefault();
     this.props.documentSaver(this.state.document);
     this.setState({ saving: true });
   }
 
+  /**
+   *
+   *
+   * @param {any} event
+   * @returns {object} object
+   *
+   * @memberOf DocumentContainer
+   */
   handleEditorChange(event) {
     const document = this.state.document;
     document.content = event.target.getContent({ format: 'raw' });
     return this.setState({ document });
   }
 
+  /**
+   *
+   *
+   * @param {any} event
+   * @returns{object} object
+   *
+   * @memberOf DocumentContainer
+   */
   updateDocumentState(event) {
     const field = event.target.name;
     const document = this.state.document;
@@ -40,6 +78,13 @@ class DocumentContainer extends React.Component {
     return this.setState({ document });
   }
 
+  /**
+   *
+   *
+   * @returns {object} object
+   *
+   * @memberOf DocumentContainer
+   */
   render() {
     return (
       <div className="container">
@@ -74,7 +119,6 @@ DocumentContainer.defaultProps = {
 };
 
 DocumentContainer.propTypes = {
-  document: React.PropTypes.object,
   documentSaver: React.PropTypes.func.isRequired,
 };
 
@@ -82,7 +126,7 @@ DocumentContainer.propTypes = {
  *
  *
  * @param {any} dispatch
- * @returns {any}
+ * @returns {any} any
  */
 const mapDispatchToProps = dispatch => ({
   fetchDocuments: () => dispatch(documentAction.fetchDocuments()),
@@ -93,7 +137,7 @@ const mapDispatchToProps = dispatch => ({
  *
  *
  * @param {any} state
- * @returns {any}
+ * @returns {any} any
  */
 const mapStateToProps = () => {
   const document = { title: '', content: '', access: '', authorId: '' };
