@@ -48,7 +48,10 @@ describe('async actions', () => {
       type: 'DELETE_ROLE_SUCCESS',
     }];
 
-    const store = mockStore({ role: {} });
+    const store = mockStore(
+      {
+        role: {}
+      });
 
     store.dispatch(deleteRoleSuccess());
     expect(store.getActions()).toEqual(expectedActions);
