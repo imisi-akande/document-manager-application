@@ -189,3 +189,4 @@ export const deleteDocument = id => (dispatch) => {
         dispatch(deleteDocumentSuccess(id));
       });
 };
+

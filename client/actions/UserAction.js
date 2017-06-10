@@ -133,8 +133,6 @@ export const login = userCredentials =>
         dispatch(setCurrentUser(jwtDecode(res.body.token)));
       });
   };
-
-
 export const editUser = (userId, userData) => (dispatch) => {
   request
       .put(`/api/users/${userId}`, userData)
@@ -153,8 +151,10 @@ export const editUser = (userId, userData) => (dispatch) => {
  * @param {any} userId
  * @returns {Object} userData
  */
-export const fetchProfile = userId => dispatch => new Promise((resolve) => {
-  request
+
+export const fetchProfile = (userId) => {
+  return dispatch => new Promise((resolve) => {
+    request
       .get(`/api/users/${userId}`)
       .set({
         'x-access-token': getToken()
@@ -215,4 +215,5 @@ export const deleteUser = id => (dispatch) => {
         }
         dispatch(deleteUserSuccess(res.body.document));
       });
-};
+  };
+}

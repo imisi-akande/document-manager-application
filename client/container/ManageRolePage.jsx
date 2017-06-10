@@ -80,12 +80,6 @@ class ManageRolePage extends React.Component {
   }
 }
 
-ManageRolePage.PropTypes = {
-  saveRole: React.PropTypes.object,
-
-};
-
-
 ManageRolePage.contextTypes = {
   router: PropTypes.object
 };
