@@ -45,16 +45,6 @@ body {
   width: 500;
 }
 
-.Typist {
-  .ptag {
-    text-align: center;
-    color: #FFF;
-    font-weight: 100;
-    font-size: 1.2em;
-    margin: 0 auto;
-  }
-}
-
 #document-container1 {
   margin-left: 20px;
 }
@@ -107,4 +97,19 @@ a {
 input#doc-search {
   width: 20% !important;
   margin-left: 40%;
+}
+
+div[data-reactroot] {
+  top: 0% !important;
+}
+
+#close-document-view {
+  border-radius: 5px;
+  z-index: 1;
+  position: absolute;
+  padding-left: 10px;
+  padding-right: 10px;
+  right: 0%;
+  top: 45px;
+  transform:translate(-50%,-50%)
 }

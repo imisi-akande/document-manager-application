@@ -13,7 +13,7 @@ import DocumentPage from '../client/container/DocumentPage';
 import OwnDocumentList from '../client/components/document/OwnDocumentList';
 import EditUser from '../client/components/user/EditUser';
 
-const logUserOut = (nextState, replace) => {
+const logUserOut = (nextState) => {
   localStorage.removeItem('dms-user');
   window.location = '/';
 };

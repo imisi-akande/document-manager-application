@@ -92,7 +92,7 @@ const Register = (props) => {
                   <label
                     htmlFor="password" data-error="wrong"
                     data-success="right" htm="password"
-  
+
                   >
                   Enter your password</label>
                 </div>

@@ -1,30 +1,39 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 
 const TextInput = ({ name, label, onChange, error, type }) => {
   let wrapperClass = 'row';
   if (error && error.length > 0) {
     wrapperClass += ' ' + 'has-error';
-  } 
+  }
   return (
-		<main>
-			<center>
-				<div className="row">
-					<div className=" col s12">
-						<div className={wrapperClass}>
-							<label htmlFor={name}>{label}</label>
-							<div className="input-field">
-								<input
-									type={type}
-									name={name}
-									className=""
-									onChange={onChange} />
+    <main>
+      <center>
+        <div className="row">
+          <div className=" col s12">
+            <div className={wrapperClass}>
+              <label htmlFor={name}>{label}</label>
+              <div className="input-field">
+                <input
+                  type={type}
+                  name={name}
+                  className=""
+                  onChange={onChange}
+                />
 
-							</div>
-						</div>
-					</div>
-				</div>
-			</center>
-		</main>
+              </div>
+            </div>
+          </div>
+        </div>
+      </center>
+    </main>
   );
+};
+
+TextInput.propTypes = {
+  name: React.PropTypes.object.isRequired,
+  label: React.PropTypes.object.isRequired,
+  onChange: React.PropTypes.func.isRequired,
+  error: React.PropTypes.object.isRequired,
+  type: React.PropTypes.object.isRequired,
 };
 export default TextInput;

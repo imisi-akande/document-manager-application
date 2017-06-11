@@ -15,10 +15,10 @@ describe('Document component test', () => {
 
   beforeEach(() => {
     props = {
-      deleteDocument: jest.fn(() => ({ then: () => null })),
-      fetchDocuments: jest.fn(() => 'fetchDocuments'),
-      searchDocuments: jest.fn(() => 'searchDocuments'),
-      updateDocument: jest.fn(() => 'updateDocuments'),
+      deleteOwnDocument: jest.fn(() => ({ then: () => null })),
+      fetchOwnDocuments: jest.fn(() => 'fetchOwnDocuments'),
+      searchOwnDocuments: jest.fn(() => 'searchOwnDocuments'),
+      updateOwnDocuments: jest.fn(() => 'updateOwnDocuments'),
       documentDetails: {
         documents: {
           rows: [
@@ -70,8 +70,57 @@ describe('Document component test', () => {
       expect(wrapper.state('access')).toBe('public');
       expect(wrapper.state('authorId')).toBe('');
     });
-    it('renders two cards to hold document', () => {
-      expect(wrapper.find('.card')).toHaveLength(2);
+    it('renders DocumentTitle with the two document titles passed in', () => {
+      expect(shallow(<DocumentTitle />).length).toEqual(1);
+      expect(shallow(<DocumentContent />).length).toEqual(1);
+    });
+
+    test('content have tags removed', () => {
+      const updatedDocument = Object.assign(
+        {},
+        props.documentDetails.documents.rows[1],
+        { content: '<a>Hey world</a>' },
+      );
+      const updatedDocuments = props.documentDetails.documents
+      .rows.concat(updatedDocument);
+      props.documentDetails.documents.rows = updatedDocuments;
+      wrapper.setProps(props);
+
+      const thirdDocumentContent = wrapper.find('.card-reveal').find(
+        DocumentContent).at(2);
+      expect(thirdDocumentContent).toHaveLength(1);
+    });
+
+    it('does not render edit form for documents not owned by current user',
+    () => {
+      expect(wrapper.find('.card').at(1).find('form')).toHaveLength(0);
+    });
+
+    it('does not render delete prompt for documents not owned by current user',
+    () => {
+      expect(wrapper.find('.card').at(1).find(Prompt)).toHaveLength(0);
+    });
+
+    it('displays no document when none is supplied', () => {
+      props = Object.assign(
+        {},
+        props,
+        { documentDetails: {} }
+      );
+      wrapper.setProps(props);
+      expect(wrapper.find('div').at(1).text().toLowerCase()).toContain(
+        'no document');
+    });
+
+    it('renders pagination on listing my documents', () => {
+      expect(wrapper.find(Pagination)).toHaveLength(1);
+    });
+
+    it('calls onSearch on entry of data to search form input', () => {
+      wrapper.instance().onSearch = jest.fn(() => 'onSearch');
+      const searchInput = wrapper.find('#doc-search');
+      searchInput.simulate('change');
+      expect(wrapper.instance().onSearch).toHaveBeenCalled();
     });
   });
 });

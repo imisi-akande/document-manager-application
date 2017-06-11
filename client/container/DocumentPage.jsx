@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import * as documentAction from '../actions/DocumentActions';
 import DocumentList from '../components/document/DocumentList';
+
 /**
   * @class DocumentPage
   */

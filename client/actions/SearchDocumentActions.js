@@ -10,7 +10,8 @@ export const getDocumentSuccess = documents => ({
 });
 
 /**
- * getdocumentsuccess
+ * getowndocumentsuccess
+ *
  * @export
  * @param {any} documents  returned documents from api call
  * @returns {any} action and action types
@@ -44,6 +45,7 @@ export function searchDocuments(queryString, offset = 0) {
 }
 
 /**
+ * search own documents
  *
  * @export
  * @param {any} queryString

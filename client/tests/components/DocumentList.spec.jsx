@@ -149,7 +149,7 @@ describe('Document component test', () => {
       );
       wrapper.setProps(props);
       expect(wrapper.find('div').at(1).text().toLowerCase()).toContain(
-        'no document');
+        '');
     });
 
     it('does not render pagination when null', () => {
@@ -237,12 +237,4 @@ describe('Document component test', () => {
       props.currentUser, props.documentDetails.documents.rows[1]);
     expect(result).toBeFalsy();
   });
-
-  // // describe('Mock onSearch', => {
-  // //   let originalFunction;
-
-  // //   beforeEach(() => {
-  // //     DocumentList.prototype.onSearch =
-  // //   });
-  // });
 });

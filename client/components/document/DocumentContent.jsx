@@ -1,12 +1,9 @@
-import React, { propTypes } from 'react';
-import { Link } from 'react-router';
+import React from 'react';
 
-const DocumentContent = ({ content }) => {
-  return (
-    <span>
-      {content}
-    </span>
+const DocumentContent = ({ content }) => (
+  <span>
+    {content}
+  </span>
   );
-};
 
 export default DocumentContent;

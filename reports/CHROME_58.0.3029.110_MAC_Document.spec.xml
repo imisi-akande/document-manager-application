@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="1"
+            tests="2">
+
+  <testsuite name="Document.spec"
+    errors="0" failures="1" hostname="" id="" package="Document.spec" skipped="0"
+    tests="2" time="35.34" timestamp="Sun, 11 Jun 2017 14:53:42 GMT">
+  
+    <testcase name="Read document" classname="Document.spec" time="18.61" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Create document" classname="Document.spec" time="16.73" assertions="4">
+
+    
+
+    
+
+      <failure message="Timed out while waiting for element &lt;#mce.tiny&gt; to be present for 5000 milliseconds.">    at Object.CreateDocument [as Create document] (/Users/andeladeveloper/Documents/document-manager-application/client/tests/EndToEndTest/Document.spec.js:40:8)
+    at _combinedTickCallback (internal/process/next_tick.js:73:7)</failure>
+
+    
+    </testcase>
+  
+  
+  </testsuite>
+</testsuites>

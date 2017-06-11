@@ -42,17 +42,11 @@ describe('Role List component test', () => {
         },
         deleteRole: jest.fn(() => 'deleteRole'),
       };
-<<<<<<< HEAD
       wrapper = mount(<RoleListRow {...props} />);
-=======
-      const wrapper = mount(<RoleListRow {...props} />);
->>>>>>> ea13d949cf20c7c8ba381ff5a9c3d43f13bfe365
       const titlehead = wrapper.find('.role-title');
 
       expect(titlehead.text()).toBe('role 1');
       expect(titlehead.text()).not.toBe('jajaj');
-      // expect(wrapper.state('roles').role).toBe({});
-      // expect(wrapper.state('roles').deleteRole).toBe({});
     });
   });
 });

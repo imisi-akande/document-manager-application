@@ -63,6 +63,7 @@ const renderIfLoggedIn = () => {
               <NavItem>
                 <Link
                   to="/createdoc"
+                  id="create-doc"
                   activeClassName="active"
                   className="right"
                 >
@@ -75,6 +76,7 @@ const renderIfLoggedIn = () => {
                   to="/documents"
                   activeClassName="active"
                   className="right"
+                  id="all-documents"
                 >
                   All Documents
                 </Link>
@@ -146,7 +148,7 @@ const renderIfLoggedIn = () => {
 
       <li>
         <Link
-          to="/login" activeClassName="active"
+          to="/login" id="login" activeClassName="active"
           className="right"
         >Login</Link>
       </li>

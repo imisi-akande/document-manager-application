@@ -11,13 +11,12 @@ import * as types from './ActionTypes';
 
 import getToken from '../actions/GetToken';
 
-
 /**
  * create new document success action
  *
  * @export
- * @param {any} document newly create document reponse from api post
- * @returns {any} action and action types
+ * @param {object} document newly create document reponse from api post
+ * @returns {object} action and action types
  */
 export const createDocument = document => ({
   type: types.CREATE_DOCUMENT,
@@ -25,10 +24,11 @@ export const createDocument = document => ({
 });
 
 /**
- * getdocumentsuccess
+ * get all accessible documents
+ *
  * @export
- * @param {any} documents  returned documents from api call
- * @returns {any} action and action types
+ * @param {object} documents  returned documents from api call
+ * @returns {object} action and action types
  */
 export const getDocumentSuccess = documents => ({
   type: types.LOAD_DOCUMENT_SUCCESS,
@@ -36,20 +36,22 @@ export const getDocumentSuccess = documents => ({
 });
 
 /**
- * getdocumentsuccess
+ * get accessible documents only
+ *
  * @export
- * @param {any} documents  returned documents from api call
- * @returns {any} action and action types
+ * @param {object} documents  returned documents from api call
+ * @returns {object} action and action types
  */
 export const getOwnDocumentSuccess = documents => ({
   type: types.LOAD_OWN_DOCUMENT_SUCCESS,
   documents
 });
+
 /**
  * update documents to database using PUT api route /documents/:id
  *
  * @export
- * @param {any} document
+ * @param {object} document
  * @returns {object} documents
  */
 export const updateDocumentSuccess = document => ({
@@ -61,8 +63,8 @@ export const updateDocumentSuccess = document => ({
  * create new document success action
  *
  * @export
- * @param {any} document newly create document reponse from api post
- * @returns {any} action and action types
+ * @param {object} document newly create document reponse from api post
+ * @returns {object} action and action types
  */
 export const createDocumentSuccess = document => ({
   type: types.CREATE_DOCUMENT_SUCCESS,
@@ -73,7 +75,7 @@ export const createDocumentSuccess = document => ({
  * delete document from database using DELETE api route /documents/:id
  *
  * @export
- * @param {any} id
+ * @param {number} id
  * @returns {object} documents
  */
 export const deleteDocumentSuccess = id => ({
@@ -81,18 +83,16 @@ export const deleteDocumentSuccess = id => ({
   id
 });
 
-// thunk
 /**
+ *Fetch documents action
  *
  * @export
- * @param {any} offset
- * @param {any} limit
- * @returns {Object}object
+ * @param {number} offset
+ * @param {number} limit
+ * @returns {Object}documents
  */
 export const fetchDocuments = (offset) => {
   const pageOffset = offset || 0;
-  // const token = localStorage.getItem('dms-user');
-
   return (dispatch) => {
     request
       .get(`/api/documents?offset=${pageOffset}`)
@@ -106,6 +106,7 @@ export const fetchDocuments = (offset) => {
 };
 
 /**
+ * fetch own documents action
  *
  * @export
  * @param {number} [offset=0]
@@ -122,7 +123,6 @@ export const fetchOwnDocuments = () => {
         'x-access-token': getToken()
       })
       .end((err, res) => {
-        Materialize.toast(res.body.message, 4000, 'rounded');
         dispatch(getOwnDocumentSuccess(res.body.userDocuments));
       });
   };
@@ -136,7 +136,6 @@ export const documentSaver = document => (dispatch) => {
         'x-access-token': getToken()
       })
       .end((err, res) => {
-        Materialize.toast(res.body.message, 4000, 'rounded');
         if (err) {
           return err;
         }
@@ -146,11 +145,11 @@ export const documentSaver = document => (dispatch) => {
 };
 
 /**
- *
+ * Update documents action
  *
  * @export
- * @param {any} document
- * @returns {Object}object
+ * @param {object} document
+ * @returns {Object}updated documents
  */
 export const updateDocument = document => (dispatch) => {
   request
@@ -159,8 +158,7 @@ export const updateDocument = document => (dispatch) => {
       .set({
         'x-access-token': getToken()
       })
-      .end((err, res) => {
-        Materialize.toast(res.body.message, 4000, 'rounded');
+      .end((err) => {
         if (err) {
           return err;
         }
@@ -169,7 +167,7 @@ export const updateDocument = document => (dispatch) => {
 };
 
 /**
- *
+ * Delete documents action
  *
  * @export
  * @param {any} id

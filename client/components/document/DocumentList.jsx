@@ -156,6 +156,10 @@ class DocumentList extends React.Component {
     return this.setState({ [e.target.name]: e.target.value, });
   }
 
+  // openSingleDocument(id) {
+
+  // }
+
   /**
    *
    *
@@ -172,7 +176,8 @@ class DocumentList extends React.Component {
       </Button>
     );
     const readMoreButton = (
-      <Button className="read-more" waves="light">READ MORE</Button>
+      <Button className="read-more" waves="red">
+        READ MORE</Button>
     );
 
     if (this.props.documentDetails.documents &&
@@ -271,6 +276,7 @@ class DocumentList extends React.Component {
 
                                   <Row>
                                     <TinyMCE
+                                      id="mce.tiny"
                                       content={document.content}
                                       config={{
                                         plugins: 'link image preview',
@@ -301,9 +307,25 @@ class DocumentList extends React.Component {
                             }
                           </div>
                           <Modal
+                            style={{
+                              maxHeight: '100%',
+                              width: '100%',
+                              bottom: '0%',
+                              top: '-1'
+                            }}
+                            actions={
+                              <h2
+                                id="close-document-view"
+                                className="modal-close"
+                                style={{ cursor: 'pointer' }}
+                              >
+                                <i className="medium material-icons">close</i>
+                              </h2>
+                            }
                             header={document.title}
                             trigger={readMoreButton}
                           >
+
                             <DocumentContent
                               content={renderHTML(document.content)}
                             />
@@ -315,7 +337,7 @@ class DocumentList extends React.Component {
                 )}
               </div>
             :
-              <div>No document</div>
+              <h1>No document</h1>
         }
         {
           pagination

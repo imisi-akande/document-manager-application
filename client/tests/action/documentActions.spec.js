@@ -1,11 +1,6 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-<<<<<<< HEAD
-=======
-import nock from 'nock';
->>>>>>> ea13d949cf20c7c8ba381ff5a9c3d43f13bfe365
 import fixtures from './fixtures.json';
-// import request from 'superagent';
 
 import mockRequestFactory from './requestFactory';
 import {
@@ -16,18 +11,10 @@ import {
   updateDocument,
 } from '../../actions/DocumentActions';
 
-<<<<<<< HEAD
-import { searchOwnDocuments } from '../../actions/SearchDocumentActions';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-=======
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
-
-// console.log(requestFactory)
->>>>>>> ea13d949cf20c7c8ba381ff5a9c3d43f13bfe365
 jest.mock('superagent', () => mockRequestFactory);
 jest.mock('react-router', () => ({
   browserHistory: {

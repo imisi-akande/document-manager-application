@@ -4,7 +4,8 @@ import * as types from './ActionTypes';
 import getToken from '../actions/GetToken';
 
 /**
- * createrole action
+ * create role action
+ *
  * @param  {object} role [description]
  * @return {object}      [description]
  */
@@ -14,7 +15,8 @@ export const createRole = role => ({
 });
 
 /**
- * get role
+ * get role action
+ *
  * @param {object} roles
  * @return {object} object of roles
  */
@@ -27,7 +29,7 @@ export const getRoleSuccess = roles => ({
  * update from state the current selected role
  *
  * @param {object} role
- * @return {[type]} [description]
+ * @return {object} updated role
  */
 export const updateRoleSuccess = role => ({
   type: types.UPDATE_ROLE_SUCCESS,
@@ -38,7 +40,7 @@ export const updateRoleSuccess = role => ({
  * delete from state the current selected role
  *
  * @param {object} id
- * @return {[type]} [description]
+ * @return {object} object
  */
 export const deleteRoleSuccess = id => ({
   type: types.DELETE_ROLE_SUCCESS,
@@ -49,7 +51,7 @@ export const deleteRoleSuccess = id => ({
  * create from state the current selected role
  *
  * @param {object} role
- * @return {[type]} [description]
+ * @return {object} new role
  */
 export const createRoleSuccess = role => ({
   type: types.CREATE_ROLE_SUCCESS,
@@ -77,6 +79,7 @@ export const roleSaver = role => (dispatch) => {
 
 /**
  * fetch roles
+ *
  * @return {object} object of roles
  */
 export const fetchRoles = () => (dispatch) => {
@@ -90,8 +93,8 @@ export const fetchRoles = () => (dispatch) => {
 };
 
 /**
- * delete role from db
- * DELETE /roles/:id
+ * delete role from db DELETE /roles/:id
+ *
  * @param  {number} id role id
  * @return {object}    api response
  */

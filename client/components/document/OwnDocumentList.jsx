@@ -138,6 +138,15 @@ class OwnDocumentList extends React.Component {
   render() {
     let pagination = null;
     let doc = null;
+    const deleteButton = (
+      <Button waves="light" className="btn-floating red darken-2 left">
+        <i className="large material-icons">delete</i>
+      </Button>
+    );
+    const readMoreButton = (
+      <Button className="read-more" waves="red">READ MORE</Button>
+      // <Link to="#" className="read-more" waves="light">READ MORE</Link>
+    );
     if (this.props.documentDetails !== undefined &&
       this.props.documentDetails.rows !== undefined) {
       doc = this.props.documentDetails.rows;
@@ -250,12 +259,25 @@ class OwnDocumentList extends React.Component {
                         />
                       </div>
                       <Modal
+                        style={{
+                          maxHeight: '100%',
+                          width: '100%',
+                          bottom: '0%',
+                          top: '-1'
+                        }}
+                        actions={
+                          <h2
+                            id="close-document-view"
+                            className="modal-close"
+                            style={{ cursor: 'pointer' }}
+                          >
+                            <i className="medium material-icons">close</i>
+                          </h2>
+                            }
                         header={document.title}
-                        trigger={
-                          <Button className="read-more" waves="light">
-                            READ MORE</Button>
-                        }
+                        trigger={readMoreButton}
                       >
+
                         <DocumentContent
                           content={renderHTML(document.content)}
                         />
@@ -264,9 +286,9 @@ class OwnDocumentList extends React.Component {
                   </div>
                 </div>
               </div>
-            )}
+                )}
           </div>
-          : <div>Not document</div>}
+          : <div>No document</div>}
         {Pagination ? <Pagination
           items={Pagination.page_count}
           activePage={2} maxButtons={5} onSelect={e => this.onSelect(e)}
@@ -281,7 +303,7 @@ OwnDocumentList.propTypes = {
   searchOwnDocuments: React.PropTypes.func.isRequired,
   updateDocument: React.PropTypes.func.isRequired,
   deleteDocument: React.PropTypes.func.isRequired,
-  documentDetails: React.PropTypes.object.isRequired
+  // documentDetails: React.PropTypes.object.isRequired
 };
 const mapDispatchToProps = dispatch => ({
   updateDocument: documentDetails =>

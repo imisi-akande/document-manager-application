@@ -1,6 +1,6 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-// import fixtures from './fixtures.json';
+import fixtures from './fixtures.json';
 
 import mockRequestFactory from './requestFactory';
 import { getDocumentSuccess, getOwnDocumentSuccess } from

@@ -11,8 +11,9 @@ const documentsReducer = (state = initialState.documents, action) => {
       return {
         documents: {
           rows: action.documents.documents.rows
-        }
-      };
+        } };
+    case types.CREATE_DOCUMENT_SUCCESS:
+      return [...state, action.document];
     case types.UPDATE_OWN_DOCUMENT_SUCCESS:
       return {
         documents: {
@@ -22,9 +23,6 @@ const documentsReducer = (state = initialState.documents, action) => {
           ]
         }
       };
-
-    case types.CREATE_DOCUMENT_SUCCESS:
-      return [...state, ...action.document];
     case types.DELETE_DOCUMENT_SUCCESS:
       {
         return {
