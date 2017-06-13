@@ -12,7 +12,7 @@ class Login extends React.Component {
 
   /**
    * Creates an instance of Login.
-   * @param {any} props
+   * @param {object} props
    *
    * @memberOf Login
    */
@@ -29,7 +29,7 @@ class Login extends React.Component {
   }
 
   /**
-   * @param {any} event
+   * @param {object} event
    * @returns {object} object
    * @memberOf Login function
    */
@@ -42,8 +42,8 @@ class Login extends React.Component {
 
   /**
    *
-   * @param {any} event
-   * @return {any} any
+   * @param {object} event
+   * @return {undefined} nothing
    * @memberOf Login
    */
   onPasswordChange(event) {
@@ -55,7 +55,7 @@ class Login extends React.Component {
   /**
    *
    * @param {onClickSave} event
-   * @return {any} any
+   * @return {undefined} nothing
    * @memberOf Login
    */
   onClickSave() {

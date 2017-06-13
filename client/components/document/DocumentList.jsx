@@ -4,10 +4,8 @@ import React from 'react';
 import { Modal, Button, Row, Input, Pagination } from 'react-materialize';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import DocumentTitle from './DocumentListTitle';
 import DocumentContent from './DocumentContent';
 import * as DocumentAction from '../../actions/DocumentActions';
-import imagePath from '../../img/cardReveal.jpg';
 import Auth from '../../util/Auth';
 
 
@@ -23,7 +21,7 @@ class DocumentList extends React.Component {
 
   /**
    * Creates an instance of DocumentList.
-   * @param {any} props
+   * @param {undefined} props
    *
    * @memberOf DocumentList
    */
@@ -44,8 +42,8 @@ class DocumentList extends React.Component {
   }
   /**
    *
-   * @param {any} event
-   *@returns {function} function
+   * @param {object} event
+   *@returns {nothing} undefined
    * @memberOf DocumentList
    */
   onChange(event) {
@@ -57,7 +55,7 @@ class DocumentList extends React.Component {
   /**
    *
    *
-   * @param {any} event
+   * @param {object} event
    * @returns {function} function
    * @memberOf DocumentList
    */
@@ -71,8 +69,8 @@ class DocumentList extends React.Component {
   /**
    *
    *
-   * @param {any} pageNo
-   * @returns {function} function
+   * @param {number} pageNo
+   * @returns {object} function
    *
    * @memberOf DocumentList
    */
@@ -82,10 +80,10 @@ class DocumentList extends React.Component {
   }
 
   /**
+   * Handles on search even
    *
-   *
-   * @param {any} e
-   * @returns {function} function
+   * @param {object} e
+   * @returns {object} object
    *
    * @memberOf DocumentList
    */
@@ -95,11 +93,11 @@ class DocumentList extends React.Component {
   }
 
   /**
+   * Handles onSubmit event
    *
-   *
-   * @param {any} e
-   * @param {any} id
-   *@returns {any} any
+   * @param {object} e
+   * @param {number} id
+   *@returns {object} object
    * @memberOf DocumentList
    */
   onSubmit(e, id) {
@@ -108,25 +106,26 @@ class DocumentList extends React.Component {
     const access = e.target.access.value;
     const content = this.state.content;
     const documentDetails = { id, title, access, content };
-    this.props.updateDocument(documentDetails);
+    this.props.updateDocument(documentDetails, true);
   }
 
   /**
+   * Handles Document access
    *
-   *
-   * @param {any} user
-   * @param {any} doc
-   * @returns {any} any
+   * @param {object} user
+   * @param {object} doc
+   * @returns {object} object
    *
    * @memberOf DocumentList
    */
   docAccess(user, doc) {
     return Auth.docAccess(user, doc);
   }
+
   /**
+     *Handle Delete Document
      *
-     *
-     * @param {any} id
+     * @param {number} id
      *@returns {object} object
      * @memberOf DocumentList
      */
@@ -135,19 +134,20 @@ class DocumentList extends React.Component {
   }
 
   /**
+   * Handle Text editor change
    *
-   *
-   * @param {any} e
-   * @returns{any} any
+   * @param {object} e
+   * @returns{object} object
    * @memberOf DocumentList
    */
   handleEditorChange(e) {
     this.setState({ content: e.target.getContent() });
   }
+
   /**
+     *Handle editor change
      *
-     *
-     * @param {any} e
+     * @param {object} e
      * @returns {object} object
      *
      * @memberOf DocumentList
@@ -156,28 +156,28 @@ class DocumentList extends React.Component {
     return this.setState({ [e.target.name]: e.target.value, });
   }
 
-  // openSingleDocument(id) {
-
-  // }
-
   /**
+   * Documents
    *
-   *
-   * @returns{any} any
+   * @returns{object} object
    *
    * @memberOf DocumentList
    */
   render() {
     let pagination = null;
-    let doc = null;
+    let doc = [];
     const deleteButton = (
-      <Button waves="light" className="btn-floating red darken-2 left">
+      <Button waves="light" id="deletebutton" className="btn-floating red darken-2 left">
         <i className="large material-icons">delete</i>
       </Button>
     );
     const readMoreButton = (
-      <Button className="read-more" waves="red">
-        READ MORE</Button>
+      <a
+        id="readmore"
+        href="readmore"
+        className="read-more"
+      >
+        READ MORE</a>
     );
 
     if (this.props.documentDetails.documents &&
@@ -186,8 +186,21 @@ class DocumentList extends React.Component {
       pagination = this.props.documentDetails.pagination;
     }
 
+    let noDoc = null;
+
+    if (pagination && pagination.total_count === 0) {
+      noDoc = (
+        <div className="container">
+          <div className="row center-align">
+            <div style={{ padding: '20px' }} />
+            <h5>Sorry there are no documents to display.</h5>
+          </div>
+        </div>
+      );
+    }
+
     return (
-      <div>
+      <div style={{ paddingLeft: '10px', paddingRight: '10px' }}>
         <input
           id="doc-search"
           type="search"
@@ -195,6 +208,9 @@ class DocumentList extends React.Component {
           onChange={e => this.onSearch(e)}
           name="search"
         />
+
+        { noDoc }
+
         {
           doc
             ?
@@ -205,33 +221,21 @@ class DocumentList extends React.Component {
                       <div
                         className="card white darken-1 activator"
                         style={{
-                          height: 185, backgroundImage: `url(${imagePath})`
+                          height: '185px'
                         }}
                       >
                         <div
-                          className="card-image waves-effect waves-block waves-light" // eslint-disable-line max-len
-                        >
-                          <a className="btn activator">PREVIEW</a>
-                        </div>
-
-                        <div className="card-reveal black-text">
-                          <DocumentTitle
-                            title={document.title}
-                          />
-                          <DocumentContent
-                            content={renderHTML(document.content)}
-                          />
-                        </div>
-
-                        <div
                           className="card-action"
+                          id="card-container"
+                          style={{ opacity: 0.9 }}
                         >
-                          <div
-                            className
-                          >{document.title}</div>
-                          <strong>
-                            <div className="right">{document.access}</div>
-                          </strong>
+                          <h5 style={{ color: '#26a69a' }}>{document.title}</h5>
+                          <h6
+                            style={{ fontSize: '19px', marginTop: '7px' }}
+                          >
+                            Access: {document.access}
+                          </h6>
+                          <br />
                           <a>Published: {moment(document.createdAt)
                             .format('MMMM Do YYYY')}
                           </a> <br />
@@ -244,8 +248,11 @@ class DocumentList extends React.Component {
                                   <Button
                                     modal="close" waves="light"
                                     className="btn-floating teal darken-2 left"
+                                    style={{ marginRight: '5px' }}
                                   >
-                                    <i className="large material-icons">
+                                    <i
+                                      className="large material-icons"
+                                    >
                                       mode_edit</i>
                                   </Button>
                                 }
@@ -276,11 +283,10 @@ class DocumentList extends React.Component {
 
                                   <Row>
                                     <TinyMCE
-                                      id="mce.tiny"
                                       content={document.content}
                                       config={{
                                         plugins: 'link image preview',
-                                        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright' // eslint-disable-line max-len
+                                        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright  | code ' // eslint-disable-line max-len
                                       }}
                                       onChange={this.handleEditorChange}
                                     />
@@ -311,7 +317,6 @@ class DocumentList extends React.Component {
                               maxHeight: '100%',
                               width: '100%',
                               bottom: '0%',
-                              top: '-1'
                             }}
                             actions={
                               <h2
@@ -340,12 +345,12 @@ class DocumentList extends React.Component {
               <h1>No document</h1>
         }
         {
-          pagination
+           pagination
             ?
-              <Pagination
+              pagination.total_count > 0 ? <Pagination
                 items={pagination.page_count}
-                activePage={2} maxButtons={5} onSelect={e => this.onSelect(e)}
-              />
+                activePage={1} maxButtons={5} onSelect={e => this.onSelect(e)}
+              /> : ''
             :
               ''
         }
@@ -360,12 +365,11 @@ DocumentList.propTypes = {
   searchDocuments: React.PropTypes.func.isRequired,
   updateDocument: React.PropTypes.func.isRequired,
   documentDetails: React.PropTypes.any.isRequired,
-  currentUser: React.PropTypes.object.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
   updateDocument: documentDetails => dispatch(DocumentAction
-    .updateDocument(documentDetails)),
+    .updateDocument(documentDetails, true)),
   deleteDocument: id => dispatch(DocumentAction.deleteDocument(id)),
   fetchDocuments: offset => dispatch(DocumentAction.fetchDocuments(offset)),
   searchDocuments: queryString => dispatch(searchDocuments(queryString))

@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import DocumentTitle from '../../components/document/DocumentListTitle';
 import DocumentContent from '../../components/document/DocumentContent';
 import * as DocumentAction from '../../actions/DocumentActions';
-import imagePath from '../../img/cardReveal.jpg';
 import Prompt from '../../components/common/Prompt';
 import { searchOwnDocuments } from '../../actions/SearchDocumentActions';
 
@@ -22,15 +21,13 @@ class OwnDocumentList extends React.Component {
 
   /**
    * Creates an instance of OwnDocumentList.
-   * @param {any} props
+   *
+   * @param {object} props
    *
    * @memberOf OwnDocumentList
    */
   constructor(props) {
     super(props);
-    // const { updateDocument } = this.props;
-    // const { deleteDocument } = this.props;
-    // const { fetchOwnDocuments } = this.props;
     this.state = {
       id: '',
       title: '',
@@ -55,7 +52,7 @@ class OwnDocumentList extends React.Component {
   /**
    *
    *
-   * @param {any} e
+   * @param {object} event
    * @returns {object} object
    *
    * @memberOf OwnDocumentList
@@ -66,9 +63,9 @@ class OwnDocumentList extends React.Component {
   }
 
   /**
+   * onSelect event for pagination
    *
-   *
-   * @param {any} pageNo
+   * @param {Number} pageNo
    *@returns {object}object
    * @memberOf OwnDocumentList
    */
@@ -78,10 +75,10 @@ class OwnDocumentList extends React.Component {
   }
 
   /**
+   * onSubmit event
    *
-   *
-   * @param {any} e
-   * @param {any} documentId
+   * @param {object} e
+   * @param {Number} documentId
    *@returns{object}object
    * @memberOf OwnDocumentList
    */
@@ -90,17 +87,15 @@ class OwnDocumentList extends React.Component {
     const title = e.target.title.value;
     const access = e.target.access.value;
     const content = this.state.content;
-    // const id = this.state.id;
     const documentDetails = { id: documentId, title, access, content };
     this.props.updateDocument(documentDetails);
   }
 
   /**
+   *fieldChange event
    *
-   *
-   * @param {any} e
+   * @param {object} e
    * @returns {object}object
-   *
    * @memberOf OwnDocumentList
    */
   fieldChange(e) {
@@ -108,19 +103,20 @@ class OwnDocumentList extends React.Component {
   }
 
   /**
+   *Handles delete document
    *
-   *
-   * @param {any} id
+   * @param {Number} id
    *@returns{object} object
    * @memberOf OwnDocumentList
    */
   deleteDoc(id) {
     this.props.deleteDocument(id);
   }
+
    /**
+   *Handles editor change
    *
-   *
-   * @param {any} e
+   * @param {object} e
    *@returns{object}object
    * @memberOf DocumentList
    */
@@ -129,7 +125,7 @@ class OwnDocumentList extends React.Component {
   }
 
   /**
-   *
+   * render method
    *
    * @returns{object}object
    *
@@ -137,21 +133,39 @@ class OwnDocumentList extends React.Component {
    */
   render() {
     let pagination = null;
+    let totalCount = null;
     let doc = null;
     const deleteButton = (
-      <Button waves="light" className="btn-floating red darken-2 left">
+      <Button waves="light" id="deleteDocs" className="btn-floating red darken-2 left">
         <i className="large material-icons">delete</i>
       </Button>
     );
     const readMoreButton = (
-      <Button className="read-more" waves="red">READ MORE</Button>
-      // <Link to="#" className="read-more" waves="light">READ MORE</Link>
+      <a
+        href="readmore"
+        className="read-more"
+      >READ MORE</a>
     );
     if (this.props.documentDetails !== undefined &&
-      this.props.documentDetails.rows !== undefined) {
-      doc = this.props.documentDetails.rows;
-      pagination = this.props.documentDetails.pagination;
+      this.props.documentDetails.rows.userDocuments !== undefined) {
+      doc = this.props.documentDetails.rows.userDocuments.documents.rows;
+      pagination = this.props.documentDetails.rows.pagination;
+      totalCount = (pagination.total_count);
     }
+
+    let noDoc = null;
+
+    if (totalCount === 0) {
+      noDoc = (
+        <div className="container">
+          <div className="row center-align">
+            <div style={{ padding: '20px' }} />
+            <h5>Sorry there are no documents to display.</h5>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div>
         <input
@@ -160,6 +174,9 @@ class OwnDocumentList extends React.Component {
           placeholder="search for documents here..."
           onChange={e => this.onSearch(e)} name="search"
         />
+
+        { noDoc }
+
         {doc ?
           <div className="row">
             {doc.map(document =>
@@ -167,37 +184,33 @@ class OwnDocumentList extends React.Component {
                 <div className="col s3">
                   <div
                     className="card white darken-1 activator"
-                    style={{
-                      height: 185, backgroundImage: `url(${imagePath})`
-                    }}
+                    style={{ height: 185 }}
                   >
                     <div
-                      className="card-image waves-effect waves-block
-                    waves-light"
+                      className="card-action"
+                      id="card-container"
+                      style={{ opacity: 0.9 }}
                     >
-                      <a className="btn activator">PREVIEW</a>
-                    </div>
-
-                    <div className="card-reveal black-text">
-                      <DocumentTitle title={document.title} />
-                      <DocumentContent content={renderHTML(document.content)} />
-                    </div>
-
-                    <div className="card-action">
-                      <div className>{document.title}</div>
-                      <strong><div className="right">{document.access}</div>
-                      </strong>
+                      <h5
+                        style={{ color: '#26a69a' }}
+                      >{document.title}
+                      </h5>
+                      <h6 style={{ fontSize: '19px', marginTop: '7px' }}>
+                        Access: {document.access}
+                      </h6>
+                      <br />
                       <a>Published: {moment(document.createdAt)
                         .format('MMMM Do YYYY')}
                       </a> <br />
 
                       <div className="card-action">
                         <Modal
-                          header="Edit Document"
+                          header="Edit Document" id="editDocument"
                           trigger={
                             <Button
-                              modal="close" waves="light"
+                              modal="close" waves="light" id="update"
                               className="btn-floating  teal darken-2 left"
+                              style={{ marginRight: '5px' }}
                             >
                               <i className="large material-icons">mode_edit
                                 </i></Button>
@@ -239,6 +252,7 @@ class OwnDocumentList extends React.Component {
                             <Button
                               modal="close" className="teal darken-2"
                               waves="light"
+                              id="updateDocument"
                               type="submit"
                             >UPDATE</Button>
                           </form>
@@ -246,7 +260,7 @@ class OwnDocumentList extends React.Component {
                         <Prompt
                           trigger={
                             <Button
-                              waves="light"
+                              waves="light" id="deleteButton"
                               className="btn-floating red darken-2 left"
                             >
                               <i className="large material-icons">delete</i>
@@ -263,7 +277,6 @@ class OwnDocumentList extends React.Component {
                           maxHeight: '100%',
                           width: '100%',
                           bottom: '0%',
-                          top: '-1'
                         }}
                         actions={
                           <h2
@@ -288,23 +301,24 @@ class OwnDocumentList extends React.Component {
               </div>
                 )}
           </div>
-          : <div>No document</div>}
+          : <h1>No document</h1>}
         {Pagination ? <Pagination
           items={Pagination.page_count}
-          activePage={2} maxButtons={5} onSelect={e => this.onSelect(e)}
+          activePage={1} maxButtons={5} onSelect={e => this.onSelect(e)}
         /> : ''}
       </div>
 
     );
   }
 }
+
 OwnDocumentList.propTypes = {
   fetchOwnDocuments: React.PropTypes.func.isRequired,
   searchOwnDocuments: React.PropTypes.func.isRequired,
   updateDocument: React.PropTypes.func.isRequired,
   deleteDocument: React.PropTypes.func.isRequired,
-  // documentDetails: React.PropTypes.object.isRequired
 };
+
 const mapDispatchToProps = dispatch => ({
   updateDocument: documentDetails =>
     dispatch(DocumentAction.updateDocument(documentDetails)),

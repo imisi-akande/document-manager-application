@@ -1,8 +1,6 @@
-import React, { propTypes } from 'react';
-import { Modal, Button, Row, Input, Pagination, Table } from 'react-materialize';
+import React from 'react';
+import { Button, Input } from 'react-materialize';
 import { connect } from 'react-redux';
-import jwtDecode from 'jwt-decode';
-import { Link } from 'react-router';
 import * as userAction from '../../actions/UserAction';
 
 /**
@@ -12,6 +10,13 @@ import * as userAction from '../../actions/UserAction';
  * @extends {React.Component}
  */
 class EditUsers extends React.Component {
+
+  /**
+   * Creates an instance of EditUsers.
+   *
+   * @param {object} props
+   * @memberOf EditUsers
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -31,23 +36,9 @@ class EditUsers extends React.Component {
     this.isEditing = this.isEditing.bind(this);
   }
 
-  /**
-   *
-   *
-   * @param {any} event
-   * @returns
-   *
-   * @memberOf EditUsers
-   */
-  onChange(event) {
-    const field = event.target.name;
-    const user = this.state.user;
-    user[field] = event.target.value;
-    return this.setState({ user });
-  }
 
   /**
-   *
+   * @returns {Undefined} nothing
    *
    *
    * @memberOf EditUsers
@@ -72,10 +63,25 @@ class EditUsers extends React.Component {
   }
 
   /**
+   * onChange event
+   *
+   * @param {object} event
+   * @returns{object}object
+   *
+   * @memberOf EditUsers
+   */
+  onChange(event) {
+    const field = event.target.name;
+    const user = this.state.user;
+    user[field] = event.target.value;
+    return this.setState({ user });
+  }
+
+  /**
    *
    *
-   * @param {any} event
-   *
+   * @param {object} event
+   *@returns{object}object
    * @memberOf EditUsers
    */
   onSubmit(event) {
@@ -88,9 +94,10 @@ class EditUsers extends React.Component {
   }
 
   /**
+   *Edit user
    *
-   *
-   *
+   *@param {object} event
+   *@returns{object}object
    * @memberOf EditUsers
    */
   isEditing() {
@@ -99,6 +106,13 @@ class EditUsers extends React.Component {
     });
   }
 
+  /**
+   * render edit user
+   *
+   * @return{object}object
+   *
+   * @memberOf EditUsers
+   */
   render() {
     const userDetails = this.state.user;
     const isEditing = this.state.isEditing;
@@ -118,20 +132,20 @@ class EditUsers extends React.Component {
 
             <tr>
               <td><Input
-                s={6} label="firstname" name="firstName"
+                s={6} name="firstName"
                 value={userDetails.firstName} onChange={this.onChange}
               /></td>
               <td><Input
-                s={6} label="lastName" name="lastName"
+                s={6} name="lastName"
                 value={userDetails.lastName} onChange={this.onChange}
               /></td>
               <td><Input
-                s={6} label="userName" name="userName"
+                s={6}name="userName"
                 value={userDetails.userName} onChange={this.onChange}
               /></td>
               <td><Input
-                s={6} label="email" name="email"
-                label="email" value={userDetails.email}
+                s={6} name="email"
+                value={userDetails.email}
                 onChange={this.onChange}
               /></td>
               <td>{userDetails.roleId === 1 ? 'Admin' :
@@ -162,7 +176,8 @@ class EditUsers extends React.Component {
                 <td>{userDetails.lastName}</td>
                 <td>{userDetails.userName}</td>
                 <td>{userDetails.email}</td>
-                <td>{userDetails.roleId === 1 ? 'Admin' : userDetails.roleId === 2 ? 'regular' : 'Guest'}</td>
+                <td>{userDetails.roleId === 1 ? 'Admin'
+                  : userDetails.roleId === 2 ? 'regular' : 'Guest'}</td>
                 <td><Button
                   waves="light"
                   onClick={this.isEditing}
@@ -182,10 +197,11 @@ class EditUsers extends React.Component {
 
 
 EditUsers.propTypes = {
-  user: React.PropTypes.array.isRequired
+  user: React.PropTypes.array.isRequired,
+  currentUser: React.PropTypes.object.isRequired,
 };
 
-const mapStoreToProps = (state) => ({
+const mapStoreToProps = state => ({
   currentUser: state.user[0],
   user: state.user
 });

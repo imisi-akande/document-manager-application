@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import * as roleActions from '../actions/RoleAction';
 import RoleForm from '../components/role/RoleForm';
 
-
 /**
  *
  *
@@ -14,8 +13,8 @@ class ManageRolePage extends React.Component {
 
   /**
    * Creates an instance of ManageRolePage.
-   * @param {any} props
    *
+   * @param {object} props
    * @memberOf ManageRolePage
    */
   constructor(props) {
@@ -30,10 +29,10 @@ class ManageRolePage extends React.Component {
   }
 
   /**
+   *update roles
    *
-   *
-   * @param {any} event
-   * @returns{any} any
+   * @param {object} event
+   * @returns{object} object
    *
    * @memberOf ManageRolePage
    */
@@ -45,10 +44,10 @@ class ManageRolePage extends React.Component {
   }
 
   /**
+   *Save role
    *
-   *
-   * @param {any} event
-   * @returns{any} any
+   * @param {object} event
+   * @returns{object} object
    * @memberOf ManageRolePage
    */
   saveRole(event) {
@@ -61,14 +60,14 @@ class ManageRolePage extends React.Component {
   /**
    *
    *
-   * @returns{any} any
+   * @returns{object} object
    *
    * @memberOf ManageRolePage
    */
   render() {
     return (
       <div>
-        <h5>Add Role</h5>
+        <h5 style={{ marginLeft: '650px', marginTop: '50px' }}>Add Role</h5>
         <RoleForm
           role={this.state.role}
           onChange={this.updateRoleState}
@@ -85,22 +84,22 @@ ManageRolePage.contextTypes = {
 };
 
 ManageRolePage.propTypes = {
-  role: React.PropTypes.object.isRequired,
   saveRole: React.PropTypes.func.isRequired,
+  role: React.PropTypes.func.isRequired,
 };
 /**
  *
- * @param {any} dispatch
- * @returns {any} any
+ * @param {object} dispatch
+ * @returns {object} object
  */
 const mapDispatchToProps = dispatch => ({
   saveRole: role => dispatch(roleActions.roleSaver(role))
 });
 /**
+ *dispatch document actions
  *
- * dispatch document actions
- * @param {any} state
- * @returns {any}any
+ * @param {object} state
+ * @returns {object}object
  */
 const mapStateToProps = () => {
   const role = { id: '', title: '', createdAt: '', updatedAt: '' };

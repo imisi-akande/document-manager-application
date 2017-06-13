@@ -9,7 +9,7 @@
     "webpack:dev": "webpack -w",
     "mocha": "NODE_ENV=test mocha --compilers js:babel-core/register server/tests/**/*.js --timeout 15000",
     "test": "NODE_ENV=test npm run test:scripts",
-    "test-fe": "jest --watch --coverage client/tests/",
+    "test-fe": "jest --watch --coverage client/tests/test",
     "test:scripts": "npm run migrate:test:db && npm run coverage ",
     "migrate:db": "NODE_ENV=development sequelize db:migrate",
     "db:test:seed": "NODE_ENV=test sequelize db:seed:all",
@@ -22,7 +22,7 @@
   },
   "jest": {
     "setupFiles": [
-      "./client/tests/components/setupFile.js"
+      "./client/tests/test/components/setupFile.js"
     ]
   },
   "keywords": [

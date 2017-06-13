@@ -4,9 +4,9 @@ import initialState from './InitialState';
 
 /**
  *
- * @param {any} [state=initialState.user]
- * @param {any} action object
- * @returns
+ * @param {object} [state=initialState.user]
+ * @param {object} action object
+ * @returns{object} object
  */
 export default function AuthReducer(state = initialState.user, action) {
   switch (action.type) {

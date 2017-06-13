@@ -21,7 +21,7 @@ class UserListRow extends React.Component {
 
   /**
    * Creates an instance of UserListRow.
-   * @param {any} props
+   * @param {object} props
    *
    * @memberOf UserListRow
    */
@@ -42,10 +42,10 @@ class UserListRow extends React.Component {
   }
 
   /**
+   * onChange event
    *
-   *
-   * @param {any} e
-   * @returns {any} any
+   * @param {object} e
+   * @returns {object} object
    *
    * @memberOf UserListRow
    */
@@ -54,11 +54,10 @@ class UserListRow extends React.Component {
   }
 
   /**
+   * Search Users list
    *
-   *
-   * @param {any} e
-   * @returns{any} any
-   *
+   * @param {object} e
+   * @returns{object} object
    * @memberOf UserListRow
    */
   onSearch(e) {
@@ -67,10 +66,10 @@ class UserListRow extends React.Component {
   }
 
   /**
+   *submit user's event
    *
-   *
-   * @param {any} e
-   *@returns{function} any
+   * @param {object} e
+   *@returns{object} object
    * @memberOf UserListRow
    */
   onSubmit(e) {
@@ -86,21 +85,21 @@ class UserListRow extends React.Component {
   }
 
  /**
+   *validate admin user
    *
-   *
-   * @param {any} user
-   * @param {any} doc
-   * @returns {any} any
+   * @param {object} user
+   * @param {object} doc
+   * @returns {object} object
    *
    * @memberOf DocumentList
    */
-  validateAdmin(user) {
+  validateAdmin() {
     return Auth.validateAdmin(this.props.currentUser);
   }
   /**
+   * Delete user
    *
-   *
-   * @param {any} id
+   * @param {number} id
    *@returns {object} object
    * @memberOf UserListRow
    */
@@ -109,7 +108,7 @@ class UserListRow extends React.Component {
   }
 
   /**
-   *
+   *List of users profile
    *
    * @returns {object} object
    *
@@ -127,57 +126,57 @@ class UserListRow extends React.Component {
             'regular' : 'Guest'}</td>
         {this.validateAdmin(this.props.user) ?
           <Modal
-          header="Edit User"
-          trigger={
-            <td><Button
-              modal="close" waves="light"
-              className="btn-floating btn-large teal darken-2"
-            >
-              <i className="large material-icons">mode_edit</i>
-            </Button></td>
+            header="Edit User"
+            trigger={
+              <td><Button
+                modal="close" waves="light"
+                className="btn-floating btn-large teal darken-2"
+              >
+                <i className="large material-icons">mode_edit</i>
+              </Button></td>
           }
-        >
-          <form
-            className="col s12" method="post" onSubmit={e =>
-                this.onSubmit(e)}
           >
-            <Row>
-              <Input
-                s={6} label="firstName" name="firstName"
-                value={this.state.firstName} onChange={this.onChange}
-              />
-              <Input
-                s={6} label="lastName" name="lastName"
-                value={this.state.lastName} onChange={this.onChange}
-              />
-            </Row>
+            <form
+              className="col s12" method="post" onSubmit={e =>
+                this.onSubmit(e)}
+            >
+              <Row>
+                <Input
+                  s={6} label="firstName" name="firstName"
+                  value={this.state.firstName} onChange={this.onChange}
+                />
+                <Input
+                  s={6} label="lastName" name="lastName"
+                  value={this.state.lastName} onChange={this.onChange}
+                />
+              </Row>
 
-            <Row>
-              <Input
-                s={6} label="userName" name="userName"
-                value={this.state.userName} onChange={this.onChange}
-              />
-              <Input
-                s={6} label="email" name="email"
-                value={this.state.email}
-                onChange={this.onChange}
-              />
-            </Row>
+              <Row>
+                <Input
+                  s={6} label="userName" name="userName"
+                  value={this.state.userName} onChange={this.onChange}
+                />
+                <Input
+                  s={6} label="email" name="email"
+                  value={this.state.email}
+                  onChange={this.onChange}
+                />
+              </Row>
 
-            {userRoleId === 1 ? <Row>
-              <Input
-                s={6} label="roleId" name="roleId"
-                value={this.state.roleId} onChange={e =>
+              {userRoleId === 1 ? <Row>
+                <Input
+                  s={6} label="roleId" name="roleId"
+                  value={this.state.roleId} onChange={e =>
                     this.onChange(e)}
-              />
-            </Row> : ''}
+                />
+              </Row> : ''}
 
-            <Button
-              className="teal darken-2" waves="light"
-              type="submit"
-            >UPDATE</Button>
-          </form>
-        </Modal> : ''}
+              <Button
+                className="teal darken-2" waves="light"
+                type="submit"
+              >UPDATE</Button>
+            </form>
+          </Modal> : ''}
         { userRoleId === 1 ?
           <Prompt
             trigger={
@@ -189,7 +188,7 @@ class UserListRow extends React.Component {
               </Button>
                       }
             onClickFunction={
-                  (e) => { this.deleteUser(user.id); }
+                  () => { this.deleteUser(user.id); }
                 }
           /> :
           ''
@@ -203,7 +202,7 @@ UserListRow.propTypes = {
   deleteUser: React.PropTypes.func.isRequired,
   searchUsers: React.PropTypes.func.isRequired,
   updateUser: React.PropTypes.func.isRequired,
-  currentUser: React.PropTypes.object.isRequired
+  currentUser: React.PropTypes.array.isRequired
 };
 const mapDispatchToProps = dispatch => ({
   updateUser: (userDetails, userId) => dispatch(UserAction

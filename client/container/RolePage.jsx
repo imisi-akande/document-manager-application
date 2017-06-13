@@ -11,6 +11,13 @@ import RoleList from '../components/role/RoleList';
  * @extends {React.Component}
  */
 class Role extends React.Component {
+
+  /**
+   * Creates an instance of Role.
+   * @param {obect} props
+   *
+   * @memberOf Role
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -19,28 +26,28 @@ class Role extends React.Component {
     this.redirectToRolePage = this.redirectToRolePage.bind(this);
   }
  /**
+  *delete role
   *
-  *
-  * @param {any} id
-  *
+  * @param {number} id
+  *@returns{object}object
   * @memberOf Role
   */
   deleteRole(id) {
     this.props.deleteRole(id);
   }
   /**
-   *
-   *
+   *load roles
    *
    * @memberOf Role
+   * @returns {object}object
    */
   componentWillMount() {
     this.props.loadRoles();
   }
 /**
+ *redirect role page
  *
- *
- *
+ *@returns {object} object
  * @memberOf Role
  */
   redirectToRolePage() {
@@ -48,9 +55,9 @@ class Role extends React.Component {
   }
 
   /**
+   *renders rolelist
    *
-   *
-   * @returns
+   * @returns{object} object
    *
    * @memberOf Role
    */
@@ -74,7 +81,6 @@ class Role extends React.Component {
 
 Role.propTypes = {
   roles: PropTypes.array.isRequired,
-  deleteRole: PropTypes.array.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -85,8 +91,8 @@ const mapDispatchToProps = dispatch => ({
 /**
  *
  *
- * @param {any} state
- * @returns {any} -h
+ * @param {object} state
+ * @returns {object} -h
  */
 const mapStateToProps = state => ({
   roles: state.roles

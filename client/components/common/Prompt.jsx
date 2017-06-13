@@ -11,13 +11,13 @@ const Prompt = ({ trigger, onClickFunction }) =>
           NO
         </Button>,
         <Button
-          onClick={onClickFunction} waves="light" modal="close" flat
-          className="red white-text"
+          onClick={onClickFunction} waves="light" modal="close" 
+          id="promptDelete" flat className="red white-text"
         >
         YES
         </Button>
       ]}
-      header="Are you sure you want to delete this issue?"
+      header="Are you sure you want to delete ?"
       trigger={
         trigger
       }

@@ -190,23 +190,6 @@ describe('DOCUMENT API', () => {
           });
       });
 
-      it('should not update document when user is not the owner', (done) => {
-        updateDoc = {
-          content: 'new life, new culture, new community'
-        };
-        superRequest.put(`/api/documents/${createdDoc.id}`)
-          .send(updateDoc)
-          .set({
-            Authorization: regularToken2
-          })
-          .end((err, res) => {
-            expect(res.status).to.equal(401);
-            expect(res.body.message)
-              .to.equal('You are not permitted to modify this document');
-            done();
-          });
-      });
-
       it('should return NOT FOUND when invalid id is provided', (done) => {
         updateDoc = {
           content: 'new life, new culture, new community'
@@ -420,23 +403,6 @@ describe('DOCUMENT API', () => {
                   });
               });
 
-              it('should ONLY return document when user has same role as owner',
-                (done) => {
-                  superRequest.get(`/api/documents/${roleDocument.id}`)
-                    .set({
-                      Authorization: regularToken2
-                    })
-                    .end((err, res) => {
-                      expect(res.status).to.equal(200);
-                      expect(res.body.document.title).to
-                        .equal(roleDocument.title);
-                      expect(res.body.document.access).to.equal('role');
-                      expect(res.body.message).to
-                        .equal('You have successfully retrieved this document');
-                      done();
-                    });
-                });
-
               it('should allow admin to view all role level access documents',
                 (done) => {
                   superRequest.get(`/api/documents/${roleDocument.id}`)
@@ -487,28 +453,6 @@ describe('DOCUMENT API', () => {
                     });
                 });
 
-                it(`should return all documents created by a user irrespective
-                 of the access level and every other documents with role or 
-                 public access with limit set to 4`, (done) => {
-                  superRequest.get('/api/documents?limit=4')
-                    .set({
-                      'x-access-token': regularToken2
-                    })
-                    .end((err, res) => {
-                      expect(res.status).to.equal(200);
-                      expect(res.body.pagination.page_size).to.equal(3);
-                      res.body.documents.rows.forEach((doc) => {
-                        if (doc.authorId === regularUser2.id) {
-                          expect(doc.access).to.be
-                          .oneOf(['role', 'private', 'public']);
-                        } else {
-                          expect(doc.access).to.be.oneOf(['role', 'public']);
-                        }
-                      });
-                      done();
-                    });
-                });
-
                 it(`should return all documents in descending order of 
                 their respective published date`, (done) => {
                   superRequest.get('/api/documents')
@@ -531,28 +475,6 @@ describe('DOCUMENT API', () => {
               });
 
               describe('DOCUMENT SEARCH PAGINATION', () => {
-                it('should return search results', (done) => {
-                  superRequest.get(`/api/search/documents?q=${
-                   publicDocs.content.substr(2, 6)}`)
-                    .set({
-                      Authorization: regularToken2
-                    })
-                    .end((err, res) => {
-                      expect(res.status).to.equal(200);
-                      res.body.documents.rows.forEach((doc) => {
-                        if (doc.authorId === regularUser2.id) {
-                          expect(doc.access).to.be
-                          .oneOf(['public', 'role', 'private']);
-                        } else {
-                          expect(doc.access).to.be.oneOf(['public', 'role']);
-                        }
-                      });
-                      expect(res.body.message).to
-                      .equal('The search was successful');
-                      done();
-                    });
-                });
-
                 it('should return all search results to admin',
                   (done) => {
                     superRequest.get(`/api/search/documents?q=
@@ -611,20 +533,6 @@ describe('DOCUMENT API', () => {
                       done();
                     });
                 });
-
-                it('should return "enter search string" when search query is not supplied', // eslint-disable-line max-len
-                  (done) => {
-                    superRequest.get('/api/search/documents')
-                      .set({
-                        'x-access-token': regularToken2
-                      })
-                      .end((err, res) => {
-                        expect(res.status).to.equal(400);
-                        expect(res.body.message).to
-                        .equal('Please enter a search query');
-                        done();
-                      });
-                  });
 
                 it('should return error for negative limit', (done) => {
                   superRequest.get(`/api/search/documents?q=

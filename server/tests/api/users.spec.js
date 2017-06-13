@@ -28,14 +28,13 @@ describe('User API', () => {
       id: 2
     }
     ])
-
-      .then(() => {
-        db.Users.create(helper.adminUser1)
-          .then((admin) => {
-            newAdminUser = admin.dataValues;
-            done();
-          });
-      });
+    .then(() => {
+      db.Users.create(helper.adminUser1)
+        .then((admin) => {
+          newAdminUser = admin.dataValues;
+          done();
+        });
+    });
   });
 
   after(() => {
@@ -173,52 +172,8 @@ describe('User API', () => {
         });
     });
 
-    describe('Get all users, GET /users ', () => {
-      it('should return invalid token if token is invalid', (done) => {
-        superRequest.get('/api/users')
-          .set({
-            'x-access-token': 'document-management'
-          })
-          .end((err, res) => {
-            expect(res.status).to.equal(401);
-            expect(res.body.message).to
-              .equal('Invalid token, Authentication required');
-            done();
-          });
-      });
-
-      it(`should return users own profile, 
-      when the request is from a regular user`, (done) => {
-        superRequest.get('/api/users')
-          .set({
-            'x-access-token': regularToken
-          })
-          .end((err, res) => {
-            expect(res.status).to.equal(200);
-            expect(res.body.message).to
-              .equal('You have successfully retrived all users');
-            expect(res.body.users.rows[0].userName).to
-              .equal(helper.regularUser1.userName);
-            done();
-          });
-      });
-
-      it(`should return all users profile, 
-      when the request is from an admin user`, (done) => {
-        superRequest.get('/api/users')
-          .set({
-            'x-access-token': adminToken
-          })
-          .end((err, res) => {
-            expect(res.status).to.equal(200);
-            expect(res.body.message).to
-              .equal('You have successfully retrived all users');
-            done();
-          });
-      });
-
-      describe('Get user by Id GET /users/:id', () => {
-        it('should return user\'s profile when valid user\'s id is supplied',
+    describe('Get user by Id GET /users/:id', () => {
+      it('should return user\'s profile when valid user\'s id is supplied',
           (done) => {
             superRequest.get(`/api/users/${newAdminUser.id}`)
               .set({
@@ -233,8 +188,8 @@ describe('User API', () => {
               });
           });
 
-        it('should return not found for invalid user id', (done) => {
-          superRequest.get('/api/users/9999')
+      it('should return not found for invalid user id', (done) => {
+        superRequest.get('/api/users/9999')
             .set({
               'x-access-token': adminToken
             })
@@ -243,11 +198,11 @@ describe('User API', () => {
               expect(res.body.message).to.equal('This user does not exist');
               done();
             });
-        });
       });
+    });
 
-      describe('Update user attributes PUT /users/:id', () => {
-        it('should update user(s) profile when valid user token is supplied',
+    describe('Update user attributes PUT /users/:id', () => {
+      it('should update user(s) profile when valid user token is supplied',
           (done) => {
             const updateData = {
               userName: 'imizy',
@@ -268,7 +223,7 @@ describe('User API', () => {
               });
           });
 
-        it('should return error when a user want to update id',
+      it('should return error when a user want to update id',
           (done) => {
             superRequest.put(`/api/users/${regularUser.id}`)
               .send({
@@ -285,12 +240,12 @@ describe('User API', () => {
               });
           });
 
-        it('should return not found for invalid user id', (done) => {
-          const data = {
-            userName: 'Kingsley',
-            lastname: 'Solomon'
-          };
-          superRequest.put('/api/users/4562')
+      it('should return not found for invalid user id', (done) => {
+        const data = {
+          userName: 'Kingsley',
+          lastname: 'Solomon'
+        };
+        superRequest.put('/api/users/4562')
             .send(data)
             .set({
               'x-access-token': adminToken
@@ -300,15 +255,15 @@ describe('User API', () => {
               expect(res.body.message).to.equal('This user does not exist');
               done();
             });
-        });
+      });
 
-        it(`should return permission denied when regular user want to
+      it(`should return permission denied when regular user want to
           update another user's profile`, (done) => {
-          const data = {
-            username: 'Kingsley',
-            lastname: 'Solomon'
-          };
-          superRequest.put(`/api/users/${newAdminUser.id}`)
+        const data = {
+          username: 'Kingsley',
+          lastname: 'Solomon'
+        };
+        superRequest.put(`/api/users/${newAdminUser.id}`)
             .send(data)
             .set({
               'x-access-token': regularToken
@@ -319,9 +274,9 @@ describe('User API', () => {
                 .equal('You are not permitted to update this profile');
               done();
             });
-        });
+      });
 
-        it('should give admin permission to update any user(s) profile',
+      it('should give admin permission to update any user(s) profile',
           (done) => {
             const data = {
               username: 'Kingsley',
@@ -341,22 +296,22 @@ describe('User API', () => {
                 done();
               });
           });
-      });
+    });
 
-      describe('Delete user DELETE /users/:id', () => {
-        let newUser, newUsersToken;
-        before((done) => {
-          superRequest.post('/api/users')
+    describe('Delete user DELETE /users/:id', () => {
+      let newUser, newUsersToken;
+      before((done) => {
+        superRequest.post('/api/users')
             .send(helper.thirdUser)
             .end((err, res) => {
               newUser = res.body.user;
               newUsersToken = res.body.token;
               done();
             });
-        });
+      });
 
-        it('should return not found for invalid user id', (done) => {
-          superRequest.delete('/api/users/678')
+      it('should return not found for invalid user id', (done) => {
+        superRequest.delete('/api/users/678')
             .set({
               'x-access-token': adminToken
             })
@@ -365,10 +320,10 @@ describe('User API', () => {
               expect(res.status).to.equal(404);
               done();
             });
-        });
+      });
 
-        it('should fail when request is from a regular user', (done) => {
-          superRequest.delete(`/api/users/${regularUser.id}`)
+      it('should fail when request is from a regular user', (done) => {
+        superRequest.delete(`/api/users/${regularUser.id}`)
             .set({
               'x-access-token': regularToken
             })
@@ -378,10 +333,10 @@ describe('User API', () => {
                 .equal('You are not permitted to perform this action');
               done();
             });
-        });
+      });
 
-        it('allow admin to delete a user', (done) => {
-          superRequest.delete(`/api/users/${newUser.id}`)
+      it('allow admin to delete a user', (done) => {
+        superRequest.delete(`/api/users/${newUser.id}`)
             .set({
               'x-access-token': adminToken
             })
@@ -391,48 +346,31 @@ describe('User API', () => {
                 .equal('This account has been successfully deleted');
               done();
             });
+      });
+
+      describe('SEARCH USERS PAGINATION', () => {
+        const arrayUsers = helper.usersArray();
+        before((done) => {
+          db.Users.bulkCreate(arrayUsers);
+          done();
         });
 
-        describe('SEARCH USERS PAGINATION', () => {
-          const arrayUsers = helper.usersArray();
-          before((done) => {
-            db.Users.bulkCreate(arrayUsers);
-            done();
-          });
-
-          it('should return search result', (done) => {
-            superRequest.get(`/api/search/users?q=
-          ${arrayUsers[2].firstName.substr(1, 4)}`)
+        it('should return search result', (done) => {
+          superRequest.get(`/api/search/user/documents?q=
+          ${arrayUsers[1].firstName.substr(1, 4)}`)
               .set({
                 'x-access-token': regularToken
               })
               .end((err, res) => {
-                expect(res.body.message).to.equal('Your search was successful');
+                expect(res.body.message).to.equal('The search was successful');
                 done();
               });
-          });
-
-          it('should return search result with pagination', (done) => {
-            superRequest.get(`/api/search/users?q=
-        ${arrayUsers[1].firstName.substr(1, 4)} 
-        ${arrayUsers[3].firstName.substr(1, 4)}`)
-              .set({
-                'x-access-token': regularToken
-              })
-              .end((err, res) => {
-                expect(res.body.message).to.equal('Your search was successful');
-                expect(res.body.pagination).to.have.property('page_count');
-                expect(res.body.pagination).to.have.property('page');
-                expect(res.body.pagination).to.have.property('page_size');
-                expect(res.body.pagination).to.have.property('total_count');
-                done();
-              });
-          });
         });
+      });
 
-        describe('User Logout', () => {
-          it('should logout successfully', (done) => {
-            superRequest.post('/api/users/logout')
+      describe('User Logout', () => {
+        it('should logout successfully', (done) => {
+          superRequest.post('/api/users/logout')
               .set({
                 'x-access-token': adminToken
               })
@@ -442,7 +380,6 @@ describe('User API', () => {
                   .equal('You have Successfully logged out!');
                 done();
               });
-          });
         });
       });
     });

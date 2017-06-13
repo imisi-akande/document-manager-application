@@ -98,10 +98,10 @@ const DocumentController = {
   },
   listMyDocuments(req, res) {
     db.Documents.findAll({
-        where: {
-          authorId: req.params.userId
-        }
-      })
+      where: {
+        authorId: req.params.userId
+      }
+    })
       .then(docs => res.status(200).send(docs));
   },
   /**
@@ -131,7 +131,50 @@ const DocumentController = {
             pagination
           });
       });
-  }
+  },
+
+  searchUserDocuments(req, res) {
+    req.dmsFilter.attributes = DocumentHelper.getDocumentAttribute();
+    const userDocuments = {};
+    db.Documents
+      .findAndCountAll(req.dmsFilter)
+      .then((documents) => {
+        const condition = {
+          count: documents.count,
+          limit: req.dmsFilter.limit,
+          offset: req.dmsFilter.offset
+        };
+        delete documents.count;
+        const pagination = Helper.pagination(condition);
+        userDocuments.documents = documents;
+        res.status(200)
+          .send({
+            message: 'The search was successful',
+            userDocuments,
+            pagination
+          });
+      });
+    // req.dmsFilter.attributes = DocumentHelper.getDocumentAttribute();
+    // const userDocuments = {};
+    // db.Documents
+    //   .findAndCountAll(req.dmsFilter)
+    //   .then((docs) => {
+    //     const condition = {
+    //       count: docs.count,
+    //       limit: req.dmsFilter.limit,
+    //       offset: req.dmsFilter.offset
+    //     };
+    //     delete docs.count;
+    //     const pagination = Helper.pagination(condition);
+    //     userDocuments.documents = docs;
+    //     return res.status(200)
+    //       .send({
+    //         message: 'This user\'s documents was successfully retrieved',
+    //         userDocuments,
+    //         pagination
+    //       });
+    //   });
+  },
 };
 
 export default DocumentController;

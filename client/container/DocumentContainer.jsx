@@ -15,8 +15,8 @@ class DocumentContainer extends React.Component {
 
   /**
    * Creates an instance of DocumentContainer.
-   * @param {any} props
-   * @param {any} context
+   * @param {object} props
+   * @param {object} context
    *
    * @memberOf DocumentContainer
    */
@@ -37,9 +37,9 @@ class DocumentContainer extends React.Component {
   }
 
   /**
+   * Handles form submit
    *
-   *
-   * @param {any} event
+   * @param {object} event
    * @returns{function} object
    * @memberOf DocumentContainer
    */
@@ -50,11 +50,10 @@ class DocumentContainer extends React.Component {
   }
 
   /**
+   *Handles editor change
    *
-   *
-   * @param {any} event
+   * @param {object} event
    * @returns {object} object
-   *
    * @memberOf DocumentContainer
    */
   handleEditorChange(event) {
@@ -64,9 +63,9 @@ class DocumentContainer extends React.Component {
   }
 
   /**
+   * Update document state
    *
-   *
-   * @param {any} event
+   * @param {object} event
    * @returns{object} object
    *
    * @memberOf DocumentContainer
@@ -79,7 +78,7 @@ class DocumentContainer extends React.Component {
   }
 
   /**
-   *
+   * renders document form and document markdown
    *
    * @returns {object} object
    *
@@ -123,10 +122,10 @@ DocumentContainer.propTypes = {
 };
 
 /**
+ * map action dispatched
  *
- *
- * @param {any} dispatch
- * @returns {any} any
+ * @param {object} dispatch
+ * @returns {object} object
  */
 const mapDispatchToProps = dispatch => ({
   fetchDocuments: () => dispatch(documentAction.fetchDocuments()),
@@ -134,10 +133,10 @@ const mapDispatchToProps = dispatch => ({
 });
 
 /**
+ *map state to props
  *
- *
- * @param {any} state
- * @returns {any} any
+ * @param {object} state
+ * @returns {object} object
  */
 const mapStateToProps = () => {
   const document = { title: '', content: '', access: '', authorId: '' };

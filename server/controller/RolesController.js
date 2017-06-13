@@ -46,6 +46,7 @@ const RoleController = {
         });
       });
   },
+
   /**
     * Update roles
     * Route: PUT: /roles/:id
@@ -86,10 +87,11 @@ const RoleController = {
           });
       });
   },
+
   /**
    * retrieve -  return a role
-   * @param {Object}  request request object
-   * @param {Object}  response response object
+   * @param {Object}  req request object
+   * @param {Object}  res response object
    * @returns {void} - returns void
    */
   getRoleById(req, res) {

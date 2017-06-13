@@ -449,13 +449,8 @@ const authenticate = {
         ? {}
         : { id: req.decoded.userId };
     }
-    if (`${req.baseUrl}${req.route.path}` === '/api/search/documents') {
-      if (!req.query.q) {
-        return res.status(400)
-          .send({
-            message: 'Please enter a search query'
-          });
-      }
+    if (`${req.baseUrl}${req.route.path}` === '/api/search/documents'
+    ) {
       if (Helper.isAdmin(req.decoded.roleId)) {
         query.where = {
           $or: [
@@ -502,6 +497,8 @@ const authenticate = {
     req.dmsFilter = query;
     next();
   },
+
+
   /**
    * Get a single user's document
    * @param {Object} req req object
@@ -532,6 +529,98 @@ const authenticate = {
       })
       .catch(error => res.status(500).send(error.errors));
   },
+
+
+   /**
+   *  Validate user search
+   *
+   * @param {Object} req req object
+   * @param {Object} res response object
+   * @param {Object} next Move to next controller handler
+   * @returns {void|Object} response object or void
+   */
+  validateDocumentSearch(req, res, next) {
+    const query = {};
+    const terms = [];
+    const userQuery = req.query.q;
+    const searchArray =
+      userQuery ? userQuery.toLowerCase().match(/\w+/g) : null;
+    const limit = req.query.limit || 10;
+    const offset = req.query.offset || 0;
+    const publishedDate = req.query.publishedDate;
+    const order =
+      publishedDate && publishedDate === 'ASC' ? publishedDate : 'DESC';
+
+    if (limit < 0 || !/^([1-9]\d*|0)$/.test(limit)) {
+      return res.status(400)
+        .send({
+          message: 'Only positive number is allowed for limit value'
+        });
+    }
+    if (offset < 0 || !/^([1-9]\d*|0)$/.test(offset)) {
+      return res.status(400)
+        .send({
+          message: 'Only positive number is allowed for offset value'
+        });
+    }
+
+    if (searchArray) {
+      searchArray.forEach((word) => {
+        terms.push(`%${word}%`);
+      });
+    }
+    query.limit = limit;
+    query.offset = offset;
+    query.order = [['createdAt', order]];
+
+    if (`${req.baseUrl}${req.route.path}` === '/api/search/users') {
+      if (!req.query.q) {
+        return res.status(400)
+          .send({
+            message: 'Please enter a search query'
+          });
+      }
+      query.where = {
+        $or: [
+          { userName: { $iLike: { $any: terms } } },
+          { firstName: { $iLike: { $any: terms } } },
+          { lastName: { $iLike: { $any: terms } } },
+          { email: { $iLike: { $any: terms } } }
+        ]
+      };
+    }
+    if (`${req.baseUrl}${req.route.path}` === '/api/users/') {
+      query.where = Helper.isAdmin(req.decoded.roleId) ||
+       Helper.isRegular(req.decoded.roleId)
+        ? {}
+        : { id: req.decoded.userId };
+    }
+    if (`${req.baseUrl}${req.route.path}` === '/api/search/user/documents') {
+      if (Helper.isAdmin(req.decoded.roleId)) {
+        query.where = {
+          $or: [
+          { title: { $iLike: { $any: terms } } },
+          { content: { $iLike: { $any: terms } } },
+          ]
+        };
+        query.include = [{
+          model: db.Users,
+          attributes: { exclude: ['password'] }
+        }];
+      } else {
+        query.where = {
+          $and: [DocumentHelper.documentAccess(req), Helper.likeSearch(terms)]
+        };
+        query.include = [{
+          model: db.Users,
+          attributes: { exclude: ['password'] }
+        }];
+      }
+    }
+    req.dmsFilter = query;
+    next();
+  },
+
   /**
    * Get a single user's profile
    * @param {Object} req req object

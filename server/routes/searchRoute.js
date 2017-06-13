@@ -47,4 +47,10 @@ searchRoutes.route('/documents')
     authenticate.validateSearch,
     DocumentController.searchDocuments);
 
+searchRoutes.route('/user/documents')
+  .get(authenticate.verifyToken,
+    authenticate.validateSearch,
+    DocumentController.searchUserDocuments);
+
+
 export default searchRoutes;

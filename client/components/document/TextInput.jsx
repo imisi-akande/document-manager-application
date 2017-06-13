@@ -29,11 +29,11 @@ const TextInput = ({ name, label, onChange, error, type }) => {
   );
 };
 
-TextInput.propTypes = {
-  name: React.PropTypes.object.isRequired,
-  label: React.PropTypes.object.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  error: React.PropTypes.object.isRequired,
-  type: React.PropTypes.object.isRequired,
-};
+// TextInput.propTypes = {
+//   name: React.PropTypes.object.isRequired,
+//   label: React.PropTypes.object.isRequired,
+//   onChange: React.PropTypes.func.isRequired,
+//   error: React.PropTypes.object.isRequired,
+//   type: React.PropTypes.object.isRequired,
+// };
 export default TextInput;

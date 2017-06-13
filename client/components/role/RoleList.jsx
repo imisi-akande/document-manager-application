@@ -18,9 +18,5 @@ const RoleList = ({ roles, deleteRole }) => (<table className="striped">
 
   </tbody>
 </table>);
-RoleList.propTypes = {
-  deleteRole: React.PropTypes.func.isRequired,
-  roles: React.PropTypes.func.isRequired,
-};
 
 export default RoleList;

@@ -77,7 +77,7 @@ const Register = (props) => {
                     id="email"
                   />
                   <label
-                    htmlFor="email" html="email" data-error="wrong"
+                    htmlFor="email" name="email" data-error="wrong"
                     data-success="right"
                   >Enter your email</label>
                 </div>
@@ -91,7 +91,7 @@ const Register = (props) => {
                   />
                   <label
                     htmlFor="password" data-error="wrong"
-                    data-success="right" htm="password"
+                    data-success="right" name="password"
 
                   >
                   Enter your password</label>
@@ -106,7 +106,7 @@ const Register = (props) => {
                   />
                   <label
                     htmlFor="password" data-error="wrong"
-                    data-success="right" html="password"
+                    data-success="right" name="password"
                   >
                   Confirm password</label>
                 </div>
@@ -136,7 +136,7 @@ const Register = (props) => {
 Register.propTypes = {
   saveUser: React.PropTypes.func.isRequired,
 };
-// we map our dispatch to custom saveUser props
+
 const mapDispatchToProps = dispatch => ({
   saveUser: user => dispatch(userActions.saveUser(user))
 });

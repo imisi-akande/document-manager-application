@@ -26,7 +26,8 @@ class DocumentPage extends React.Component {
 
 
   /**
-   * componentDidMount
+   *fetch user's document
+   *
    * @param {props}  void
    * @return {fetchDocuments} function
    */
@@ -36,10 +37,10 @@ class DocumentPage extends React.Component {
 
   /**
    *
-   * @param {any} event
-   * @results {any} any
+   * @param {object} event
+   * @results {object} object
    * @memberOf SearchDocument
-   * @returns {any}any
+   * @returns {object}object
    */
   onChange(event) {
     this.setState({ [event.target.name]: event.target.value });
@@ -70,8 +71,8 @@ class DocumentPage extends React.Component {
 /**
  *
  *
- * @param {any} dispatch
- * @returns {any}any
+ * @param {object} dispatch
+ * @returns {object}object
  */
 const mapDispatchToProps = dispatch => ({
   documentSaver: documents => dispatch(documentAction.documentSaver(documents)),
@@ -85,8 +86,8 @@ DocumentPage.propTypes = {
 /**
  *
  *
- * @param {any} state
- * @returns {any}any
+ * @param {object} state
+ * @returns {object}object
  */
 const mapStateToProps = state => ({
   documents: state.documents

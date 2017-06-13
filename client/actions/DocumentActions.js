@@ -123,7 +123,7 @@ export const fetchOwnDocuments = () => {
         'x-access-token': getToken()
       })
       .end((err, res) => {
-        dispatch(getOwnDocumentSuccess(res.body.userDocuments));
+        dispatch(getOwnDocumentSuccess(res.body));
       });
   };
 };
@@ -136,9 +136,6 @@ export const documentSaver = document => (dispatch) => {
         'x-access-token': getToken()
       })
       .end((err, res) => {
-        if (err) {
-          return err;
-        }
         dispatch(createDocumentSuccess(res.body.document));
         browserHistory.push('/documents');
       });
@@ -149,20 +146,22 @@ export const documentSaver = document => (dispatch) => {
  *
  * @export
  * @param {object} document
+ * @param {object} isAdmin
  * @returns {Object}updated documents
  */
-export const updateDocument = document => (dispatch) => {
+export const updateDocument = (document, isAdmin) => (dispatch) => {
   request
       .put(`/api/documents/${document.id}`)
       .send(document)
       .set({
         'x-access-token': getToken()
       })
-      .end((err) => {
-        if (err) {
-          return err;
+      .end(() => {
+        if (isAdmin) {
+          dispatch(fetchDocuments());
+        } else {
+          dispatch(fetchOwnDocuments());
         }
-        dispatch(fetchOwnDocuments());
       });
 };
 
@@ -170,7 +169,7 @@ export const updateDocument = document => (dispatch) => {
  * Delete documents action
  *
  * @export
- * @param {any} id
+ * @param {number} id
  * @returns {Object}object
  */
 export const deleteDocument = id => (dispatch) => {
@@ -179,11 +178,7 @@ export const deleteDocument = id => (dispatch) => {
       .set({
         'x-access-token': getToken()
       })
-      .end((err, res) => {
-        Materialize.toast(res.body.message, 4000, 'rounded');
-        if (err) {
-          return err;
-        }
+      .end(() => {
         dispatch(deleteDocumentSuccess(id));
       });
 };

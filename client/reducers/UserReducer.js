@@ -3,11 +3,11 @@ import initialState from './InitialState';
 
 
 /**
- *
+ *user reducer
  *
  * @export
- * @param {any} [state=initialState.allUsers]
- * @param {any} action
+ * @param {object} [state=initialState.allUsers]
+ * @param {object} action
  * @returns {object} object
  */
 export default function userReducer(state = initialState.allUsers, action) {

@@ -10,7 +10,7 @@ const documentsReducer = (state = initialState.documents, action) => {
     case types.LOAD_OWN_DOCUMENT_SUCCESS:
       return {
         documents: {
-          rows: action.documents.documents.rows
+          rows: action.documents
         } };
     case types.CREATE_DOCUMENT_SUCCESS:
       return [...state, action.document];

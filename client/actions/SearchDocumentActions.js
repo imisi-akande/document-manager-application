@@ -13,8 +13,8 @@ export const getDocumentSuccess = documents => ({
  * getowndocumentsuccess
  *
  * @export
- * @param {any} documents  returned documents from api call
- * @returns {any} action and action types
+ * @param {object} documents  returned documents from api call
+ * @returns {object} action and action types
  */
 export const getOwnDocumentSuccess = documents => ({
   type: types.LOAD_OWN_DOCUMENT_SUCCESS,
@@ -48,7 +48,7 @@ export function searchDocuments(queryString, offset = 0) {
  * search own documents
  *
  * @export
- * @param {any} queryString
+ * @param {object} queryString
  * @param {number} [offset=0]
  * @returns {object}} object
  */
@@ -56,7 +56,7 @@ export function searchOwnDocuments(queryString, offset = 0) {
   getToken();
   return (dispatch) => {
     request
-     .get(`/api/search/documents/?q=${queryString}&offset=${offset}`)
+     .get(`/api/search/user/documents/?q=${queryString}&offset=${offset}`)
     .set({ 'x-access-token': getToken() })
     .end((err, res) => {
       if (queryString) {

@@ -15,8 +15,9 @@ class ManageUserPage extends React.Component {
 
   /**
    * Creates an instance of ManageUserPage.
-   * @param {any} props
-   * @param {any} context
+   *
+   * @param {object} props
+   * @param {object} context
    * @memberOf ManageUserPage
    */
   constructor(props, context) {
@@ -31,10 +32,10 @@ class ManageUserPage extends React.Component {
   }
 
   /**
+   *update user state
    *
-   *
-   * @param {any} event
-   *@returns {any} any
+   * @param {object} event
+   *@returns {object} object
    * @memberOf ManageUserPage
    */
   updateUserState(event) {
@@ -45,9 +46,10 @@ class ManageUserPage extends React.Component {
   }
 
   /**
+   *save user instance
    *
-   *@param {any} event
-   *@returns {any} any
+   *@param {object} event
+   *@returns {object} object
    *
    * @memberOf ManageUserPage
    */
@@ -60,7 +62,7 @@ class ManageUserPage extends React.Component {
   }
 
   /**
-   *
+   *Render the component
    *
    * @returns{object} object
    *
@@ -85,9 +87,10 @@ ManageUserPage.propTypes = {
 };
 
 /**
- *
- * @param {any} dispatch
- * @returns {any} any
+ *map dispatched action to props
+ * 
+ * @param {object} dispatch
+ * @returns {object} object
  */
 const mapDispatchToProps = dispatch => ({
   saveUser: user => dispatch(userAction.saveUser(user)),
@@ -97,8 +100,9 @@ const mapDispatchToProps = dispatch => ({
 /**
  *
  * dispatch user actions
- * @param {any} state
- * @returns {any} any
+ *
+ * @param {object} state
+ * @returns {object} object
  */
 const mapStateToProps = () => {
   const user = { firstName: '',

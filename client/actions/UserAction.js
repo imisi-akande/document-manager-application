@@ -82,8 +82,12 @@ export const saveUser = user => (dispatch) => {
       if (err) {
         return err;
       }
-      dispatch(createUserSuccess(user));
-      browserHistory.push('/login');
+      Object.assign({}, res.body.user, {
+        token: res.body.token
+      });
+      localStorage.setItem('dms-user', res.body.token);
+      browserHistory.push('/documents');
+      dispatch(setCurrentUser(jwtDecode(res.body.token)));
     });
 };
 
@@ -103,7 +107,6 @@ export const fetchAllUsers = offset =>
         'x-access-token': getToken()
       })
       .end((err, res) => {
-        Materialize.toast(res.body.message, 4000, 'rounded');
         dispatch(getUserSuccess(res.body));
         resolve();
       });
@@ -124,15 +127,11 @@ export const login = userCredentials =>
       .post('/api/users/login')
       .send(userCredentials)
       .end((err, res) => {
-        Materialize.toast(res.body.message, 4000, 'rounded');
-        if (err) {
-          return err;
-        }
         Object.assign({}, res.body.user, {
           token: res.body.token
         });
         localStorage.setItem('dms-user', res.body.token);
-        browserHistory.push('/');
+        browserHistory.push('/documents');
         dispatch(setCurrentUser(jwtDecode(res.body.token)));
       });
   };

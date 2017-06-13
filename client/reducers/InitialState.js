@@ -1,6 +1,12 @@
 export default {
   roles: [],
-  documents: [],
+  documents: {
+    message: '',
+    documents: {
+      rows: []
+    },
+    pagination: {}
+  },
   user: [],
   allUsers: {}
 };

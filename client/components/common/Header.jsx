@@ -85,6 +85,7 @@ const renderIfLoggedIn = () => {
               <NavItem>
                 <Link
                   to="/mydocuments"
+                  id="myDocuments"
                   activeClassName="active"
                   className="right"
                 >
@@ -94,32 +95,18 @@ const renderIfLoggedIn = () => {
               <NavItem divider />
             </Dropdown>
           </li>
-
           <li>
             {
               userRoleId === 1
                 ?
-                  <Dropdown trigger={rolesButton}>
-                    <NavItem>
-                      <Link
-                        to="/role"
-                        activeClassName="active"
-                        className="right"
-                      >
-                        Add Role
-                      </Link>
-                    </NavItem>
-                    <NavItem divider />
-                    <NavItem>
-                      <Link
-                        to="/roles"
-                        activeClassName="active"
-                        className="right"
-                      >
+                  <Link
+                    to="/roles"
+                    activeClassName="active"
+                    className="right"
+                    id="rolesButton"
+                  >
                         Roles
                       </Link>
-                    </NavItem>
-                  </Dropdown>
                 :
                   null
             }
@@ -157,6 +144,7 @@ const renderIfLoggedIn = () => {
         <Link
           to="/signup" activeClassName="active"
           className="right"
+          id="Signup"
         >Sign up</Link>
       </li>
     </ul>
@@ -170,7 +158,7 @@ const Header = () => (
 
       <IndexLink
         to="/" activeClassName="active"
-        className="brand-logo"
+        className="brand-logo" id="logo"
       >smartDocx</IndexLink>
       {renderIfLoggedIn()}
 

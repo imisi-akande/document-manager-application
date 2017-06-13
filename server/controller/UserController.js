@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import db from '../models';
 import UserHelper from '../ControllerHelper /UserHelper';
 import DocumentHelper from '../ControllerHelper /DocumentHelper';
-import authenticate from '../middleware/Authenticate';
 import Helpers from '../Helper/utility';
 
 dotenv.config();
@@ -221,7 +220,11 @@ const UserController = {
     db.Users
       .create(req.userInput)
       .then((user) => {
-        const token = authenticate.getToken(user);
+        const token = jwt.sign({ userId: user.id,
+          roleId: user.roleId,
+          username: user.userName,
+          email: user.email },
+          secretKey, { expiresIn: '1 day' });
         user = UserHelper.userProfile(user);
         return res.status(201)
           .send({
