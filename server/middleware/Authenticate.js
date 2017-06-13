@@ -140,20 +140,7 @@ const authenticate = {
     };
     next();
   },
-    /**
-   * generateToken generates token for authentication
-   * @param {Object} user object
-   * @returns {Object} jwt
-   * @param {Object} request object
-   * @param {Object} response object
-   */
-  generateToken(user) {
-    // a callback is supplied, callback is called with the err or the JWT.
-    return jwt.sign({
-      userId: user.id,
-      roleId: user.roleId,
-    }, secretKey, { expiresIn: '1 day' });
-  },
+
   /**
    * Check for role edit and delete permission
    * @param {Object} req req object
@@ -609,7 +596,11 @@ const authenticate = {
         }];
       } else {
         query.where = {
-          $and: [DocumentHelper.documentAccess(req), Helper.likeSearch(terms)]
+          $and: [{ title: {
+            $ilike: {
+              $any: searchArray,
+            },
+          }, }, { authorId: req.decoded.userId }]
         };
         query.include = [{
           model: db.Users,
@@ -632,30 +623,6 @@ const authenticate = {
     db.Users
       .findOne({
         where: { id: req.params.id },
-      })
-      .then((user) => {
-        if (!user) {
-          return res.status(404)
-            .send({
-              message: 'This user does not exist'
-            });
-        }
-        req.getUser = user;
-        next();
-      })
-      .catch(err => res.status(500).send(err.errors));
-  },
-  /**
-   * Get a single user's profile
-   * @param {Object} req req object
-   * @param {Object} res response object
-   * @param {Object} next Move to next controller handler
-   * @returns {void|Object} response object or void
-   */
-  getUserName(req, res, next) {
-    db.Users
-      .findOne({
-        where: { userName: req.query.q },
       })
       .then((user) => {
         if (!user) {
