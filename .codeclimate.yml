@@ -1,0 +1,16 @@
+exclude_paths:
+  - "**/tests/"
+  - "**/config
+  - "docs/"
+  - "coverage/"
+  - "reports/"
+  - "node_modules/"
+  - "**/spec/"
+
+ratings:
+   paths:
+   - "client/**/*.jsx"
+   - "client/**/*.js"
+   - "server/**/*.jsx"
+   - "server/**/*.js"
+ 
