@@ -33,7 +33,7 @@ Features
 - Sequelize ORM  
 
 ### **Installation Steps**
-* Clone the project repository from your terminal `git clone https://github.com/andela-moseni/document-mgt-system.git`
+* Clone the project repository from your terminal `git clone https://github.com/andela-iakande/document-manager-application`
 * Change directory into the `document-mgt-system` directory
 * Run `npm install` to install the dependencies in the `package.json` file
 * Run `npm run start` to start the project
