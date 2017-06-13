@@ -1,4 +1,3 @@
-### document-manager-app
 
 ### document-manager-app
 
