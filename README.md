@@ -4,7 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/andela-iakande/document-manager-application/badge.svg?branch=development)](https://coveralls.io/github/andela-iakande/document-manager-application?branch=development)
 [![Build Status](https://travis-ci.org/andela-iakande/document-manager-application.svg?branch=development)](https://travis-ci.org/andela-iakande/document-manager-application)
 
-Document management system is an application that is employed by users to manage their documents in a well structured manner. A User will able to upload a document, edit it and share it with other users. Aside from enabling users to properly document their work with regard to category, the application permits users to work collaboratively on documents.
+Document management system is an application that is employed by users to manage their documents in a well structured manner. A User will be able to upload a document, edit it and share it with other users. Aside from enabling users to properly document their work with regard to category, the application permits users to work collaboratively on documents.
 To access the application [!click here](https://smartdocx.herokuapp.com/)
 
 Document Management System provides a restful API and friend users interface for users to create and manage documents giving different privileges based on user roles and managing authentication using Json Web Token (JWT). The API has routes, each dedicated to a single task that uses HTTP response codes to indicate API status and errors.
@@ -23,7 +23,7 @@ Features
 - Search for documents 
 - Search for users
 - Check own documents
-- With admin access you manage users and change user roles
+- With admin access you manage users and delete roles
 
 ## Technologies Used
 - JavaScript (ES6)
