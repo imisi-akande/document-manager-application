@@ -60,6 +60,7 @@ export const createRoleSuccess = role => ({
 
 /**
  * create new role
+ *
  * POST /roles/
  * @param  {object} role role object to be svaed
  * @return {object}      response from api

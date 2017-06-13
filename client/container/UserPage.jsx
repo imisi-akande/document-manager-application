@@ -6,7 +6,21 @@ import { browserHistory } from 'react-router';
 import * as userActions from '../actions/UserAction';
 import UserList from '../components/user/UserList';
 
+
+/**
+ * User Page
+ *
+ * @class User
+ * @extends {React.Component}
+ */
 class User extends React.Component {
+
+  /**
+   * Creates an instance of User.
+   * @param {any} props
+   *
+   * @memberOf User
+   */
   constructor(props) {
     super(props);
     this.state = {
@@ -16,15 +30,34 @@ class User extends React.Component {
     this.onSelect = this.onSelect.bind(this);
   }
 
+  /**
+   *
+   *
+   *@returns {object}object
+   * @memberOf User
+   */
   redirectToRolePage() {
     browserHistory.push('/user');
   }
 
+  /**
+   *Onselect pageNo
+   *
+   * @param {Number} pageNo
+   *@returns{object}object
+   * @memberOf User
+   */
   onSelect(pageNo) {
     const offset = (pageNo - 1) * 10;
     this.props.actions.fetchAllUsers(offset);
   }
 
+  /**
+   *
+   *@returns{object}object
+   *
+   * @memberOf User
+   */
   componentWillMount() {
     this.props.actions.fetchAllUsers(0)
     .then(() => {
@@ -34,6 +67,13 @@ class User extends React.Component {
     });
   }
 
+  /**
+   *
+   *
+   * @returns{object}object
+   *
+   * @memberOf User
+   */
   render() {
     const allUsers = this.props.allUsers;
     let users, pagination;
@@ -41,8 +81,7 @@ class User extends React.Component {
       users = allUsers.users.rows;
       pagination = allUsers.pagination;
     }
-    // const users = allUsers.users.rows;
-    // const pagination = allUsers.pagination;
+
     let paginationData;
     if (pagination) {
       paginationData = (
@@ -52,7 +91,8 @@ class User extends React.Component {
         />
         );
     }
-    // if (users.pagination) {
+
+
     return (
       <div>
         {

@@ -167,7 +167,10 @@ class DocumentList extends React.Component {
     let pagination = null;
     let doc = [];
     const deleteButton = (
-      <Button waves="light" id="deletebutton" className="btn-floating red darken-2 left">
+      <Button
+        waves="light" id="deletebutton"
+        className="btn-floating red darken-2 left"
+      >
         <i className="large material-icons">delete</i>
       </Button>
     );

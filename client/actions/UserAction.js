@@ -79,9 +79,6 @@ export const saveUser = user => (dispatch) => {
     .send(user)
     .end((err, res) => {
       Materialize.toast(res.body.message, 4000, 'rounded');
-      if (err) {
-        return err;
-      }
       Object.assign({}, res.body.user, {
         token: res.body.token
       });
@@ -161,10 +158,6 @@ export const fetchProfile = userId => dispatch => new Promise((resolve) => {
         'x-access-token': getToken()
       })
       .end((err, res) => {
-        Materialize.toast(res.body.message, 4000, 'rounded');
-        if (err) {
-          return err;
-        }
         dispatch(setCurrentUser(res.body.user));
         resolve();
       });
@@ -187,10 +180,6 @@ export const updateUser = (user, userId) =>
       })
       .send(user)
       .end((err, res) => {
-        Materialize.toast(res.body.message, 4000, 'rounded');
-        if (err) {
-          return err;
-        }
         browserHistory.push('/users');
         dispatch(updateUserSuccess(res.body.updatedUser, userId));
       });
@@ -211,10 +200,6 @@ export const deleteUser = id => (dispatch) => {
         'x-access-token': getToken()
       })
       .end((err, res) => {
-        Materialize.toast(res.body.message, 4000, 'rounded');
-        if (err) {
-          return err;
-        }
         dispatch(deleteUserSuccess(res.body.document));
       });
 };

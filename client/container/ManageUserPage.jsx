@@ -88,7 +88,7 @@ ManageUserPage.propTypes = {
 
 /**
  *map dispatched action to props
- * 
+ *
  * @param {object} dispatch
  * @returns {object} object
  */

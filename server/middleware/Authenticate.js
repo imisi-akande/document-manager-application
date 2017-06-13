@@ -449,8 +449,8 @@ const authenticate = {
         ? {}
         : { id: req.decoded.userId };
     }
-    if (`${req.baseUrl}${req.route.path}` === '/api/search/documents'
-    ) {
+    if (`${req.baseUrl}${req.route.path}` === '/api/search/documents' ||
+      `${req.baseUrl}${req.route.path}` === '/api/search/user/documents') {
       if (Helper.isAdmin(req.decoded.roleId)) {
         query.where = {
           $or: [
