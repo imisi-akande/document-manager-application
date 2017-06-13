@@ -31,7 +31,7 @@ const Register = (props) => {
               <div className="input-field col s12">
                 <input
                   className="validate" type="text" name="firstName"
-                  id="firstName"
+                  id="firstName" required
                 />
                 <label htmlFor="email">firstName</label>
               </div>
@@ -42,7 +42,7 @@ const Register = (props) => {
               <div className="input-field col s12">
                 <input
                   className="validate" type="text" name="lastName"
-                  id="lastName"
+                  id="lastName" required
                 />
                 <label htmlFor="email">lastName</label>
               </div>
@@ -53,7 +53,7 @@ const Register = (props) => {
               <div className="input-field col s12">
                 <input
                   className="validate" type="text" name="userName"
-                  id="userName"
+                  id="userName" required
                 /><label htmlFor="userName">userName</label>
               </div>
             </div>
@@ -63,7 +63,7 @@ const Register = (props) => {
               <div className="input-field col s12">
                 <input
                   className="validate" type="email" name="email"
-                  id="email"
+                  id="email" required
                 />
                 <label
                   htmlFor="email" html="email" data-error="wrong"
@@ -76,7 +76,7 @@ const Register = (props) => {
               <div className="input-field col s12">
                 <input
                   className="validate" type="password"
-                  name="password" id="password"
+                  name="password" id="password" required
                 />
                 <label
                   htmlFor="password" data-error="wrong"

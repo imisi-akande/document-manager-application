@@ -196,7 +196,9 @@ class DocumentList extends React.Component {
         <div className="container">
           <div className="row center-align">
             <div style={{ padding: '20px' }} />
-            <h5>Sorry there are no documents to display.</h5>
+            <h5>Sorry there are no documents to display.</h5> <br />
+            <h5><a href="/documents">Click here to search for another document
+              </a></h5>
           </div>
         </div>
       );

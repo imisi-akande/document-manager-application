@@ -68,31 +68,48 @@ describe('ROLE API', () => {
           done();
         });
     });
+    it('should not allow regular user to create a role', (done) => {
+      superRequest.post('/api/users')
+        .send(helper.regularUser2)
+        .end((err, res) => {
+          regularToken = res.body.token;
+          superRequest.post('/api/roles')
+            .send(helper.sampleRole)
+            .set({ 'x-access-token': regularToken })
+            .end((er, re) => {
+              expect(re.status).to.equal(401);
+              expect(re.body.message).to
+                .equal('You are not permitted to perform this action');
+              done();
+            });
+        });
+    });
+  });
 
-    describe('DELETE ROLE, DELETE /roles', () => {
-      before((done) => {
-        superRequest.post('/api/roles')
+  describe('DELETE ROLE, DELETE /roles', () => {
+    before((done) => {
+      superRequest.post('/api/roles')
         .send(helper.guestRole1)
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
           role = res.body.role;
           done();
         });
-      });
+    });
 
-      it('should delete a role', (done) => {
-        superRequest.delete(`/api/roles/${role.id}`)
+    it('should delete a role', (done) => {
+      superRequest.delete(`/api/roles/${role.id}`)
         .set({ 'x-access-token': adminToken })
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.message).to.equal('This role has been deleted');
           done();
         });
-      });
+    });
 
-      const roleArray = [1, 2];
-      roleArray.forEach((roleId) => {
-        it(`should not allow admin to delete role with id ${roleId}`,
+    const roleArray = [1, 2];
+    roleArray.forEach((roleId) => {
+      it(`should not allow admin to delete role with id ${roleId}`,
          (done) => {
            superRequest.delete(`/api/roles/${roleId}`)
               .set({ 'x-access-token': adminToken })
@@ -103,32 +120,64 @@ describe('ROLE API', () => {
                 done();
               });
          });
+      it('should not allow regular user to delete a role', (done) => {
+        superRequest.delete(`/api/roles/${role.id}`)
+              .set({ 'x-access-token': regularToken })
+              .end((er, re) => {
+                expect(re.status).to.equal(401);
+                expect(re.body.message).to
+                  .equal('You are not permitted to perform this action');
+                done();
+              });
+      });
+      it('should return id not found for invalid id', (done) => {
+        superRequest.delete('/api/roles/999')
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('This role does not exist');
+          done();
+        });
+      });
+    });
 
-        describe('GET BY ID', () => {
-          before((done) => {
-            superRequest.post('/api/roles')
+
+    describe('GET BY ID', () => {
+      before((done) => {
+        superRequest.post('/api/roles')
             .send(helper.guestRole2)
             .set({ 'x-access-token': adminToken })
             .end((err, res) => {
               role = res.body.role;
               done();
             });
-          });
+      });
 
-          describe('UPDATE PUT /api/roles/:id', () => {
-            let newRole;
-            before((done) => {
-              superRequest.post('/api/roles')
+      it('should return not found when provided with invalid id', (done) => {
+        superRequest.get('/api/roles/9999')
+        .set({ 'x-access-token': adminToken })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Role does not exists');
+          done();
+        });
+      });
+    });
+
+    describe('UPDATE PUT /api/roles/:id', () => {
+      let newRole;
+      before((done) => {
+        superRequest.post('/api/roles')
                 .send(helper.guestRole3)
                 .set({ 'x-access-token': adminToken })
                 .end((err, res) => {
                   newRole = res.body.role;
                   done();
                 });
-            });
+      });
 
-            it('should update a role when given a valid id', (done) => {
-              superRequest.put(`/api/roles/${5}`)
+      it('should update a role when given a valid id', (done) => {
+        superRequest.put(`/api/roles/${5}`)
                 .send({ title: 'andela' })
                 .set({ Authorization: adminToken })
                 .end((er, re) => {
@@ -138,9 +187,9 @@ describe('ROLE API', () => {
                   expect(re.body.updatedRole.title).to.equal('andela');
                   done();
                 });
-            });
+      });
 
-            it('should not update a role when given an empty title string',
+      it('should not update a role when given an empty title string',
              (done) => {
                superRequest.put(`/api/roles/${5}`)
                   .send({ title: '' })
@@ -153,9 +202,9 @@ describe('ROLE API', () => {
                   });
              });
 
-            const roleArray = [1, 2];
-            roleArray.forEach((roleId) => {
-              it(`should not allow admin to update role with id ${roleId}`,
+      const roleArray = [1, 2];
+      roleArray.forEach((roleId) => {
+        it(`should not allow admin to update role with id ${roleId}`,
                (done) => {
                  superRequest.put(`/api/roles/${roleId}`)
                   .send({ title: 'andela' })
@@ -168,8 +217,8 @@ describe('ROLE API', () => {
                   });
                });
 
-              it('should return not found for invalid id', (done) => {
-                superRequest.put('/api/roles/999')
+        it('should return not found for invalid id', (done) => {
+            superRequest.put('/api/roles/999')
                   .send({ title: 'talent' })
                   .set({ 'x-access-token': adminToken })
                   .end((error, resp) => {
@@ -178,20 +227,20 @@ describe('ROLE API', () => {
                     .equal('This role does not exist');
                     done();
                   });
-              });
-            });
+          });
+      });
 
-            describe('GET ALL ROLES GET /roles', () => {
-              before((done) => {
-                superRequest.post('/api/roles')
+      describe('GET ALL ROLES GET /roles', () => {
+        before((done) => {
+            superRequest.post('/api/roles')
                   .send(helper.guestRole1)
                   .set({ 'x-access-token': adminToken });
-                done();
-              });
-            });
+            done();
+          });
+      });
 
-            it('it should allow admin to view all roles', (done) => {
-              superRequest.get('/api/roles')
+      it('it should allow admin to view all roles', (done) => {
+        superRequest.get('/api/roles')
                 .set({ 'x-access-token': adminToken })
                 .end((err, res) => {
                   expect(res.status).to.equal(200);
@@ -200,8 +249,15 @@ describe('ROLE API', () => {
                   expect(res.body.roles.length).to.be.greaterThan(0);
                   done();
                 });
-            });
-          });
+      });
+      it('should not allow regular user to view all roles', (done) => {
+        superRequest.get('/api/roles')
+        .set({ 'x-access-token': regularToken })
+        .end((er, re) => {
+          expect(re.status).to.equal(401);
+          expect(re.body.message).to
+            .equal('You are not permitted to perform this action');
+          done();
         });
       });
     });

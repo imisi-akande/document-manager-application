@@ -91,13 +91,18 @@ class User extends React.Component {
         />
         );
     }
-
-
+    
     return (
       <div>
         {
           users && users.length > 0 ?
-            <UserList usersList={users} /> : <span>users</span>
+            <UserList usersList={users} /> :
+            <div className="row center-align">
+              <div style={{ padding: '20px' }} />
+              <h5>Sorry, user name does not match</h5> <br />
+              <h5><a href="/users">Click here to search for another user
+              </a></h5>
+            </div>
         }
         {paginationData}
       </div>

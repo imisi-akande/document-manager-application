@@ -44,7 +44,6 @@ describe('Middleware Test', () => {
   after(() => db.sequelize.sync({ force: true }));
 
   describe('verifyToken', () => {
-
     it('returns an error if a wrong token is passed', (done) => {
       const res = createResponse();
       const req = httpMocks.createRequest({
@@ -95,7 +94,6 @@ describe('Middleware Test', () => {
   });
 
   describe('validateAdmin', () => {
-
     it('calls the next function if the user is an admin', (done) => {
       const res = createResponse();
       const req = httpMocks.createRequest({
@@ -398,61 +396,61 @@ describe('getSingleDocument', () => {
           //   .end((error, response) => {
           //     privateDocument = response.body.document;
           //     done();
-            });
         });
   });
-  it('should not continue when document does not exist', () => {
-    const response = createResponse();
-    request = httpMocks.createRequest({
-      method: 'GET',
-      url: '/api/documents/7',
-      params: { id: 7 },
-      decoded: { userId: 2, roleId: 2 }
-    });
-    const middlewareStub = {
-      callback: () => { }
-    };
-    sinon.spy(middlewareStub, 'callback');
-    response.on('end', () => {
-      expect(response._getData().message).to
+});
+it('should not continue when document does not exist', () => {
+  const response = createResponse();
+  request = httpMocks.createRequest({
+    method: 'GET',
+    url: '/api/documents/7',
+    params: { id: 7 },
+    decoded: { userId: 2, roleId: 2 }
+  });
+  const middlewareStub = {
+    callback: () => { }
+  };
+  sinon.spy(middlewareStub, 'callback');
+  response.on('end', () => {
+    expect(response._getData().message).to
           .equal('This document cannot be found');
-    });
-    authentication.getSingleDocument(request, response, middlewareStub.callback);
   });
-  it('should not continue when document is private', () => {
-    const response = createResponse();
-    request = httpMocks.createRequest({
-      method: 'GET',
-      url: '/api/documents/2',
-      params: { id: 5 },
-      decoded: { userId: 2, roleId: 2 }
-    });
-    const middlewareStub = {
-      callback: () => { }
-    };
-    sinon.spy(middlewareStub, 'callback');
-    response.on('end', () => {
-      expect(response._getData().message).to
+  authentication.getSingleDocument(request, response, middlewareStub.callback);
+});
+it('should not continue when document is private', () => {
+  const response = createResponse();
+  request = httpMocks.createRequest({
+    method: 'GET',
+    url: '/api/documents/2',
+    params: { id: 5 },
+    decoded: { userId: 2, roleId: 2 }
+  });
+  const middlewareStub = {
+    callback: () => { }
+  };
+  sinon.spy(middlewareStub, 'callback');
+  response.on('end', () => {
+    expect(response._getData().message).to
           .equal('You are not permitted to view this document');
-    });
-    authentication.getSingleDocument(request, response, middlewareStub.callback);
   });
-  it('should continue when document is public', (done) => {
-    const response = createResponse();
-    request = httpMocks.createRequest({
-      method: 'GET',
-      url: '/api/documents/1',
-      params: { id: 1 },
-      decoded: { userId: 2, roleId: 2 }
-    });
-    const middlewareStub = {
-      callback: () => { }
-    };
-    sinon.spy(middlewareStub, 'callback');
-    authentication.getSingleDocument(request, response, middlewareStub.callback);
-    expect(middlewareStub.callback).not.to.have.been.called;
-    done();
+  authentication.getSingleDocument(request, response, middlewareStub.callback);
+});
+it('should continue when document is public', (done) => {
+  const response = createResponse();
+  request = httpMocks.createRequest({
+    method: 'GET',
+    url: '/api/documents/1',
+    params: { id: 1 },
+    decoded: { userId: 2, roleId: 2 }
   });
+  const middlewareStub = {
+    callback: () => { }
+  };
+  sinon.spy(middlewareStub, 'callback');
+  authentication.getSingleDocument(request, response, middlewareStub.callback);
+  expect(middlewareStub.callback).not.to.have.been.called;
+  done();
+});
 
 describe('hasDocumentPermission', () => {
   it('should not continue when user is not the owner of the document', () => {

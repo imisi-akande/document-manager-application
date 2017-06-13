@@ -49,7 +49,7 @@ searchRoutes.route('/documents')
 
 searchRoutes.route('/user/documents')
   .get(authenticate.verifyToken,
-    authenticate.validateSearch,
+    authenticate.validateDocumentSearch,
     DocumentController.searchUserDocuments);
 
 

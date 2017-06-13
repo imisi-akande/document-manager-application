@@ -40,7 +40,7 @@ class OwnDocumentList extends React.Component {
   }
 
   /**
-   *
+   *ComponentDidMount
    *
    *@returns {object}object
    * @memberOf OwnDocumentList
@@ -52,7 +52,7 @@ class OwnDocumentList extends React.Component {
   /**
    *
    *
-   * @param {object} event
+   * @param {object} e
    * @returns {object} object
    *
    * @memberOf OwnDocumentList
@@ -136,7 +136,10 @@ class OwnDocumentList extends React.Component {
     let totalCount = null;
     let doc = null;
     const deleteButton = (
-      <Button waves="light" id="deleteDocs" className="btn-floating red darken-2 left">
+      <Button
+        waves="light" id="deleteDocs"
+        className="btn-floating red darken-2 left"
+      >
         <i className="large material-icons">delete</i>
       </Button>
     );
