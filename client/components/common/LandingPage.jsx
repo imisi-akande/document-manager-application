@@ -16,7 +16,7 @@ const docStyle = {
  */
 const HomePage = () =>
   (
-    <div style={docStyle}>
+    <div className="background-container">
       <div className="parallax-container">
         <div id="parallax">
           <Typist className="Typist">

@@ -191,19 +191,20 @@ const UserController = {
         req.dmsFilter.where.authorId = req.params.id;
         req.dmsFilter.attributes = DocumentHelper.getDocumentAttribute();
         db.Documents.findAndCountAll(req.dmsFilter)
-          .then((docs) => {
+          .then((documents) => {
             const condition = {
-              count: docs.count,
+              count: documents.count,
               limit: req.dmsFilter.limit,
               offset: req.dmsFilter.offset
             };
-            delete docs.count;
+            delete documents.count;
             const pagination = Helpers.pagination(condition);
-            userDocuments.documents = docs;
+            // userDocuments.documents = docs;
             return res.status(200)
               .send({
                 message: 'This user\'s documents was successfully retrieved',
                 userDocuments,
+                documents,
                 pagination
               });
           });

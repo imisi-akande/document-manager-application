@@ -5,9 +5,9 @@ import * as documentAction from '../actions/DocumentActions';
 import DocumentList from '../components/document/DocumentList';
 
 /**
-  * @class DocumentPage
+  * @class MyDocumentPage
   */
-class DocumentPage extends React.Component {
+class MyDocumentPage extends React.Component {
   /**
    * @constructor constructor
    * @param {props}  props
@@ -28,10 +28,10 @@ class DocumentPage extends React.Component {
    *fetch user's document
    *
    * @param {props}  void
-   * @return {fetchDocuments} function
+   * @return {fetchOwnDocuments} function
    */
   componentWillMount() {
-    this.props.fetchDocuments();
+    this.props.fetchOwnDocuments();
   }
 
   /**
@@ -75,11 +75,11 @@ class DocumentPage extends React.Component {
  */
 const mapDispatchToProps = dispatch => ({
   documentSaver: documents => dispatch(documentAction.documentSaver(documents)),
-  fetchDocuments: () => dispatch(documentAction.fetchDocuments()),
+  fetchOwnDocuments: () => dispatch(documentAction.fetchOwnDocuments()),
   updateDocument: () => dispatch(documentAction.updateDocument())
 });
-DocumentPage.propTypes = {
-  fetchDocuments: PropTypes.any.isRequired,
+MyDocumentPage.propTypes = {
+  fetchOwnDocuments: PropTypes.any.isRequired,
   documents: PropTypes.any.isRequired,
 };
 /**
@@ -92,5 +92,5 @@ const mapStateToProps = state => ({
   documents: state.documents
 });
 
-export { DocumentPage };
-export default connect(mapStateToProps, mapDispatchToProps)(DocumentPage);
+export { MyDocumentPage };
+export default connect(mapStateToProps, mapDispatchToProps)(MyDocumentPage);

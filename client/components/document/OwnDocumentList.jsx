@@ -4,7 +4,6 @@ import TinyMCE from 'react-tinymce';
 import { Modal, Button, Row, Input, Pagination } from 'react-materialize';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import DocumentTitle from '../../components/document/DocumentListTitle';
 import DocumentContent from '../../components/document/DocumentContent';
 import * as DocumentAction from '../../actions/DocumentActions';
 import Prompt from '../../components/common/Prompt';
@@ -315,6 +314,7 @@ OwnDocumentList.propTypes = {
   searchOwnDocuments: React.PropTypes.func.isRequired,
   updateDocument: React.PropTypes.func.isRequired,
   deleteDocument: React.PropTypes.func.isRequired,
+  documentDetails: React.PropTypes.obj,
 };
 
 const mapDispatchToProps = dispatch => ({

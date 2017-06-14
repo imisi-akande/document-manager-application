@@ -628,9 +628,9 @@ describe('DOCUMENT API', () => {
                         expect(res.status).to.equal(200);
                         expect(res.body.userDocuments.user.id).to
                         .equal(regularUser.id);
-                        expect(res.body.userDocuments.documents.rows.length)
+                        expect(res.body.documents.rows.length)
                           .to.be.greaterThan(0);
-                        res.body.userDocuments.documents.rows.forEach((doc) => {
+                        res.body.documents.rows.forEach((doc) => {
                           expect(doc.access).to.be
                           .oneOf(['public', 'role', 'private']);
                         });
@@ -648,9 +648,9 @@ describe('DOCUMENT API', () => {
                           expect(res.status).to.equal(200);
                           expect(res.body.userDocuments.user.id)
                           .to.equal(regularUser.id);
-                          expect(res.body.userDocuments.documents.rows.length)
+                          expect(res.body.documents.rows.length)
                             .to.be.greaterThan(0);
-                          res.body.userDocuments.documents.rows
+                          res.body.documents.rows
                           .forEach((doc) => {
                             expect(doc.access).to.be
                             .oneOf(['public', 'role', 'private']);
@@ -669,7 +669,7 @@ describe('DOCUMENT API', () => {
                         expect(res.status).to.equal(200);
                         expect(res.body.userDocuments.user.id).to
                         .equal(regularUser.id);
-                        res.body.userDocuments.documents.rows
+                        res.body.documents.rows
                         .forEach((doc) => {
                           expect(doc.access).to.be.oneOf(['role', 'public']);
                         });

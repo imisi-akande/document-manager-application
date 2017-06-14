@@ -184,7 +184,7 @@ class DocumentList extends React.Component {
     );
 
     if (this.props.documentDetails.documents &&
-      this.props.documentDetails.documents.rows) {
+        this.props.documentDetails.documents.rows) {
       doc = this.props.documentDetails.documents.rows;
       pagination = this.props.documentDetails.pagination;
     }
@@ -369,7 +369,7 @@ DocumentList.propTypes = {
   fetchDocuments: React.PropTypes.func.isRequired,
   searchDocuments: React.PropTypes.func.isRequired,
   updateDocument: React.PropTypes.func.isRequired,
-  documentDetails: React.PropTypes.any.isRequired,
+  documentDetails: React.PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({

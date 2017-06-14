@@ -126,7 +126,7 @@ class EditUsers extends React.Component {
                 <th>lastName</th>
                 <th>userName</th>
                 <th>email</th>
-                <th>role Id</th>
+                <th>role</th>
               </tr>
             </thead>
 
@@ -167,7 +167,7 @@ class EditUsers extends React.Component {
                 <th>lastName</th>
                 <th>userName</th>
                 <th>email</th>
-                <th>role Id</th>
+                <th>role</th>
               </tr>
             </thead>
             <tbody>

@@ -14,9 +14,9 @@ const renderIfLoggedIn = () => {
       DOCUMENTS
     </Button>
   );
-  const rolesButton = (
-    <Button id="document-container3"className="right">ROLES</Button>
-  );
+  // const rolesButton = (
+  //   <Button id="document-container3"className="right">ROgjjjjLES</Button>
+  // );
 
   if (token) {
     return (

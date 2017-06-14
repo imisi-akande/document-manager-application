@@ -39,10 +39,6 @@ const authenticate = {
           // Move to the next middleware function
         next();
       });
-    // } else {
-    //   response.status(401).send({
-    //     message: 'You are not permitted to perform this action'
-    //   });
     }
   },
 
@@ -601,7 +597,6 @@ const authenticate = {
           attributes: { exclude: ['password'] }
         }];
       } else {
-       
         query.where = {
           $and: [{ title: {
             $ilike: {
@@ -609,7 +604,6 @@ const authenticate = {
             },
           }, }, { authorId: req.decoded.userId }]
         };
-
 
 
         query.include = [{

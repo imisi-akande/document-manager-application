@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 import { Pagination } from 'react-materialize';
 
 import { DocumentList } from '../../../components/document/DocumentList';
-import DocumentTitle from '../../../components/document/DocumentListTitle';
 import DocumentContent from '../../../components/document/DocumentContent';
 import Prompt from '../../../components/common/Prompt';
 
@@ -79,19 +78,6 @@ describe('DocumentLists component test', () => {
     it('renders two cards to hold document', () => {
       expect(wrapper.find('.card')).toHaveLength(2);
     });
-
-    // it('renders DocumentTitle with the two document titles passed in', () => {
-    //   const firstDocumentTitle = wrapper.find(DocumentTitle).first();
-    //   expect(firstDocumentTitle).toHaveLength(1);
-    //   console.log(firstDocumentTitle.props())
-    //   expect(firstDocumentTitle.prop('title')).toBe(
-    //     props.documentDetails.documents.rows[0].title);
-
-    //   const secondDocumentTitle = wrapper.find(DocumentTitle).at(1);
-    //   expect(secondDocumentTitle).toHaveLength(1);
-    //   expect(secondDocumentTitle.prop('title')).toBe(
-    //     props.documentDetails.documents.rows[1].title);
-    // });
 
     it('renders DocumentContent with the two document contents passed in',
     () => {

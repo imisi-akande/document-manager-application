@@ -40,28 +40,27 @@ describe('Document component test', () => {
             updatedAt: '2017-06-05T23:10:26.841Z'
           }
         ],
-        userDocuments: {
-          documents: {
-            rows: [{
-              id: 56,
-              title: 'Amity all',
-              content: 'Politics and Games',
-              access: 'public',
-              authorId: 7,
-              createdAt: '2017-06-05T19:34:52.623Z',
-              updatedAt: '2017-06-05T23:10:26.841Z'
-            },
-            {
-              id: 57,
-              title: 'Test',
-              content: 'Test docs',
-              access: 'public',
-              authorId: 8,
-              createdAt: '2017-06-05T19:34:52.623Z',
-              updatedAt: '2017-06-05T23:10:26.841Z'
-            }]
-          }
-        },
+
+        documents: {
+          rows: [{
+            id: 56,
+            title: 'Amity all',
+            content: 'Politics and Games',
+            access: 'public',
+            authorId: 7,
+            createdAt: '2017-06-05T19:34:52.623Z',
+            updatedAt: '2017-06-05T23:10:26.841Z'
+          },
+          {
+            id: 57,
+            title: 'Test',
+            content: 'Test docs',
+            access: 'public',
+            authorId: 8,
+            createdAt: '2017-06-05T19:34:52.623Z',
+            updatedAt: '2017-06-05T23:10:26.841Z'
+          }]
+        }
       },
       currentUser: {
         userId: 7,
