@@ -59,6 +59,7 @@ export function searchOwnDocuments(queryString, offset = 0) {
      .get(`/api/search/user/documents/?q=${queryString}&offset=${offset}`)
     .set({ 'x-access-token': getToken() })
     .end((err, res) => {
+      console.log(res, ' user docs');
       if (queryString) {
         dispatch(getOwnDocumentSuccess(res.body));
       } else {

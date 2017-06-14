@@ -436,8 +436,7 @@ const authenticate = {
         ? {}
         : { id: req.decoded.userId };
     }
-    if (`${req.baseUrl}${req.route.path}` === '/api/search/documents' ||
-      `${req.baseUrl}${req.route.path}` === '/api/search/user/documents') {
+    if (`${req.baseUrl}${req.route.path}` === '/api/search/documents') {
       if (Helper.isAdmin(req.decoded.roleId)) {
         query.where = {
           $or: [
@@ -459,6 +458,30 @@ const authenticate = {
         }];
       }
     }
+
+    if (`${req.baseUrl}${req.route.path}` === '/api/search/user/documents') {
+      if (Helper.isOwner(req.decoded.roleId)) {
+        query.where = {
+          $or: [
+          { title: { $iLike: { $any: terms } } },
+          { content: { $iLike: { $any: terms } } },
+          ]
+        };
+        query.include = [{
+          model: db.Users,
+          attributes: { exclude: ['password'] }
+        }];
+      } else {
+        query.where = {
+          $and: [DocumentHelper.documentAccess(req), Helper.likeSearch(terms)]
+        };
+        query.include = [{
+          model: db.Users,
+          attributes: { exclude: ['password'] }
+        }];
+      }
+    }
+
     if (`${req.baseUrl}${req.route.path}` === '/api/documents/') {
       if (Helper.isAdmin(req.decoded.roleId)) {
         query.where = {};
@@ -559,23 +582,6 @@ const authenticate = {
     query.limit = limit;
     query.offset = offset;
     query.order = [['createdAt', order]];
-
-    if (`${req.baseUrl}${req.route.path}` === '/api/search/users') {
-      if (!req.query.q) {
-        return res.status(400)
-          .send({
-            message: 'Please enter a search query'
-          });
-      }
-      query.where = {
-        $or: [
-          { userName: { $iLike: { $any: terms } } },
-          { firstName: { $iLike: { $any: terms } } },
-          { lastName: { $iLike: { $any: terms } } },
-          { email: { $iLike: { $any: terms } } }
-        ]
-      };
-    }
     if (`${req.baseUrl}${req.route.path}` === '/api/users/') {
       query.where = Helper.isAdmin(req.decoded.roleId) ||
        Helper.isRegular(req.decoded.roleId)
@@ -595,6 +601,7 @@ const authenticate = {
           attributes: { exclude: ['password'] }
         }];
       } else {
+       
         query.where = {
           $and: [{ title: {
             $ilike: {
@@ -602,6 +609,9 @@ const authenticate = {
             },
           }, }, { authorId: req.decoded.userId }]
         };
+
+
+
         query.include = [{
           model: db.Users,
           attributes: { exclude: ['password'] }

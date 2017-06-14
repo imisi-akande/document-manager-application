@@ -124,6 +124,7 @@ export const login = userCredentials =>
       .post('/api/users/login')
       .send(userCredentials)
       .end((err, res) => {
+        Materialize.toast(res.body.message, 4000, 'rounded');
         Object.assign({}, res.body.user, {
           token: res.body.token
         });

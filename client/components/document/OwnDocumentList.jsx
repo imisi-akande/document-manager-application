@@ -171,12 +171,7 @@ class OwnDocumentList extends React.Component {
 
     return (
       <div>
-        <input
-          id="doc-search"
-          type="search"
-          placeholder="search for documents here..."
-          onChange={e => this.onSearch(e)} name="search"
-        />
+
 
         { noDoc }
 

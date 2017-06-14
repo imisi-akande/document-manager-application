@@ -34,7 +34,10 @@ const renderIfLoggedIn = () => {
                 </Link>
               </NavItem>
               <NavItem>
-                <Link to="/users" activeClassName="active" className="right">
+                <Link
+                  to="/users" activeClassName="active" id="allUsers"
+                  className="right"
+                >
                   All Users
                 </Link>
               </NavItem>
