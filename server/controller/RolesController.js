@@ -8,9 +8,10 @@ const RoleController = {
  /**
     * Create a new role
     * Route: POST: /roles/
+    *
     * @param {Object} req request object
     * @param {Object} res response object
-    * @returns {void} no returns
+    * @returns {response} response object
     */
   createRole(req, res) {
     db.Roles.create(req.body)
@@ -31,9 +32,10 @@ const RoleController = {
   /**
     * Get all roles
     * Route: GET: /roles/
+    *
     * @param {Object} req request object
     * @param {Object} res response object
-    * @returns {void} no returns
+    * @returns {response} object
     */
   getAllRoles(req, res) {
     db.Roles
@@ -50,9 +52,10 @@ const RoleController = {
   /**
     * Update roles
     * Route: PUT: /roles/:id
+    *
     * @param {Object} req request object
     * @param {Object} res response object
-    * @returns {void} no returns
+    * @returns {response} object
     */
   updateRole(req, res) {
     req.roleInstance.update(req.body)
@@ -73,9 +76,10 @@ const RoleController = {
   /**
     * Delete a Role
     * Route: DELETE: /roles/:id
+    *
     * @param {Object} req request object
     * @param {Object} res response object
-    * @returns {void} no returns
+    * @returns {response} object
     */
   deleteRole(req, res) {
     req.roleInstance.destroy()
@@ -90,6 +94,7 @@ const RoleController = {
 
   /**
    * retrieve -  return a role
+   *
    * @param {Object}  req request object
    * @param {Object}  res response object
    * @returns {void} - returns void

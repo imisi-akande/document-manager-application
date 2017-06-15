@@ -58,6 +58,7 @@ class OwnDocumentList extends React.Component {
    */
   onSearch(e) {
     const queryString = e.target.value;
+    console.log('okay', queryString);
     return this.props.searchOwnDocuments(queryString);
   }
 
@@ -324,6 +325,7 @@ const mapDispatchToProps = dispatch => ({
   fetchOwnDocuments: offset =>
     dispatch(DocumentAction.fetchOwnDocuments(offset)),
   searchOwnDocuments: queryString => dispatch(searchOwnDocuments(queryString))
+
 });
 
 const mapStateToProps = state => ({

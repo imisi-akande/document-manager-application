@@ -91,12 +91,13 @@ class User extends React.Component {
         />
         );
     }
-    
+
     return (
       <div>
         {
           users && users.length > 0 ?
-            <UserList usersList={users} /> :
+            <UserList usersList={users} pagination={paginationData} />
+            :
             <div className="row center-align">
               <div style={{ padding: '20px' }} />
               <h5>Sorry, user name does not match</h5> <br />
@@ -104,7 +105,6 @@ class User extends React.Component {
               </a></h5>
             </div>
         }
-        {paginationData}
       </div>
     );
   }

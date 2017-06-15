@@ -18,7 +18,7 @@ const Register = (props) => {
     if (password === confirmPassword) {
       saveUser(user);
     } else {
-      Materialize.toast('Password does not match', 4000, 'rounded');
+      Materialize.toast('Passwords do not match', 4000, 'rounded');
     }
   };
 

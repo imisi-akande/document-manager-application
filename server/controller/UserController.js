@@ -12,6 +12,7 @@ const secretKey = process.env.SECRET;
 const UserController = {
 /**
    * Login a user
+   *
    * @param {Object} req - Request object
    * @param {Object} res - Response object
    * @returns {Object} Response object
@@ -20,7 +21,6 @@ const UserController = {
     const query = {
       where: { email: req.body.email }
     };
-    // finds the users record
     db.Users.findOne(query)
       .then((user) => {
         if (user && user.ValidatePassword(req.body.password)) {
@@ -46,6 +46,8 @@ const UserController = {
   },
   /**
    * Logout a user
+   * Route: POST: /users/logout
+   *
    * @param {Object} req - Request object
    * @param {Object} res - Response object
    * @returns {Object} Response object
@@ -56,9 +58,11 @@ const UserController = {
     res.status(200)
       .send({ message: 'You have Successfully logged out!' });
   },
+
  /**
     * Get all users
     * Route: GET: /users
+    *
     * @param {Object} req request object
     * @param {Object} res response object
     * @returns {void} no returns
@@ -84,12 +88,14 @@ const UserController = {
         }
       });
   },
+
   /**
     * Get user by id
     * Route: get: /users/:id
+    *
     * @param {Object} req request object
     * @param {Object} res response object
-    * @returns {void|Response} response object or void
+    * @returns {response} response object
     */
   FindUserById(req, res) {
     return res.status(200)
@@ -98,11 +104,13 @@ const UserController = {
         user: UserHelper.getUserProfile(req.getUser)
       });
   },
+
   /** update
    * updates a user
+   *
    * @param {Object} req object
    * @param {Object} res object
-   * @returns {void} - returns void
+   * @returns {response} - returns object
    */
   UpdateUser(req, res) {
     const errorArray = [];
@@ -125,11 +133,14 @@ const UserController = {
           });
       });
   },
+
   /**
    * deletes a user
+   * Route: DELETE: /users/:id
+   *
    * @param {Object} req object
    * @param {Object} res object
-   * @returns {void} - returns void
+   * @returns {response} - returns object
    */
   DeleteUser(req, res) {
     req.userInstance.destroy()
@@ -141,9 +152,11 @@ const UserController = {
       })
       .catch(err => res.status(500).send(err.errors));
   },
+
   /**
     * Search users
-    * Route: GET: /users/searchs?query=
+    * Route: GET: /users/search?query={}
+    *
     * @param {Object} req request object
     * @param {Object} res response object
     * @returns {void|Response} response object or void
@@ -170,9 +183,11 @@ const UserController = {
           });
       });
   },
+
   /**
     * Get all document by a user
     * Route: GET: /users/:id/documents
+    *
     * @param {Object} req request object
     * @param {Object} res response object
     * @returns {void} no returns
@@ -199,7 +214,6 @@ const UserController = {
             };
             delete documents.count;
             const pagination = Helpers.pagination(condition);
-            // userDocuments.documents = docs;
             return res.status(200)
               .send({
                 message: 'This user\'s documents was successfully retrieved',
@@ -213,6 +227,8 @@ const UserController = {
 
   /**
    * Create a user
+   * Route: POST: /users/
+   *
    * @param {Object} req - Request object
    * @param {Object} res - Response object
    * @returns {Object} Response object

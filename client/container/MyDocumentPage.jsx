@@ -58,10 +58,10 @@ class MyDocumentPage extends React.Component {
    * @returns {Object} allFiles
    */
   render() {
-    const { documents } = this.props;
+    const { documents, location } = this.props;
     return (
       <div>
-        <DocumentList documents={documents} />
+        <DocumentList documents={documents} location={location} />
       </div>
     );
   }

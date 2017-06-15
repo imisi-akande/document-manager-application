@@ -2,33 +2,33 @@ const UserHelper = {
 
   /**
    * Get user's profile'
-   * @param {Object} data object containing user's details
-   * @returns {Object} return user's data
+   * @param {Object} value object containing user's details
+   * @returns {Object} return user's value
    */
-  getUserProfile(data) {
+  getUserProfile(value) {
     return {
-      id: data.id,
-      userName: data.userName,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
+      id: value.id,
+      userName: value.userName,
+      firstName: value.firstName,
+      lastName: value.lastName,
+      email: value.email,
     };
   },
   /**
    * Get user's profile'
-   * @param {Object} data object containing user's details
-   * @returns {Object} return user's data
+   * @param {Object} value object containing user's details
+   * @returns {Object} return user's value
    */
-  userProfile(data) {
+  userProfile(value) {
     return {
-      id: data.id,
-      userName: data.userName,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      roleId: data.roleId,
-      createAt: data.createdAt,
-      updatedAt: data.updatedAt
+      id: value.id,
+      userName: value.userName,
+      firstName: value.firstName,
+      lastName: value.lastName,
+      email: value.email,
+      roleId: value.roleId,
+      createAt: value.createdAt,
+      updatedAt: value.updatedAt
     };
   },
   /**

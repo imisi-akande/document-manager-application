@@ -378,10 +378,7 @@ const authenticate = {
    */
   validateSearch(req, res, next) {
     const query = {};
-    const terms = [];
-    const userQuery = req.query.q;
-    const searchArray =
-      userQuery ? userQuery.toLowerCase().match(/\w+/g) : null;
+    const searchTerm = req.query.q;
     const limit = req.query.limit || 10;
     const offset = req.query.offset || 0;
     const publishedDate = req.query.publishedDate;
@@ -400,12 +397,6 @@ const authenticate = {
           message: 'Only positive number is allowed for offset value'
         });
     }
-
-    if (searchArray) {
-      searchArray.forEach((word) => {
-        terms.push(`%${word}%`);
-      });
-    }
     query.limit = limit;
     query.offset = offset;
     query.order = [['createdAt', order]];
@@ -419,10 +410,10 @@ const authenticate = {
       }
       query.where = {
         $or: [
-          { userName: { $iLike: { $any: terms } } },
-          { firstName: { $iLike: { $any: terms } } },
-          { lastName: { $iLike: { $any: terms } } },
-          { email: { $iLike: { $any: terms } } }
+          { userName: { $iLike: `%${searchTerm}%` } },
+          { firstName: { $iLike: `%${searchTerm}%` } },
+          { lastName: { $iLike: `%${searchTerm}%` } },
+          { email: { $iLike: `%${searchTerm}%` } }
         ]
       };
     }
@@ -436,8 +427,8 @@ const authenticate = {
       if (Helper.isAdmin(req.decoded.roleId)) {
         query.where = {
           $or: [
-          { title: { $iLike: { $any: terms } } },
-          { content: { $iLike: { $any: terms } } },
+          { title: { $iLike: `%${searchTerm}%` } },
+          { content: { $iLike: `%${searchTerm}%` } },
           ]
         };
         query.include = [{
@@ -446,7 +437,8 @@ const authenticate = {
         }];
       } else {
         query.where = {
-          $and: [DocumentHelper.documentAccess(req), Helper.likeSearch(terms)]
+          $and: [DocumentHelper.documentAccess(req),
+            Helper.likeSearch(`%${searchTerm}%`)]
         };
         query.include = [{
           model: db.Users,
@@ -459,8 +451,8 @@ const authenticate = {
       if (Helper.isOwner(req.decoded.roleId)) {
         query.where = {
           $or: [
-          { title: { $iLike: { $any: terms } } },
-          { content: { $iLike: { $any: terms } } },
+            { title: { $iLike: `%${searchTerm}%` } },
+            { content: { $iLike: `%${searchTerm}%` } },
           ]
         };
         query.include = [{
@@ -469,7 +461,8 @@ const authenticate = {
         }];
       } else {
         query.where = {
-          $and: [DocumentHelper.documentAccess(req), Helper.likeSearch(terms)]
+          $and: [DocumentHelper.documentAccess(req),
+            Helper.likeSearch(`%${searchTerm}%`)]
         };
         query.include = [{
           model: db.Users,
@@ -490,9 +483,9 @@ const authenticate = {
       }
     }
     if (`${req.baseUrl}${req.route.path}` === '/api/users/:id/documents') {
-      const adminSearch = req.query.q ? Helper.likeSearch(terms) : { };
+      const adminSearch = req.query.q ? Helper.likeSearch(`%${searchTerm}%`) : { };
       const userSearch = req.query.q
-        ? [DocumentHelper.documentAccess(req), Helper.likeSearch(terms)]
+        ? [DocumentHelper.documentAccess(req), Helper.likeSearch(`%${searchTerm}%`)]
         : DocumentHelper.documentAccess(req);
       if (Helper.isAdmin(req.decoded.roleId)) {
         query.where = adminSearch;
@@ -547,10 +540,7 @@ const authenticate = {
    */
   validateDocumentSearch(req, res, next) {
     const query = {};
-    const terms = [];
-    const userQuery = req.query.q;
-    const searchArray =
-      userQuery ? userQuery.toLowerCase().match(/\w+/g) : null;
+    const searchTerm = req.query.q;
     const limit = req.query.limit || 10;
     const offset = req.query.offset || 0;
     const publishedDate = req.query.publishedDate;
@@ -569,12 +559,6 @@ const authenticate = {
           message: 'Only positive number is allowed for offset value'
         });
     }
-
-    if (searchArray) {
-      searchArray.forEach((word) => {
-        terms.push(`%${word}%`);
-      });
-    }
     query.limit = limit;
     query.offset = offset;
     query.order = [['createdAt', order]];
@@ -588,8 +572,8 @@ const authenticate = {
       if (Helper.isAdmin(req.decoded.roleId)) {
         query.where = {
           $or: [
-          { title: { $iLike: { $any: terms } } },
-          { content: { $iLike: { $any: terms } } },
+          { title: { $iLike: `%${searchTerm}%` } },
+          { content: { $iLike: `%${searchTerm}%` } },
           ]
         };
         query.include = [{
@@ -599,9 +583,7 @@ const authenticate = {
       } else {
         query.where = {
           $and: [{ title: {
-            $ilike: {
-              $any: searchArray,
-            },
+            $ilike: `%${searchTerm}%`,
           }, }, { authorId: req.decoded.userId }]
         };
 

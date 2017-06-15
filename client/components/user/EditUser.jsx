@@ -26,7 +26,10 @@ class EditUsers extends React.Component {
         lastName: '',
         userName: '',
         email: '',
-        roleId: ''
+        roleId: '',
+        password: '',
+        confirmPassword: ''
+
       },
       isEditing: false
     };
@@ -55,7 +58,6 @@ class EditUsers extends React.Component {
         newState.userName = this.props.user[1].userName;
         newState.email = this.props.user[1].email;
         newState.roleId = currentUser.roleId;
-
         this.setState({
           newState
         });
@@ -89,7 +91,11 @@ class EditUsers extends React.Component {
     event.preventDefault();
     const { editUser } = this.props;
     const userData = this.state.user;
-    editUser(currentUser.userId, userData);
+    if (this.state.user.password === this.state.user.confirmPassword) {
+      editUser(currentUser.userId, userData);
+    } else {
+      Materialize.toast('Passwords do not match', 4000, 'rounded');
+    }
     this.isEditing();
   }
 
@@ -126,10 +132,11 @@ class EditUsers extends React.Component {
                 <th>lastName</th>
                 <th>userName</th>
                 <th>email</th>
+                <th>password</th>
+                <th>confrirmPassword</th>
                 <th>role</th>
               </tr>
             </thead>
-
             <tr>
               <td><Input
                 s={6} name="firstName"
@@ -147,6 +154,18 @@ class EditUsers extends React.Component {
                 s={6} name="email"
                 value={userDetails.email}
                 onChange={this.onChange}
+              /></td>
+              <td><Input
+                s={6} name="password"
+                value={userDetails.password}
+                onChange={this.onChange}
+                type="password"
+              /></td>
+              <td><Input
+                s={6} name="confirmPassword"
+                value={userDetails.confirmPassword}
+                onChange={this.onChange}
+                type="password"
               /></td>
               <td>{userDetails.roleId === 1 ? 'Admin' :
                 userDetails.roleId === 2 ? 'regular' : 'Guest'}
@@ -167,7 +186,6 @@ class EditUsers extends React.Component {
                 <th>lastName</th>
                 <th>userName</th>
                 <th>email</th>
-                <th>role</th>
               </tr>
             </thead>
             <tbody>
@@ -199,6 +217,8 @@ class EditUsers extends React.Component {
 EditUsers.propTypes = {
   user: React.PropTypes.array.isRequired,
   currentUser: React.PropTypes.object.isRequired,
+  editUser: React.PropTypes.func.isRequired,
+  fetchProfile: React.PropTypes.func.isRequired
 };
 
 const mapStoreToProps = state => ({

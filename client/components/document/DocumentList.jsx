@@ -10,7 +10,8 @@ import Auth from '../../util/Auth';
 
 
 import Prompt from '../common/Prompt';
-import { searchDocuments } from '../../actions/SearchDocumentActions';
+import { searchDocuments, searchOwnDocuments }
+  from '../../actions/SearchDocumentActions';
 /**
  *
  *
@@ -89,7 +90,12 @@ class DocumentList extends React.Component {
    */
   onSearch(e) {
     const queryString = e.target.value;
-    return this.props.searchDocuments(queryString);
+    if (this.props.location.pathname === '/documents') {
+      return this.props.searchDocuments(queryString);
+    } else if (this.props.location.pathname === '/mydocuments') {
+      const userId = this.props.currentUser.userId;
+      return this.props.searchOwnDocuments(queryString, 0, userId);
+    }
   }
 
   /**
@@ -368,8 +374,11 @@ DocumentList.propTypes = {
   deleteDocument: React.PropTypes.func.isRequired,
   fetchDocuments: React.PropTypes.func.isRequired,
   searchDocuments: React.PropTypes.func.isRequired,
+  searchOwnDocuments: React.PropTypes.func.isRequired,
   updateDocument: React.PropTypes.func.isRequired,
   documentDetails: React.PropTypes.object.isRequired,
+  location: React.PropTypes.object.isRequired,
+  currentUser: React.PropTypes.object.isRequired
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -377,7 +386,9 @@ const mapDispatchToProps = dispatch => ({
     .updateDocument(documentDetails, true)),
   deleteDocument: id => dispatch(DocumentAction.deleteDocument(id)),
   fetchDocuments: offset => dispatch(DocumentAction.fetchDocuments(offset)),
-  searchDocuments: queryString => dispatch(searchDocuments(queryString))
+  searchDocuments: queryString => dispatch(searchDocuments(queryString)),
+  searchOwnDocuments: (queryString, offset, userId) =>
+    dispatch(searchOwnDocuments(queryString, offset, userId))
 });
 
 const mapStateToProps = state => ({

@@ -32,46 +32,64 @@ describe('UserReducer', () => {
       ],
     },
   };
+  const user = [{
+    id: 2,
+    name: 'Ayoola Ajose',
+    email: 'ayoola.ajose@andela.com',
+    privacy: 'public',
+    createdAt: '2017-05-20T14:01:51.891Z',
+    updatedAt: '2017-06-03T11:48:54.226Z',
+    roleId: 2,
+  }];
 
-  it('should put all users in the store if handled LOAD_USER_SUCCESS', () => {
-    const state = {};
-    const expectedState = {
-      usersInDatabase
+
+  it('has the default initial state', () => {
+    expect(userReducer([], { type: '' })).toEqual([]);
+  });
+
+  it('handles CREATE_USER_SUCCESS action', () => {
+    const action = {
+      type: 'CREATE_USER_SUCCESS',
+      user
     };
-    it('has the default initial state', () => {
-      expect(userReducer(undefined, {})).toEqual([]);
-    });
 
-    it('handles CREATE_USER action', () => {
-      const action = {
-        type: types.CREATE_USER,
-        user: [
-          {
-            id: 2,
-            name: 'Ayoola Ajose',
-            email: 'ayoola.ajose@andela.com',
-            privacy: 'public',
-            createdAt: '2017-05-20T14:01:51.891Z',
-            updatedAt: '2017-06-03T11:48:54.226Z',
-            roleId: 2,
-          },
-        ]
-      };
-      expect(userReducer(users, action)).toEqual([...users, ...action.users]);
-    });
-    it('handles LOAD_USER_SUCCESS action', () => {
-      const action = {
-        type: types.LOAD_ROLE_SUCCESS,
-        user: users
-      };
-      expect(userReducer([], action)).toEqual(action.roles);
-    });
-    it('handles DELETE_ROLE_SUCCESS action', () => {
-      const action = {
-        type: types.DELETE_ROLE_SUCCESS,
-        id: 2,
-      };
-      expect(userReducer(users, action)).toEqual([users[0], users[2]]);
-    });
+    const expectedOutcome = [{
+      createdAt: '2017-05-20T14:01:51.891Z',
+      email: 'ayoola.ajose@andela.com',
+      id: 2,
+      name: 'Ayoola Ajose',
+      privacy: 'public',
+      roleId: 2,
+      updatedAt: '2017-06-03T11:48:54.226Z'
+    }];
+    expect(userReducer([], action)).toEqual(expectedOutcome);
+  });
+
+  it('handles LOAD_USER_SUCCESS action', () => {
+    const action = {
+      type: types.LOAD_USER_SUCCESS,
+      users: usersInDatabase.users
+    };
+
+    const expectOutcome = { rows:
+    [{
+      createdAt: '2017-05-20T14:01:51.891Z',
+      email: 'imisioluwa.akande@andela.com',
+      id: 1,
+      name: 'Akande Imisioluwa',
+      privacy: 'public',
+      roleId: 1,
+      updatedAt: '2017-06-03T11:48:54.226Z'
+    }, {
+      createdAt: '2017-05-20T14:01:51.891Z',
+      email: 'ayoola.ajose@andela.com',
+      id: 2,
+      name: 'Ayoola Ajose',
+      privacy: 'public',
+      roleId: 2,
+      updatedAt: '2017-06-03T11:48:54.226Z'
+    }]
+    };
+    expect(userReducer([], action)).toEqual(expectOutcome);
   });
 });

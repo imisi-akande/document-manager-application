@@ -216,5 +216,4 @@ const mapStateToProps = state => ({
   currentUser: state.user
 });
 
-
 export default connect(mapStateToProps, mapDispatchToProps)(UserListRow);

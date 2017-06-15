@@ -88,7 +88,6 @@ export const fetchRoles = () => (dispatch) => {
       .get('/api/roles/')
       .set({ 'x-access-token': getToken() })
       .end((err, res) => {
-        // Materialize.toast(res.body.message, 4000, 'rounded');
         dispatch(getRoleSuccess(res.body.roles));
       });
 };

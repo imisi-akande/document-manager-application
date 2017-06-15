@@ -5,8 +5,8 @@ const Helper = {
 
   /**
    * Get user's profile'
-   * @param {Object} data object containing user's details
-   * @returns {Object} return user's data
+   * @param {Object} value object containing user's details
+   * @returns {Object} return user's value
    */
   /**
    * Check for admin permission
@@ -72,14 +72,14 @@ const Helper = {
   /**
    * Query for search terms
    * @param {Array} terms array of search terms
-   * @returns {Object} return user's data
+   * @returns {Object} return user's value
    */
-  likeSearch(terms) {
+  likeSearch(searchTerm) {
     const like = {
       $or:
       [
-        { title: { $iLike: { $any: terms } } },
-        { content: { $iLike: { $any: terms } } }
+        { title: { $iLike: searchTerm } },
+        { content: { $iLike: searchTerm } }
       ]
     };
     return like;

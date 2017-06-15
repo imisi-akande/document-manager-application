@@ -80,7 +80,7 @@ class renderList extends React.Component {
     )}
             </tbody>
           </table>
-
+          {this.props.pagination}
         </div>
       </div>
     );
@@ -89,7 +89,8 @@ class renderList extends React.Component {
 
 renderList.propTypes = {
   searchUsers: React.PropTypes.func.isRequired,
-  usersList: React.PropTypes.array.isRequired
+  usersList: React.PropTypes.array.isRequired,
+  pagination: React.PropTypes.object
 };
 
 

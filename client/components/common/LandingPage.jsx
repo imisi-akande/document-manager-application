@@ -8,7 +8,6 @@ const docStyle = {
   height: 900,
 };
 
-// class HomePage extends React.Component {
 /**
  * renders the HomePage component
  * @returns {void}

@@ -14,7 +14,6 @@ import db from '../../models';
 
 const expect = chai.expect;
 const superRequest = supertest(app);
-// const request = supertest(app);
 const userParams = helper.documentOwner;
 const adminRole = helper.documentAdmin;
 const createResponse = () => httpMocks
@@ -391,11 +390,6 @@ describe('getSingleDocument', () => {
         .end((err, res) => {
           adminToken = res.body.token;
           publicDocument = res.body.document;
-          // superRequest.post('/api/documents')
-          //   .send(testHelper.privateDocument)
-          //   .end((error, response) => {
-          //     privateDocument = response.body.document;
-          //     done();
         });
   });
 });
