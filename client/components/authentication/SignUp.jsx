@@ -32,7 +32,7 @@ const Register = (props) => {
         <div className="container" style={{ width: 700 }}>
           <div className="z-depth-1 grey lighten-4 row">
 
-            <form className="col s12" method="post" onSubmit={onSubmit}>
+            <form className="col s12 m12 l12" method="post" onSubmit={onSubmit}>
               <div className="row">
                 <div className="col s12" />
               </div>

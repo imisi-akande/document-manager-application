@@ -78,12 +78,18 @@ describe('documents reducer', () => {
   it('should handle LOAD_OWN_DOCUMENT_SUCCESS', () => {
     const expectedState = {
       documents: {
-        rows: [{ access: 'public',
-          id: 1,
-          title: 'title one' },
-        { access: 'private',
-          id: 2,
-          title: 'title two' }]
+        rows: [
+          {
+            access: 'public',
+            id: 1,
+            title: 'title one',
+          },
+          {
+            access: 'private',
+            id: 2,
+            title: 'title two',
+          },
+        ],
       }
     };
 
@@ -91,7 +97,7 @@ describe('documents reducer', () => {
       type: LOAD_OWN_DOCUMENT_SUCCESS,
       documents: testDocuments.documents.rows
     }))
-    .toEqual(expectedState);
+    .toEqual(expectedState.documents.rows);
   });
 
   it('should handle LOAD_DOCUMENT_SUCCESS', () => {

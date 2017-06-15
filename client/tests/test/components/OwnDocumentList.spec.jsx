@@ -7,8 +7,6 @@ import DocumentTitle from '../../../components/document/DocumentListTitle';
 import DocumentContent from '../../../components/document/DocumentContent';
 import Prompt from '../../../components/common/Prompt';
 
-// jest.mock('../../img/cardReveal.jpg', () => 'http://doc-image.jpg');
-
 describe('Document component test', () => {
   let props;
   let wrapper;
@@ -133,13 +131,6 @@ describe('Document component test', () => {
 
     it('renders pagination on listing my documents', () => {
       expect(wrapper.find(Pagination)).toHaveLength(1);
-    });
-
-    it('calls onSearch on entry of data to search form input', () => {
-      wrapper.instance().onSearch = jest.fn(() => 'onSearch');
-      const searchInput = wrapper.find('#doc-search');
-      searchInput.simulate('change');
-      expect(wrapper.instance().onSearch).toHaveBeenCalled();
     });
   });
 });

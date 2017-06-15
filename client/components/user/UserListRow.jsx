@@ -182,9 +182,9 @@ class UserListRow extends React.Component {
             trigger={
               <Button
                 waves="light"
-                className="btn-floating btn-large red darken-2 right"
+                className="btn-floating btn-small red darken-2"
               >
-                <i className="large material-icons">delete</i>
+                <i className="material-icons">delete</i>
               </Button>
                       }
             onClickFunction={

@@ -27,7 +27,7 @@ const renderIfLoggedIn = () => {
               <NavItem>
                 <Link
                   to="/myprofile"
-                  activeClassName="active"
+                  activeClassName="active" id="myProfile"
                   className="right"
                 >
                   My Profile

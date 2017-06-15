@@ -98,5 +98,6 @@ const mapStateToProps = state => ({
   roles: state.roles
 });
 
+export { Role };
 export default connect(mapStateToProps, mapDispatchToProps)(Role);
 

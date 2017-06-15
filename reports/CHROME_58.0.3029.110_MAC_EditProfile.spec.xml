@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="1"
+            failures="1"
+            tests="2">
+
+  <testsuite name="EditProfile.spec"
+    errors="1" failures="1" hostname="" id="" package="EditProfile.spec" skipped="0"
+    tests="2" time="16.09" timestamp="Wed, 14 Jun 2017 18:50:13 GMT">
+  
+    <testcase name="Login a user" classname="EditProfile.spec" time="5.631" assertions="2">
+
+    
+
+    
+    </testcase>
+      <system-err>
+        ERROR: Unable to locate element: &quot;#document-container2&quot; using: css selector
+    at Object.AUserCanUpdateHisHerDocuments [as A user can update his/her documents] (/Users/andeladeveloper/Documents/document-manager-application/client/tests/EndToEndTest/EditProfile.spec.js:19:10)
+    at Module.call (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/runner/module.js:62:34)
+    at /Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/runner/testcase.js:70:29
+    at _fulfilled (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/node_modules/q/q.js:834:54)
+    at self.promiseDispatch.done (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/node_modules/q/q.js:863:30)
+    at Promise.promise.promiseDispatch (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/node_modules/q/q.js:796:13)
+    at /Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/node_modules/q/q.js:556:49
+    at runSingle (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/node_modules/q/q.js:137:13)
+    at flush (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/node_modules/q/q.js:125:13)
+    at _combinedTickCallback (internal/process/next_tick.js:73:7)
+      </system-err>
+  
+    <testcase name="A user can update his/her documents" classname="EditProfile.spec" time="10.46" assertions="2">
+<system-out>[[ATTACHMENT|/Users/andeladeveloper/Documents/document-manager-application/screenshots/EditProfile.spec/A-user-can-update-his/her-documents_ERROR_Jun-14-2017-195024-GMT+0100.png]]</system-out>
+      <failure message="Timed out while waiting for element &lt;#myProfile&gt; to be present for 5000 milliseconds.">    at Object.AUserCanUpdateHisHerDocuments [as A user can update his/her documents] (/Users/andeladeveloper/Documents/document-manager-application/client/tests/EndToEndTest/EditProfile.spec.js:20:11)
+    at _combinedTickCallback (internal/process/next_tick.js:73:7)</failure>
+
+    
+    </testcase>
+      <system-err>
+        ERROR: Unable to locate element: &quot;#document-container2&quot; using: css selector
+    at Object.AUserCanUpdateHisHerDocuments [as A user can update his/her documents] (/Users/andeladeveloper/Documents/document-manager-application/client/tests/EndToEndTest/EditProfile.spec.js:19:10)
+    at Module.call (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/runner/module.js:62:34)
+    at /Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/lib/runner/testcase.js:70:29
+    at _fulfilled (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/node_modules/q/q.js:834:54)
+    at self.promiseDispatch.done (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/node_modules/q/q.js:863:30)
+    at Promise.promise.promiseDispatch (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/node_modules/q/q.js:796:13)
+    at /Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/node_modules/q/q.js:556:49
+    at runSingle (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/node_modules/q/q.js:137:13)
+    at flush (/Users/andeladeveloper/Documents/document-manager-application/node_modules/nightwatch/node_modules/q/q.js:125:13)
+    at _combinedTickCallback (internal/process/next_tick.js:73:7)
+      </system-err>
+  
+  
+  </testsuite>
+</testsuites>

@@ -7,8 +7,6 @@ import DocumentContent from '../../../components/document/DocumentContent';
 import Prompt from '../../../components/common/Prompt';
 
 
-// jest.mock('../../img/cardReveal.jpg', () => 'http://doc-image.jpg');
-
 describe('DocumentLists component test', () => {
   let props;
   let wrapper;
@@ -42,7 +40,6 @@ describe('DocumentLists component test', () => {
             },
           ],
         },
-        // pagination: { total_count: 1 },
       },
       currentUser: {
         userId: 7,
@@ -58,9 +55,9 @@ describe('DocumentLists component test', () => {
   });
 
   describe('Base test', () => {
-    // beforeEach(() => {
-    //   wrapper = shallow(<DocumentList {...props} />);
-    // });
+    beforeEach(() => {
+      wrapper = shallow(<DocumentList {...props} />);
+    });
 
     it('renders without crashing', () => {
       expect(wrapper).toBeDefined();
@@ -142,7 +139,7 @@ describe('DocumentLists component test', () => {
       expect(wrapper.find(Pagination)).toHaveLength(0);
     });
 
-    fit('renders pagination when provided through props', () => {
+    it('renders pagination when provided through props', () => {
       const newDocumentDetails = Object.assign(
         {},
         props.documentDetails,
@@ -208,7 +205,7 @@ describe('DocumentLists component test', () => {
         access: event.target.access.value,
         content: wrapper.state('content'),
       };
-      expect(props.updateDocument).toHaveBeenCalledWith(args);
+      expect(props.updateDocument).toHaveBeenCalledWith(args, true);
     });
   });
 

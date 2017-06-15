@@ -178,7 +178,7 @@ class DocumentList extends React.Component {
       <a
         id="readmore"
         href="readmore"
-        className="read-more"
+        className="right"
       >
         READ MORE</a>
     );
@@ -222,7 +222,7 @@ class DocumentList extends React.Component {
               <div className="row">
                 {doc.map(document =>
                   <div key={document.id}>
-                    <div className="col s3">
+                    <div className="col s12 m6 l4">
                       <div
                         className="card white darken-1 activator"
                         style={{
