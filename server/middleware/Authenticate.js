@@ -296,6 +296,7 @@ const authenticate = {
   },
  /**
    * Validate user's login datas
+   *
    * @param {Object} req req object
    * @param {Object} res response object
    * @param {Object} next Move to next controller handler

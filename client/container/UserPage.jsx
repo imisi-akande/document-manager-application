@@ -101,8 +101,6 @@ class User extends React.Component {
             <div className="row center-align">
               <div style={{ padding: '20px' }} />
               <h5>Sorry, user name does not match</h5> <br />
-              <h5><a href="/users">Click here to search for another user
-              </a></h5>
             </div>
         }
       </div>

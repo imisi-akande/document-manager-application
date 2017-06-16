@@ -79,12 +79,11 @@ export const saveUser = user => (dispatch) => {
     .send(user)
     .end((err, res) => {
       Materialize.toast(res.body.message, 4000, 'rounded');
-      Object.assign({}, res.body.user, {
-        token: res.body.token
-      });
-      localStorage.setItem('dms-user', res.body.token);
-      browserHistory.push('/documents');
-      dispatch(setCurrentUser(jwtDecode(res.body.token)));
+      if (res.body.token) {
+        localStorage.setItem('dms-user', res.body.token);
+        browserHistory.push('/documents');
+        dispatch(setCurrentUser(jwtDecode(res.body.token)));
+      }
     });
 };
 
