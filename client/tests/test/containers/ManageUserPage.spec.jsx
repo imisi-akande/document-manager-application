@@ -13,7 +13,6 @@ jest.mock('react-router', () => ({
 describe('ManageUserPage Container test', () => {
   let props;
   let wrapper;
-  // let push;
 
   beforeEach(() => {
     props = {

@@ -60,8 +60,8 @@ export const createRoleSuccess = role => ({
 
 /**
  * create new role
- *
  * POST /roles/
+ *
  * @param  {object} role role object to be svaed
  * @return {object}      response from api
  */
@@ -80,6 +80,7 @@ export const roleSaver = role => (dispatch) => {
 
 /**
  * fetch roles
+ * GET /roles/
  *
  * @return {object} object of roles
  */
@@ -93,7 +94,8 @@ export const fetchRoles = () => (dispatch) => {
 };
 
 /**
- * delete role from db DELETE /roles/:id
+ * delete role from db
+ *  DELETE /roles/:id
  *
  * @param  {number} id role id
  * @return {object}    api response

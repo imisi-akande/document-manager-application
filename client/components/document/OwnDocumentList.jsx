@@ -58,7 +58,6 @@ class OwnDocumentList extends React.Component {
    */
   onSearch(e) {
     const queryString = e.target.value;
-    console.log('okay', queryString);
     return this.props.searchOwnDocuments(queryString);
   }
 
@@ -89,6 +88,18 @@ class OwnDocumentList extends React.Component {
     const content = this.state.content;
     const documentDetails = { id: documentId, title, access, content };
     this.props.updateDocument(documentDetails);
+    if (content === ' ' ||
+    content === '') {
+      Materialize.toast('Content Field Cannot Be Empty', 2000);
+    } else if (
+    title === ' ' ||
+    title === '') {
+      Materialize.toast('Title Field Cannot Be Empty', 2000);
+    } else {
+      const documentDetails = { documentId, title, access, content };
+      this.props.updateDocument(documentDetails, true);
+      $(`#updateDocModal${documentDetails.documentId}`).modal('close');
+    }
   }
 
   /**
@@ -223,6 +234,14 @@ class OwnDocumentList extends React.Component {
                               <Input
                                 s={6} name="title" defaultValue={document.title}
                                 onChange={e => this.fieldChange(e)}
+                              />
+                              <TinyMCE
+                                content={document.content}
+                                config={{
+                                  plugins: 'link image preview',
+                                  toolbar: 'undo redo | bold italic | alignleft aligncenter alignright  | code ' // eslint-disable-line max-len
+                                }}
+                                onChange={this.handleEditorChange}
                               />
                               <Input
                                 s={6} name="access" validate type="select"

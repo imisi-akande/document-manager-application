@@ -13,6 +13,7 @@ import documentPage from '../client/container/DocumentPage';
 import myDocumentPage from '../client/container/MyDocumentPage';
 import EditUser from '../client/components/user/EditUser';
 
+
 const logUserOut = (nextState) => {
   localStorage.removeItem('dms-user');
   window.location = '/';
@@ -28,7 +29,6 @@ export default (
     <Route path="role" component={manageRolePage} />
     <Route path="role/:id" component={manageRolePage} />
     <Route path="users" component={UserPage} />
-    <Route path="signups" component={manageUserPage} />
     <Route path="user" component={manageUserPage} />
     <Route path="logout" onEnter={logUserOut} />
     <Route path="documents" component={documentPage} />

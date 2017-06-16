@@ -1,5 +1,7 @@
 const DocumentHelper = {
   /**
+   * Helper method for getDocument
+   *
    * @param {Object} value document response from the database
    * Get documents's attributes'
    * @returns {Object} return user's attributes
@@ -16,6 +18,8 @@ const DocumentHelper = {
     };
   },
   /**
+   * Document access
+   *
    * Query for document's access
    * @param {Object} req request object
    * @returns {Object} return access query
@@ -41,6 +45,5 @@ const DocumentHelper = {
       'updatedAt'
     ];
   },
-
 };
 export default DocumentHelper;

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 import * as documentAction from '../actions/DocumentActions';
-import DocumentList from '../components/document/DocumentList';
+import MyDocumentList from '../components/document/DocumentList';
 
 /**
   * @class MyDocumentPage
@@ -61,7 +61,7 @@ class MyDocumentPage extends React.Component {
     const { documents, location } = this.props;
     return (
       <div>
-        <DocumentList documents={documents} location={location} />
+        <MyDocumentList documents={documents} location={location} />
       </div>
     );
   }
@@ -81,6 +81,7 @@ const mapDispatchToProps = dispatch => ({
 MyDocumentPage.propTypes = {
   fetchOwnDocuments: PropTypes.any.isRequired,
   documents: PropTypes.any.isRequired,
+  location: PropTypes.object.isRequired
 };
 /**
  *

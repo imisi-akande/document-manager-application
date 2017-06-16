@@ -2,7 +2,7 @@
 
 // require('dotenv').config();
 
-// const username = faker.internet.username();
+// const username = faker.internet.userName();
 // const password = faker.internet.password();
 
 

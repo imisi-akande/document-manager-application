@@ -523,13 +523,13 @@ describe('DOCUMENT API', () => {
                     .end((err, res) => {
                       expect(res.status).to.equal(200);
                       expect(res.body.pagination.page_count)
-                      .to.be.greaterThan(0);
+                      .to.equal(0);
                       expect(res.body.pagination.page)
-                      .to.be.greaterThan(0);
+                      .to.equal(1);
                       expect(res.body.pagination.page_size)
-                      .to.greaterThan(0);
+                      .to.equal(0);
                       expect(res.body.pagination.total_count)
-                      .to.be.greaterThan(0);
+                      .to.equal(0);
                       done();
                     });
                 });

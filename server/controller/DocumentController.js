@@ -27,7 +27,7 @@ const DocumentController = {
    *
    * @param {Object} req request object
    * @param {Object} res response object
-   * @returns {void} response object or void
+   * @returns {Object} response object or void
    */
   listAllDocuments(req, res) {
     req.dmsFilter.attributes = DocumentHelper.getDocumentAttribute();
@@ -56,7 +56,7 @@ const DocumentController = {
    *
    * @param {Object} req request object
    * @param {Object} res response object
-   * @returns {void|Response} response object or void
+   * @returns {Object} response object
    */
   getDocument(req, res) {
     const document = DocumentHelper.getDocument(req.singleDocument);
@@ -73,7 +73,7 @@ const DocumentController = {
    *
    * @param {Object} req request object
    * @param {Object} res response object
-   * @returns {void} no returns
+   * @returns {Object} response object
    */
   deleteDocument(req, res) {
     req.docInstance.destroy()
@@ -90,7 +90,7 @@ const DocumentController = {
    *
    * @param {Object} req request object
    * @param {Object} res response object
-   * @returns {void} no returns
+   * @returns {Object}response object
    */
   updateDocuments(req, res) {
     req.docInstance.update(req.body)
@@ -106,9 +106,10 @@ const DocumentController = {
   /**
    * List all documents
    * Route: GET: /documenta/
-   * 
-   * @param {any} req 
-   * @param {any} res 
+   *
+   * @param {object} req
+   * @param {object} res
+   * @returns{object}response object
    */
   listMyDocuments(req, res) {
     db.Documents.findAll({
@@ -125,7 +126,7 @@ const DocumentController = {
    *
    * @param {Object} req request object
    * @param {Object} res response object
-   * @returns {void|Response} response object or void
+   * @returns {Object} response object
    */
   searchDocuments(req, res) {
     req.dmsFilter.attributes = DocumentHelper.getDocumentAttribute();
@@ -153,8 +154,8 @@ const DocumentController = {
    *Route: GET: /search?query={}
    *
    * @returns {Object}object
-   * @param {any} req
-   * @param {any} res
+   * @param {Object} req
+   * @param {Object} res
    */
   searchUserDocuments(req, res) {
     req.dmsFilter.attributes = DocumentHelper.getDocumentAttribute();

@@ -124,15 +124,24 @@ export const login = userCredentials =>
       .send(userCredentials)
       .end((err, res) => {
         Materialize.toast(res.body.message, 4000, 'rounded');
-        Object.assign({}, res.body.user, {
-          token: res.body.token
-        });
-        localStorage.setItem('dms-user', res.body.token);
-        browserHistory.push('/documents');
-        dispatch(setCurrentUser(jwtDecode(res.body.token)));
+        if (res.body.token) {
+          Object.assign({}, res.body.user, {
+            token: res.body.token
+          });
+          localStorage.setItem('dms-user', res.body.token);
+          browserHistory.push('/documents');
+          dispatch(setCurrentUser(jwtDecode(res.body.token)));
+        }
       });
   };
 
+/**
+* Edit and update user details
+*
+* @param {String} userId
+* @param {String} userData
+* @returns {Object} dispatch object
+*/
 export const editUser = (userId, userData) => (dispatch) => {
   request
       .put(`/api/users/${userId}`, userData)

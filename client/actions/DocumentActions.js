@@ -61,6 +61,7 @@ export const updateDocumentSuccess = document => ({
 
 /**
  * create new document success action
+ * Route: POST: /documents
  *
  * @export
  * @param {object} document newly create document reponse from api post
@@ -85,6 +86,7 @@ export const deleteDocumentSuccess = id => ({
 
 /**
  *Fetch documents action
+ *Route: GET: /documents
  *
  * @export
  * @param {number} offset
@@ -107,6 +109,7 @@ export const fetchDocuments = (offset) => {
 
 /**
  * fetch own documents action
+ * Route: GET: users/:id/documents
  *
  * @export
  * @param {number} [offset=0]
@@ -127,7 +130,14 @@ export const fetchOwnDocuments = () => {
       });
   };
 };
-
+/**
+  * Save - Save Document
+  * Route: POST: /documents
+  *
+  * @param {Object} document Request object
+  * @param {Object} response Response object
+  * @returns {Object} res Response object
+  */
 export const documentSaver = document => (dispatch) => {
   request
       .post('/api/documents')
@@ -143,6 +153,7 @@ export const documentSaver = document => (dispatch) => {
 
 /**
  * Update documents action
+ * Route: PUT: /documents/:id
  *
  * @export
  * @param {object} document
@@ -167,6 +178,7 @@ export const updateDocument = (document, isAdmin) => (dispatch) => {
 
 /**
  * Delete documents action
+ * Route: DELETE: /documents/:id
  *
  * @export
  * @param {number} id

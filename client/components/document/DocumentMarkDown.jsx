@@ -6,8 +6,8 @@ const DocumentMarkdown = ({ document, onChange }) => (
     <TinyMCE
       content={document.content}
       config={{
-        plugins: 'link image preview',
-        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
+        plugins: 'link image preview code',
+        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
       }}
       onChange={onChange}
     />

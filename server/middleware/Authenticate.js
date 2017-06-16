@@ -132,7 +132,6 @@ const authenticate = {
       content: req.body.content,
       authorId: req.decoded.userId,
       access: req.body.access,
-      // ownerRoleId: req.decoded.roleId
     };
     next();
   },
@@ -165,6 +164,7 @@ const authenticate = {
   },
   /**
    * Validate user's input
+   *
    * @param {Object} req req object
    * @param {Object} res response object
    * @param {Object} next Move to next controller handler
@@ -211,6 +211,7 @@ const authenticate = {
   },
   /**
    * Validate user's input
+   *
    * @param {Object} req req object
    * @param {Object} res response object
    * @param {Object} next Move to next controller handler
@@ -484,9 +485,11 @@ const authenticate = {
       }
     }
     if (`${req.baseUrl}${req.route.path}` === '/api/users/:id/documents') {
-      const adminSearch = req.query.q ? Helper.likeSearch(`%${searchTerm}%`) : { };
+      const adminSearch = req.query.q ?
+      Helper.likeSearch(`%${searchTerm}%`) : { };
       const userSearch = req.query.q
-        ? [DocumentHelper.documentAccess(req), Helper.likeSearch(`%${searchTerm}%`)]
+        ? [DocumentHelper.documentAccess(req),
+          Helper.likeSearch(`%${searchTerm}%`)]
         : DocumentHelper.documentAccess(req);
       if (Helper.isAdmin(req.decoded.roleId)) {
         query.where = adminSearch;

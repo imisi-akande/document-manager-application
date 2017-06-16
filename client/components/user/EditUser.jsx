@@ -133,51 +133,53 @@ class EditUsers extends React.Component {
                 <th>userName</th>
                 <th>email</th>
                 <th>password</th>
-                <th>confrirmPassword</th>
+                <th>confirmPassword</th>
                 <th>role</th>
               </tr>
             </thead>
-            <tr>
-              <td><Input
-                s={6} name="firstName"
-                value={userDetails.firstName} onChange={this.onChange}
-              /></td>
-              <td><Input
-                s={6} name="lastName"
-                value={userDetails.lastName} onChange={this.onChange}
-              /></td>
-              <td><Input
-                s={6}name="userName"
-                value={userDetails.userName} onChange={this.onChange}
-              /></td>
-              <td><Input
-                s={6} name="email"
-                value={userDetails.email}
-                onChange={this.onChange}
-              /></td>
-              <td><Input
-                s={6} name="password"
-                value={userDetails.password}
-                onChange={this.onChange}
-                type="password"
-              /></td>
-              <td><Input
-                s={6} name="confirmPassword"
-                value={userDetails.confirmPassword}
-                onChange={this.onChange}
-                type="password"
-              /></td>
-              <td>{userDetails.roleId === 1 ? 'Admin' :
+            <tbody>
+              <tr>
+                <td><Input
+                  s={6} name="firstName"
+                  value={userDetails.firstName} onChange={this.onChange}
+                /></td>
+                <td><Input
+                  s={6} name="lastName"
+                  value={userDetails.lastName} onChange={this.onChange}
+                /></td>
+                <td><Input
+                  s={6}name="userName"
+                  value={userDetails.userName} onChange={this.onChange}
+                /></td>
+                <td><Input
+                  s={6} name="email"
+                  value={userDetails.email}
+                  onChange={this.onChange}
+                /></td>
+                <td><Input
+                  s={6} name="password"
+                  value={userDetails.password}
+                  onChange={this.onChange}
+                  type="password"
+                /></td>
+                <td><Input
+                  s={6} name="confirmPassword"
+                  value={userDetails.confirmPassword}
+                  onChange={this.onChange}
+                  type="password"
+                /></td>
+                <td>{userDetails.roleId === 1 ? 'Admin' :
                 userDetails.roleId === 2 ? 'regular' : 'Guest'}
-              </td>
-              <td><Button
-                waves="light"
-                onClick={e => this.onSubmit(e)}
-                className="btn-large teal darken-2"
-              >
-                <i className="large material-icons">
+                </td>
+                <td><Button
+                  waves="light"
+                  onClick={e => this.onSubmit(e)}
+                  className="btn-large teal darken-2"
+                >
+                  <i className="large material-icons">
                   mode_edit</i> Save</Button></td>
-            </tr>
+              </tr>
+            </tbody>
           </table> :
           <table className="table striped">
             <thead>

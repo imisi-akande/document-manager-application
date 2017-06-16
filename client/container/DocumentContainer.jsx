@@ -4,7 +4,6 @@ import * as documentAction from '../actions/DocumentActions';
 import DocumentForm from '../components/document/DocumentForm';
 import DocumentMarkdown from '../components/document/DocumentMarkDown';
 
-
 /**
  *
  *
@@ -45,8 +44,24 @@ class DocumentContainer extends React.Component {
    */
   handleFormSubmit(event) {
     event.preventDefault();
-    this.props.documentSaver(this.state.document);
-    this.setState({ saving: true });
+    if (this.state.document.content === ' ' ||
+    this.state.document.content === '') {
+      Materialize.toast('Content Field Cannot Be Empty', 2000);
+    } else if (
+    this.state.document.title === ' ' ||
+    this.state.document.title === '') {
+      Materialize.toast('Title Field Cannot Be Empty', 2000);
+    } else {
+      this.props.documentSaver(this.state.document).then(() => {
+        this.setState({
+          title: '',
+          content: ''
+        });
+        Materialize.toast('Document Successfully Created', 2000);
+      }).catch((err) => {
+        Materialize.toast('Please Choose Access Type', 2000);
+      });
+    }
   }
 
   /**

@@ -90,9 +90,10 @@ class DocumentList extends React.Component {
    */
   onSearch(e) {
     const queryString = e.target.value;
-    if (this.props.location.pathname === '/documents') {
+    const locationPath = this.props.location.pathname;
+    if (locationPath === '/documents') {
       return this.props.searchDocuments(queryString);
-    } else if (this.props.location.pathname === '/mydocuments') {
+    } else if (locationPath === '/mydocuments') {
       const userId = this.props.currentUser.userId;
       return this.props.searchOwnDocuments(queryString, 0, userId);
     }
@@ -108,11 +109,28 @@ class DocumentList extends React.Component {
    */
   onSubmit(e, id) {
     e.preventDefault();
+    const locationPath = this.props.location.pathname;
     const title = e.target.title.value;
     const access = e.target.access.value;
     const content = this.state.content;
-    const documentDetails = { id, title, access, content };
-    this.props.updateDocument(documentDetails, true);
+
+    if (content === ' ' ||
+    content === '') {
+      Materialize.toast('Content Field Cannot Be Empty', 2000);
+    } else if (
+    title === ' ' ||
+    title === '') {
+      Materialize.toast('Title Field Cannot Be Empty', 2000);
+    } else {
+      const documentDetails = { id, title, access, content };
+      if (locationPath === '/documents') {
+        this.props.updateDocument(documentDetails, true);
+      } else if (locationPath === '/mydocuments') {
+
+        this.props.updateDocument(documentDetails);
+      }
+      $(`#updateDocModal${documentDetails.id}`).modal('close');
+    }
   }
 
   /**
@@ -252,6 +270,7 @@ class DocumentList extends React.Component {
                           <div className="card-action">
                             {this.docAccess(this.props.currentUser, document) ?
                               <Modal
+                                id={`updateDocModal${document.id}`}
                                 header="Edit Document"
                                 trigger={
                                   <Button
@@ -293,15 +312,17 @@ class DocumentList extends React.Component {
                                   <Row>
                                     <TinyMCE
                                       content={document.content}
+                                      name="content"
                                       config={{
-                                        plugins: 'link image preview',
-                                        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright  | code ' // eslint-disable-line max-len
+                                        plugins: 'link image code',
+                                        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
                                       }}
                                       onChange={this.handleEditorChange}
+                                      className="wysiwyg" required
                                     />
                                   </Row>
                                   <Button
-                                    modal="close" className="teal darken-2"
+                                    className="teal darken-2"
                                     waves="light"
                                     type="submit"
                                   >UPDATE</Button>
@@ -376,12 +397,12 @@ DocumentList.propTypes = {
   updateDocument: React.PropTypes.func.isRequired,
   documentDetails: React.PropTypes.object.isRequired,
   location: React.PropTypes.object.isRequired,
-  currentUser: React.PropTypes.object.isRequired
+
 };
 
 const mapDispatchToProps = dispatch => ({
-  updateDocument: documentDetails => dispatch(DocumentAction
-    .updateDocument(documentDetails, true)),
+  updateDocument: (documentDetails, isAdmin) => dispatch(DocumentAction
+    .updateDocument(documentDetails, isAdmin)),
   deleteDocument: id => dispatch(DocumentAction.deleteDocument(id)),
   fetchDocuments: offset => dispatch(DocumentAction.fetchDocuments(offset)),
   searchDocuments: queryString => dispatch(searchDocuments(queryString)),
