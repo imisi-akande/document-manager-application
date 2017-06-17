@@ -3,7 +3,8 @@ coverage
 .coveralls.yml
 README.md
 package.json
-webpack.config.js
+webpack.config.dev.js
+webpack.config.prod.js
 nightwatch.conf.js
 SetUp.js
 setupFile.js

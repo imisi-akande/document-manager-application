@@ -590,6 +590,17 @@ const authenticate = {
             $ilike: `%${searchTerm}%`,
           }, }, { authorId: req.decoded.userId }]
         };
+        if (`${req.baseUrl}${req.route.path}` === '/api/documents/') {
+          if (Helper.isAdmin(req.decoded.roleId)) {
+            query.where = {};
+          } else {
+            query.where = Helper.documentAccess(req);
+            query.include = [{
+              model: db.Users,
+              attributes: { exclude: ['password'] }
+            }];
+          }
+        }
 
 
         query.include = [{

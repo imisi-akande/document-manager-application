@@ -19,6 +19,18 @@ import { searchDocuments, searchOwnDocuments }
  * @extends {React.Component}
  */
 class DocumentList extends React.Component {
+  /**
+   * Handles Document access
+   *
+   * @param {object} user
+   * @param {object} doc
+   * @returns {object} object
+   *
+   * @memberOf DocumentList
+   */
+  static docAccess(user, doc) {
+    return Auth.docAccess(user, doc);
+  }
 
   /**
    * Creates an instance of DocumentList.
@@ -126,24 +138,10 @@ class DocumentList extends React.Component {
       if (locationPath === '/documents') {
         this.props.updateDocument(documentDetails, true);
       } else if (locationPath === '/mydocuments') {
-
         this.props.updateDocument(documentDetails);
       }
       $(`#updateDocModal${documentDetails.id}`).modal('close');
     }
-  }
-
-  /**
-   * Handles Document access
-   *
-   * @param {object} user
-   * @param {object} doc
-   * @returns {object} object
-   *
-   * @memberOf DocumentList
-   */
-  docAccess(user, doc) {
-    return Auth.docAccess(user, doc);
   }
 
   /**
@@ -246,7 +244,9 @@ class DocumentList extends React.Component {
                   <div key={document.id}>
                     <div className="col s12 m6 l4">
                       <div
-                        className="card Searching through a list of documents created by a user seems to display white darken-1 activator"
+                        className={'card Searching through a list of ' +
+                        'documents created by a user seems to display' +
+                        'white darken-1 activator'}
                         style={{
                           height: '185px'
                         }}
@@ -268,7 +268,8 @@ class DocumentList extends React.Component {
                           </a> <br />
 
                           <div className="card-action">
-                            {this.docAccess(this.props.currentUser, document) ?
+                            {DocumentList
+                            .docAccess(this.props.currentUser, document) ?
                               <Modal
                                 id={`updateDocModal${document.id}`}
                                 header="Edit Document"
@@ -318,7 +319,8 @@ class DocumentList extends React.Component {
                                       name="content"
                                       config={{
                                         plugins: 'link image code',
-                                        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
+                                        toolbar:
+            'undo redo | bold italic | alignleft aligncenter alignright | code'
                                       }}
                                       onChange={this.handleEditorChange}
                                       className="wysiwyg" required
@@ -334,7 +336,8 @@ class DocumentList extends React.Component {
                               </Modal> : ''
                             }
                             {
-                              this.docAccess(this.props.currentUser, document)
+                              DocumentList
+                              .docAccess(this.props.currentUser, document)
                                 ?
                                   <Prompt
                                     trigger={deleteButton}
@@ -399,7 +402,7 @@ DocumentList.propTypes = {
   searchDocuments: React.PropTypes.func.isRequired,
   searchOwnDocuments: React.PropTypes.func.isRequired,
   updateDocument: React.PropTypes.func.isRequired,
-  documentDetails: React.PropTypes.object.isRequired,
+  currentUser: React.PropTypes.object.isRequired,
   location: React.PropTypes.object.isRequired,
 
 };

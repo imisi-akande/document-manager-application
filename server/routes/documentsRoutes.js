@@ -58,7 +58,7 @@ documentRoutes.route('/')
    *           $ref: '#/definitions/Document'
    */
 
-  .get(authenticate.verifyToken, authenticate.validateDocumentSearch,
+  .get(authenticate.verifyToken, authenticate.validateSearch,
     DocumentsController.listAllDocuments)
   .post(authenticate.verifyToken, authenticate.validateDocumentsInput,
   DocumentsController.createDocument);
