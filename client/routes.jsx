@@ -12,6 +12,8 @@ import documentContainer from '../client/container/DocumentContainer';
 import documentPage from '../client/container/DocumentPage';
 import myDocumentPage from '../client/container/MyDocumentPage';
 import EditUser from '../client/components/user/EditUser';
+import requiresAuthentication from './util/RequiresAuthentication';
+import alreadyAuthenticated from './util/AlreadyAuthenticated';
 
 
 const logUserOut = (nextState) => {
@@ -21,8 +23,8 @@ const logUserOut = (nextState) => {
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={LandingPage} />
-    <Route path="signup" component={register} />
+    <IndexRoute component={alreadyAuthenticated(LandingPage)} />
+    <Route path="signup" component={alreadyAuthenticated(register)} />
     <Route path="login" component={login} />
     <Route path="roles" component={RolePage} />
     <Route path="createdoc" component={documentContainer} />
@@ -33,7 +35,7 @@ export default (
     <Route path="logout" onEnter={logUserOut} />
     <Route path="documents" component={documentPage} />
     <Route path="documents/:id" component={documentContainer} />
-    <Route path="mydocuments" component={myDocumentPage} />
-    <Route path="myprofile" component={EditUser} />
+    <Route path="mydocuments" component={requiresAuthentication(myDocumentPage)} />
+    <Route path="myprofile" component={requiresAuthentication(EditUser)} />
   </Route>
 );

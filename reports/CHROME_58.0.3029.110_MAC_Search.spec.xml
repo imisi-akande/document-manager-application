@@ -1,26 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites errors="0"
             failures="0"
-            tests="1">
+            tests="0">
 
   <testsuite name="Search.spec"
     errors="0" failures="0" hostname="" id="" package="Search.spec" skipped="0"
-    tests="1" time="7.589" timestamp="Fri, 16 Jun 2017 17:36:33 GMT">
-  
-    <testcase name="Search a Document" classname="Search.spec" time="7.589" assertions="6">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    </testcase>
+    tests="0" time="0.000" timestamp="Fri, 16 Jun 2017 22:54:17 GMT">
   
   
   </testsuite>

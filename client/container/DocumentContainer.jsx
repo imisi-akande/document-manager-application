@@ -116,6 +116,7 @@ class DocumentContainer extends React.Component {
           <br />
           <br />
           <button
+            id="add-docs"
             type="submit" name="btn_login"
             className="col s12 btn btn-large waves-effect teal darken-2"
             onClick={this.handleFormSubmit}

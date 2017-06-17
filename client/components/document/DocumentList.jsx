@@ -246,7 +246,7 @@ class DocumentList extends React.Component {
                   <div key={document.id}>
                     <div className="col s12 m6 l4">
                       <div
-                        className="card white darken-1 activator"
+                        className="card Searching through a list of documents created by a user seems to display white darken-1 activator"
                         style={{
                           height: '185px'
                         }}
@@ -256,7 +256,7 @@ class DocumentList extends React.Component {
                           id="card-container"
                           style={{ opacity: 0.9 }}
                         >
-                          <h5 style={{ color: '#26a69a' }}>{document.title}</h5>
+                          <h5 className="card-container2" style={{ color: '#26a69a' }}>{document.title}</h5>
                           <h6
                             style={{ fontSize: '19px', marginTop: '7px' }}
                           >
@@ -279,6 +279,7 @@ class DocumentList extends React.Component {
                                     style={{ marginRight: '5px' }}
                                   >
                                     <i
+                                      id="editButton"
                                       className="large material-icons"
                                     >
                                       mode_edit</i>
@@ -286,12 +287,14 @@ class DocumentList extends React.Component {
                                 }
                               >
                                 <form
+                                  id="submitButton"
                                   className="col s12" method="post"
                                   onSubmit={e =>
                                     this.onSubmit(e, document.id)}
                                 >
                                   <Row>
                                     <Input
+                                      className="card-title"
                                       s={6} name="title"
                                       defaultValue={document.title}
                                       onChange={e => this.fieldChange(e)}
@@ -322,6 +325,7 @@ class DocumentList extends React.Component {
                                     />
                                   </Row>
                                   <Button
+                                    id="updateButton"
                                     className="teal darken-2"
                                     waves="light"
                                     type="submit"

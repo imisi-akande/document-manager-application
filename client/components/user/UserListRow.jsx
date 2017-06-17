@@ -117,8 +117,8 @@ class UserListRow extends React.Component {
   render() {
     const user = this.props.user;
     return (
-      <tr>
-        <td>{user.firstName}</td>
+      <tr className="user-rows">
+        <td className="firstName">{user.firstName}</td>
         <td>{user.lastName}</td>
         <td>{user.userName}</td>
         <td>{user.email}</td>
