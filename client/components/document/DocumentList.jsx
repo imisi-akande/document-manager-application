@@ -402,7 +402,6 @@ DocumentList.propTypes = {
   searchDocuments: React.PropTypes.func.isRequired,
   searchOwnDocuments: React.PropTypes.func.isRequired,
   updateDocument: React.PropTypes.func.isRequired,
-  documentDetails: React.PropTypes.object.isRequired,
   currentUser: React.PropTypes.object.isRequired,
   location: React.PropTypes.object.isRequired,
 

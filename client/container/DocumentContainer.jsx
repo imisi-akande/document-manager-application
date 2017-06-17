@@ -52,15 +52,12 @@ class DocumentContainer extends React.Component {
     this.state.document.title === '') {
       Materialize.toast('Title Field Cannot Be Empty', 2000);
     } else {
-      this.props.documentSaver(this.state.document).then(() => {
-        this.setState({
-          title: '',
-          content: ''
-        });
-        Materialize.toast('Document Successfully Created', 2000);
-      }).catch((err) => {
-        Materialize.toast('Please Choose Access Type', 2000);
+      this.props.documentSaver(this.state.document);
+      this.setState({
+        title: '',
+        content: ''
       });
+      Materialize.toast('Document Successfully Created', 2000);
     }
   }
 
