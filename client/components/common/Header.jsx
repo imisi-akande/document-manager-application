@@ -14,9 +14,6 @@ const renderIfLoggedIn = () => {
       DOCUMENTS
     </Button>
   );
-  const rolesButton = (
-    <Button id="document-container3"className="right">ROLES</Button>
-  );
 
   if (token) {
     return (
@@ -27,14 +24,17 @@ const renderIfLoggedIn = () => {
               <NavItem>
                 <Link
                   to="/myprofile"
-                  activeClassName="active"
+                  activeClassName="active" id="myProfile"
                   className="right"
                 >
                   My Profile
                 </Link>
               </NavItem>
               <NavItem>
-                <Link to="/users" activeClassName="active" className="right">
+                <Link
+                  to="/users" activeClassName="active" id="allUsers"
+                  className="right"
+                >
                   All Users
                 </Link>
               </NavItem>

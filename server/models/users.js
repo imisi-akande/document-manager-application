@@ -36,7 +36,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       classMethods: {
         associate: (models) => {
-        // associations defined here
           Users.belongsTo(models.Roles, {
             onDelete: 'CASCADE',
             foreignKey: 'roleId',
@@ -48,8 +47,10 @@ module.exports = (sequelize, DataTypes) => {
           });
         },
       },
+
     /**
      * Hash user's password
+     *
      * @method
      * @returns {Void} no return
      */
@@ -57,8 +58,10 @@ module.exports = (sequelize, DataTypes) => {
         ValidatePassword(password) {
           return bcrypt.compareSync(password, this.password);
         },
+
     /**
      * Compare plain password to user's hashed password
+     *
      * @method
      * @param {String} password
      * @returns {Boolean} password match
@@ -72,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
           user.password = user.hashPassword(user.password);
         },
         beforeUpdate(user) {
-          user.hashPassword();
+          user.password = user.hashPassword(user.password);
         }
       }
     });

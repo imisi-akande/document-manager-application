@@ -31,15 +31,14 @@ export const getOwnDocumentSuccess = documents => ({
 export function searchDocuments(queryString, offset = 0) {
   getToken();
   return (dispatch) => {
+    if (!queryString) {
+      return dispatch(fetchDocuments());
+    }
     request
     .get(`/api/search/documents/?q=${queryString}&offset=${offset}`)
     .set({ 'x-access-token': getToken() })
     .end((err, res) => {
-      if (queryString) {
-        dispatch(getDocumentSuccess(res.body));
-      } else {
-        dispatch(fetchDocuments());
-      }
+      dispatch(getDocumentSuccess(res.body));
     });
   };
 }
@@ -52,18 +51,20 @@ export function searchDocuments(queryString, offset = 0) {
  * @param {number} [offset=0]
  * @returns {object}} object
  */
-export function searchOwnDocuments(queryString, offset = 0) {
+export function searchOwnDocuments(queryString, offset = 0, userId) {
   getToken();
+
   return (dispatch) => {
+    if (!queryString) {
+      return dispatch(fetchOwnDocuments());
+    }
     request
-     .get(`/api/search/user/documents/?q=${queryString}&offset=${offset}`)
+     .get(`/api/search/documents/?q=${queryString}&offset=${offset}`)
     .set({ 'x-access-token': getToken() })
     .end((err, res) => {
-      if (queryString) {
-        dispatch(getOwnDocumentSuccess(res.body));
-      } else {
-        dispatch(fetchOwnDocuments());
-      }
+      res.body.documents.rows = res.body.documents.rows
+        .filter(document => document.authorId === userId);
+      dispatch(getOwnDocumentSuccess(res.body));
     });
   };
 }

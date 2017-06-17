@@ -24,14 +24,13 @@ class DocumentPage extends React.Component {
     this.redirectToRolePage = this.redirectToRolePage.bind(this);
   }
 
-
   /**
    *fetch user's document
    *
    * @param {props}  void
    * @return {fetchDocuments} function
    */
-  componentDidMount() {
+  componentWillMount() {
     this.props.fetchDocuments();
   }
 
@@ -59,10 +58,10 @@ class DocumentPage extends React.Component {
    * @returns {Object} allFiles
    */
   render() {
-    const { documents } = this.props;
+    const { documents, location } = this.props;
     return (
       <div>
-        <DocumentList documents={documents} />
+        <DocumentList documents={documents} location={location} />
       </div>
     );
   }

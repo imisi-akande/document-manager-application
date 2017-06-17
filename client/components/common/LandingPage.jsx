@@ -8,7 +8,6 @@ const docStyle = {
   height: 900,
 };
 
-// class HomePage extends React.Component {
 /**
  * renders the HomePage component
  * @returns {void}
@@ -16,7 +15,7 @@ const docStyle = {
  */
 const HomePage = () =>
   (
-    <div style={docStyle}>
+    <div className="background-container">
       <div className="parallax-container">
         <div id="parallax">
           <Typist className="Typist">

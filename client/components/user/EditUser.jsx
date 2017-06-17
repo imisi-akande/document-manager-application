@@ -26,7 +26,10 @@ class EditUsers extends React.Component {
         lastName: '',
         userName: '',
         email: '',
-        roleId: ''
+        roleId: '',
+        password: '',
+        confirmPassword: ''
+
       },
       isEditing: false
     };
@@ -55,7 +58,6 @@ class EditUsers extends React.Component {
         newState.userName = this.props.user[1].userName;
         newState.email = this.props.user[1].email;
         newState.roleId = currentUser.roleId;
-
         this.setState({
           newState
         });
@@ -89,7 +91,11 @@ class EditUsers extends React.Component {
     event.preventDefault();
     const { editUser } = this.props;
     const userData = this.state.user;
-    editUser(currentUser.userId, userData);
+    if (this.state.user.password === this.state.user.confirmPassword) {
+      editUser(currentUser.userId, userData);
+    } else {
+      Materialize.toast('Passwords do not match', 4000, 'rounded');
+    }
     this.isEditing();
   }
 
@@ -126,39 +132,54 @@ class EditUsers extends React.Component {
                 <th>lastName</th>
                 <th>userName</th>
                 <th>email</th>
-                <th>role Id</th>
+                <th>password</th>
+                <th>confirmPassword</th>
+                <th>role</th>
               </tr>
             </thead>
-
-            <tr>
-              <td><Input
-                s={6} name="firstName"
-                value={userDetails.firstName} onChange={this.onChange}
-              /></td>
-              <td><Input
-                s={6} name="lastName"
-                value={userDetails.lastName} onChange={this.onChange}
-              /></td>
-              <td><Input
-                s={6}name="userName"
-                value={userDetails.userName} onChange={this.onChange}
-              /></td>
-              <td><Input
-                s={6} name="email"
-                value={userDetails.email}
-                onChange={this.onChange}
-              /></td>
-              <td>{userDetails.roleId === 1 ? 'Admin' :
+            <tbody>
+              <tr>
+                <td><Input
+                  s={6} name="firstName"
+                  value={userDetails.firstName} onChange={this.onChange}
+                /></td>
+                <td><Input
+                  s={6} name="lastName"
+                  value={userDetails.lastName} onChange={this.onChange}
+                /></td>
+                <td><Input
+                  s={6}name="userName"
+                  value={userDetails.userName} onChange={this.onChange}
+                /></td>
+                <td><Input
+                  s={6} name="email"
+                  value={userDetails.email}
+                  onChange={this.onChange}
+                /></td>
+                <td><Input
+                  s={6} name="password"
+                  value={userDetails.password}
+                  onChange={this.onChange}
+                  type="password"
+                /></td>
+                <td><Input
+                  s={6} name="confirmPassword"
+                  value={userDetails.confirmPassword}
+                  onChange={this.onChange}
+                  type="password"
+                /></td>
+                <td>{userDetails.roleId === 1 ? 'Admin' :
                 userDetails.roleId === 2 ? 'regular' : 'Guest'}
-              </td>
-              <td><Button
-                waves="light"
-                onClick={e => this.onSubmit(e)}
-                className="btn-large teal darken-2"
-              >
-                <i className="large material-icons">
+                </td>
+                <td><Button
+                  waves="light"
+                  onClick={e => this.onSubmit(e)}
+                  className="btn-large teal darken-2"
+                >
+                  <i className="large material-icons">
                   mode_edit</i> Save</Button></td>
-            </tr>
+              </tr>
+            </tbody>
           </table> :
           <table className="table striped">
             <thead>
@@ -167,7 +188,6 @@ class EditUsers extends React.Component {
                 <th>lastName</th>
                 <th>userName</th>
                 <th>email</th>
-                <th>role Id</th>
               </tr>
             </thead>
             <tbody>
@@ -199,6 +219,8 @@ class EditUsers extends React.Component {
 EditUsers.propTypes = {
   user: React.PropTypes.array.isRequired,
   currentUser: React.PropTypes.object.isRequired,
+  editUser: React.PropTypes.func.isRequired,
+  fetchProfile: React.PropTypes.func.isRequired
 };
 
 const mapStoreToProps = state => ({

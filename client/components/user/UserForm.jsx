@@ -19,30 +19,26 @@ const Register = (props) => {
   return (<main>
     <center>
 
-      <div className="container" style={{ width: 700 }}>
-        <div className="z-depth-1 grey lighten-4 row">
+      <div className="container" style={{ marginTop: 100 }}>
+        <div className="z-depth-1 grey lighten-4">
 
-          <form className="col s12" method="post" onSubmit={onSubmit}>
+          <form className="col s12 m12 l12" method="post" onSubmit={onSubmit}>
             <div className="row">
               <div className="col s12" />
             </div>
 
             <div className="row">
-              <div className="input-field col s12">
+              <div className="input-field col s6">
                 <input
                   className="validate" type="text" name="firstName"
-                  id="firstName"
+                  id="firstName" required
                 />
                 <label htmlFor="email">firstName</label>
               </div>
-            </div>
-
-
-            <div className="row">
-              <div className="input-field col s12">
+              <div className="input-field col s6">
                 <input
                   className="validate" type="text" name="lastName"
-                  id="lastName"
+                  id="lastName" required
                 />
                 <label htmlFor="email">lastName</label>
               </div>
@@ -50,20 +46,16 @@ const Register = (props) => {
 
 
             <div className="row">
-              <div className="input-field col s12">
+              <div className="input-field col s6">
                 <input
                   className="validate" type="text" name="userName"
-                  id="userName"
+                  id="userName" required
                 /><label htmlFor="userName">userName</label>
               </div>
-            </div>
-
-
-            <div className="row">
-              <div className="input-field col s12">
+              <div className="input-field col s6">
                 <input
                   className="validate" type="email" name="email"
-                  id="email"
+                  id="email" required
                 />
                 <label
                   htmlFor="email" html="email" data-error="wrong"
@@ -73,20 +65,17 @@ const Register = (props) => {
             </div>
 
             <div className="row">
-              <div className="input-field col s12">
+              <div className="input-field col s6">
                 <input
                   className="validate" type="password"
-                  name="password" id="password"
+                  name="password" id="password" required
                 />
                 <label
                   htmlFor="password" data-error="wrong"
                   data-success="right" html="password"
                 >password</label>
               </div>
-            </div>
-
-            <div className="row">
-              <div className="input-field col s12">
+              <div className="input-field col s6">
                 <input
                   className="validate" type="text" name="role"
                   id="role"

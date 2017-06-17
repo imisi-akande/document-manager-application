@@ -61,6 +61,7 @@ export const createRoleSuccess = role => ({
 /**
  * create new role
  * POST /roles/
+ *
  * @param  {object} role role object to be svaed
  * @return {object}      response from api
  */
@@ -79,6 +80,7 @@ export const roleSaver = role => (dispatch) => {
 
 /**
  * fetch roles
+ * GET /roles/
  *
  * @return {object} object of roles
  */
@@ -87,13 +89,13 @@ export const fetchRoles = () => (dispatch) => {
       .get('/api/roles/')
       .set({ 'x-access-token': getToken() })
       .end((err, res) => {
-        // Materialize.toast(res.body.message, 4000, 'rounded');
         dispatch(getRoleSuccess(res.body.roles));
       });
 };
 
 /**
- * delete role from db DELETE /roles/:id
+ * delete role from db
+ *  DELETE /roles/:id
  *
  * @param  {number} id role id
  * @return {object}    api response

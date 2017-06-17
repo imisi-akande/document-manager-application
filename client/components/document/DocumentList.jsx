@@ -10,7 +10,8 @@ import Auth from '../../util/Auth';
 
 
 import Prompt from '../common/Prompt';
-import { searchDocuments } from '../../actions/SearchDocumentActions';
+import { searchDocuments, searchOwnDocuments }
+  from '../../actions/SearchDocumentActions';
 /**
  *
  *
@@ -89,7 +90,13 @@ class DocumentList extends React.Component {
    */
   onSearch(e) {
     const queryString = e.target.value;
-    return this.props.searchDocuments(queryString);
+    const locationPath = this.props.location.pathname;
+    if (locationPath === '/documents') {
+      return this.props.searchDocuments(queryString);
+    } else if (locationPath === '/mydocuments') {
+      const userId = this.props.currentUser.userId;
+      return this.props.searchOwnDocuments(queryString, 0, userId);
+    }
   }
 
   /**
@@ -102,11 +109,28 @@ class DocumentList extends React.Component {
    */
   onSubmit(e, id) {
     e.preventDefault();
+    const locationPath = this.props.location.pathname;
     const title = e.target.title.value;
     const access = e.target.access.value;
     const content = this.state.content;
-    const documentDetails = { id, title, access, content };
-    this.props.updateDocument(documentDetails, true);
+
+    if (content === ' ' ||
+    content === '') {
+      Materialize.toast('Content Field Cannot Be Empty', 2000);
+    } else if (
+    title === ' ' ||
+    title === '') {
+      Materialize.toast('Title Field Cannot Be Empty', 2000);
+    } else {
+      const documentDetails = { id, title, access, content };
+      if (locationPath === '/documents') {
+        this.props.updateDocument(documentDetails, true);
+      } else if (locationPath === '/mydocuments') {
+
+        this.props.updateDocument(documentDetails);
+      }
+      $(`#updateDocModal${documentDetails.id}`).modal('close');
+    }
   }
 
   /**
@@ -167,7 +191,10 @@ class DocumentList extends React.Component {
     let pagination = null;
     let doc = [];
     const deleteButton = (
-      <Button waves="light" id="deletebutton" className="btn-floating red darken-2 left">
+      <Button
+        waves="light" id="deletebutton"
+        className="btn-floating red darken-2 left"
+      >
         <i className="large material-icons">delete</i>
       </Button>
     );
@@ -175,13 +202,13 @@ class DocumentList extends React.Component {
       <a
         id="readmore"
         href="readmore"
-        className="read-more"
+        className="right"
       >
         READ MORE</a>
     );
 
     if (this.props.documentDetails.documents &&
-      this.props.documentDetails.documents.rows) {
+        this.props.documentDetails.documents.rows) {
       doc = this.props.documentDetails.documents.rows;
       pagination = this.props.documentDetails.pagination;
     }
@@ -193,7 +220,7 @@ class DocumentList extends React.Component {
         <div className="container">
           <div className="row center-align">
             <div style={{ padding: '20px' }} />
-            <h5>Sorry there are no documents to display.</h5>
+            <h5>Sorry there are no documents to display.</h5> <br />
           </div>
         </div>
       );
@@ -217,9 +244,9 @@ class DocumentList extends React.Component {
               <div className="row">
                 {doc.map(document =>
                   <div key={document.id}>
-                    <div className="col s3">
+                    <div className="col s12 m6 l4">
                       <div
-                        className="card white darken-1 activator"
+                        className="card Searching through a list of documents created by a user seems to display white darken-1 activator"
                         style={{
                           height: '185px'
                         }}
@@ -229,7 +256,7 @@ class DocumentList extends React.Component {
                           id="card-container"
                           style={{ opacity: 0.9 }}
                         >
-                          <h5 style={{ color: '#26a69a' }}>{document.title}</h5>
+                          <h5 className="card-container2" style={{ color: '#26a69a' }}>{document.title}</h5>
                           <h6
                             style={{ fontSize: '19px', marginTop: '7px' }}
                           >
@@ -243,6 +270,7 @@ class DocumentList extends React.Component {
                           <div className="card-action">
                             {this.docAccess(this.props.currentUser, document) ?
                               <Modal
+                                id={`updateDocModal${document.id}`}
                                 header="Edit Document"
                                 trigger={
                                   <Button
@@ -251,6 +279,7 @@ class DocumentList extends React.Component {
                                     style={{ marginRight: '5px' }}
                                   >
                                     <i
+                                      id="editButton"
                                       className="large material-icons"
                                     >
                                       mode_edit</i>
@@ -258,12 +287,14 @@ class DocumentList extends React.Component {
                                 }
                               >
                                 <form
+                                  id="submitButton"
                                   className="col s12" method="post"
                                   onSubmit={e =>
                                     this.onSubmit(e, document.id)}
                                 >
                                   <Row>
                                     <Input
+                                      className="card-title"
                                       s={6} name="title"
                                       defaultValue={document.title}
                                       onChange={e => this.fieldChange(e)}
@@ -284,15 +315,18 @@ class DocumentList extends React.Component {
                                   <Row>
                                     <TinyMCE
                                       content={document.content}
+                                      name="content"
                                       config={{
-                                        plugins: 'link image preview',
-                                        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright  | code ' // eslint-disable-line max-len
+                                        plugins: 'link image code',
+                                        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code'
                                       }}
                                       onChange={this.handleEditorChange}
+                                      className="wysiwyg" required
                                     />
                                   </Row>
                                   <Button
-                                    modal="close" className="teal darken-2"
+                                    id="updateButton"
+                                    className="teal darken-2"
                                     waves="light"
                                     type="submit"
                                   >UPDATE</Button>
@@ -363,16 +397,21 @@ DocumentList.propTypes = {
   deleteDocument: React.PropTypes.func.isRequired,
   fetchDocuments: React.PropTypes.func.isRequired,
   searchDocuments: React.PropTypes.func.isRequired,
+  searchOwnDocuments: React.PropTypes.func.isRequired,
   updateDocument: React.PropTypes.func.isRequired,
-  documentDetails: React.PropTypes.any.isRequired,
+  documentDetails: React.PropTypes.object.isRequired,
+  location: React.PropTypes.object.isRequired,
+
 };
 
 const mapDispatchToProps = dispatch => ({
-  updateDocument: documentDetails => dispatch(DocumentAction
-    .updateDocument(documentDetails, true)),
+  updateDocument: (documentDetails, isAdmin) => dispatch(DocumentAction
+    .updateDocument(documentDetails, isAdmin)),
   deleteDocument: id => dispatch(DocumentAction.deleteDocument(id)),
   fetchDocuments: offset => dispatch(DocumentAction.fetchDocuments(offset)),
-  searchDocuments: queryString => dispatch(searchDocuments(queryString))
+  searchDocuments: queryString => dispatch(searchDocuments(queryString)),
+  searchOwnDocuments: (queryString, offset, userId) =>
+    dispatch(searchOwnDocuments(queryString, offset, userId))
 });
 
 const mapStateToProps = state => ({

@@ -8,10 +8,7 @@ const documentsReducer = (state = initialState.documents, action) => {
     case types.LOAD_DOCUMENT_SUCCESS:
       return action.documents;
     case types.LOAD_OWN_DOCUMENT_SUCCESS:
-      return {
-        documents: {
-          rows: action.documents
-        } };
+      return action.documents;
     case types.CREATE_DOCUMENT_SUCCESS:
       return [...state, action.document];
     case types.UPDATE_OWN_DOCUMENT_SUCCESS:
@@ -28,12 +25,12 @@ const documentsReducer = (state = initialState.documents, action) => {
         return {
           ...state,
           documents: {
-            rows: [
-              ...state.documents.rows.filter(document =>
+            rows:
+              state.documents.rows.filter(document =>
                 document.id !== action.id
               )
-            ]
-          }
+          },
+          pagination: state.pagination
         };
       }
     case types.UPDATE_DOCUMENT_SUCCESS:

@@ -3,12 +3,14 @@ import Helper from '../Helper/utility';
 import DocumentHelper from '../ControllerHelper /DocumentHelper';
 
 const DocumentController = {
-  /**
-   * create - create a new Document
-   * @param {Object} request Request object
-   * @param {Object} response Response object
-   * @returns {Object} res Response object
-   */
+ /**
+  * create - create a new Document
+  * Route: POST: /documents
+  *
+  * @param {Object} request Request object
+  * @param {Object} response Response object
+  * @returns {Object} res Response object
+  */
 
   createDocument(req, res) {
     req.body.authorId = req.decoded.userId;
@@ -18,13 +20,14 @@ const DocumentController = {
       .then(document => res.status(201).send(document))
       .catch(error => res.status(400).send(error));
   },
+
   /**
    * Get all document
    * Route: GET: /documents/
    *
    * @param {Object} req request object
    * @param {Object} res response object
-   * @returns {void} response object or void
+   * @returns {Object} response object or void
    */
   listAllDocuments(req, res) {
     req.dmsFilter.attributes = DocumentHelper.getDocumentAttribute();
@@ -46,13 +49,14 @@ const DocumentController = {
           });
       });
   },
+
   /**
    * Get document by ID
    * Route: GET: /documents/:id
    *
    * @param {Object} req request object
    * @param {Object} res response object
-   * @returns {void|Response} response object or void
+   * @returns {Object} response object
    */
   getDocument(req, res) {
     const document = DocumentHelper.getDocument(req.singleDocument);
@@ -62,13 +66,14 @@ const DocumentController = {
         document
       });
   },
+
   /**
    * Delete document by id
    * Route: DELETE: /documents/:id
    *
    * @param {Object} req request object
    * @param {Object} res response object
-   * @returns {void} no returns
+   * @returns {Object} response object
    */
   deleteDocument(req, res) {
     req.docInstance.destroy()
@@ -78,13 +83,14 @@ const DocumentController = {
         })
       );
   },
+
   /**
    * Update document by id
    * Route: PUT: /documents/:id
    *
    * @param {Object} req request object
    * @param {Object} res response object
-   * @returns {void} no returns
+   * @returns {Object}response object
    */
   updateDocuments(req, res) {
     req.docInstance.update(req.body)
@@ -96,6 +102,15 @@ const DocumentController = {
       })
       .catch(error => res.status(500).send(error.errors));
   },
+
+  /**
+   * List all documents
+   * Route: GET: /documenta/
+   *
+   * @param {object} req
+   * @param {object} res
+   * @returns{object}response object
+   */
   listMyDocuments(req, res) {
     db.Documents.findAll({
       where: {
@@ -104,13 +119,14 @@ const DocumentController = {
     })
       .then(docs => res.status(200).send(docs));
   },
+
   /**
    * Search document
-   * Route: GET: /searchs?query={}
+   * Route: GET: /search?query={}
    *
    * @param {Object} req request object
    * @param {Object} res response object
-   * @returns {void|Response} response object or void
+   * @returns {Object} response object
    */
   searchDocuments(req, res) {
     req.dmsFilter.attributes = DocumentHelper.getDocumentAttribute();
@@ -133,6 +149,14 @@ const DocumentController = {
       });
   },
 
+  /**
+   *Search user's documents
+   *Route: GET: /search?query={}
+   *
+   * @returns {Object}object
+   * @param {Object} req
+   * @param {Object} res
+   */
   searchUserDocuments(req, res) {
     req.dmsFilter.attributes = DocumentHelper.getDocumentAttribute();
     const userDocuments = {};
@@ -154,26 +178,6 @@ const DocumentController = {
             pagination
           });
       });
-    // req.dmsFilter.attributes = DocumentHelper.getDocumentAttribute();
-    // const userDocuments = {};
-    // db.Documents
-    //   .findAndCountAll(req.dmsFilter)
-    //   .then((docs) => {
-    //     const condition = {
-    //       count: docs.count,
-    //       limit: req.dmsFilter.limit,
-    //       offset: req.dmsFilter.offset
-    //     };
-    //     delete docs.count;
-    //     const pagination = Helper.pagination(condition);
-    //     userDocuments.documents = docs;
-    //     return res.status(200)
-    //       .send({
-    //         message: 'This user\'s documents was successfully retrieved',
-    //         userDocuments,
-    //         pagination
-    //       });
-    //   });
   },
 };
 

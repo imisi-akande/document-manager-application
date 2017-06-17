@@ -2,11 +2,11 @@ import faker from 'faker';
 
 require('dotenv').config();
 
-const username = faker.internet.username();
+const username = faker.internet.userName();
 const password = faker.internet.password();
 
 
-module.exports = {
+export default {
   'User should be able see the homepage': (browser) => {
     browser
       .url(process.env.BASE_URL)

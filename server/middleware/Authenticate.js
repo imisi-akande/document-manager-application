@@ -39,10 +39,6 @@ const authenticate = {
           // Move to the next middleware function
         next();
       });
-    // } else {
-    //   response.status(401).send({
-    //     message: 'You are not permitted to perform this action'
-    //   });
     }
   },
 
@@ -136,24 +132,10 @@ const authenticate = {
       content: req.body.content,
       authorId: req.decoded.userId,
       access: req.body.access,
-      // ownerRoleId: req.decoded.roleId
     };
     next();
   },
-    /**
-   * generateToken generates token for authentication
-   * @param {Object} user object
-   * @returns {Object} jwt
-   * @param {Object} request object
-   * @param {Object} response object
-   */
-  generateToken(user) {
-    // a callback is supplied, callback is called with the err or the JWT.
-    return jwt.sign({
-      userId: user.id,
-      roleId: user.roleId,
-    }, secretKey, { expiresIn: '1 day' });
-  },
+
   /**
    * Check for role edit and delete permission
    * @param {Object} req req object
@@ -182,6 +164,7 @@ const authenticate = {
   },
   /**
    * Validate user's input
+   *
    * @param {Object} req req object
    * @param {Object} res response object
    * @param {Object} next Move to next controller handler
@@ -228,6 +211,7 @@ const authenticate = {
   },
   /**
    * Validate user's input
+   *
    * @param {Object} req req object
    * @param {Object} res response object
    * @param {Object} next Move to next controller handler
@@ -313,6 +297,7 @@ const authenticate = {
   },
  /**
    * Validate user's login datas
+   *
    * @param {Object} req req object
    * @param {Object} res response object
    * @param {Object} next Move to next controller handler
@@ -395,10 +380,7 @@ const authenticate = {
    */
   validateSearch(req, res, next) {
     const query = {};
-    const terms = [];
-    const userQuery = req.query.q;
-    const searchArray =
-      userQuery ? userQuery.toLowerCase().match(/\w+/g) : null;
+    const searchTerm = req.query.q;
     const limit = req.query.limit || 10;
     const offset = req.query.offset || 0;
     const publishedDate = req.query.publishedDate;
@@ -417,12 +399,6 @@ const authenticate = {
           message: 'Only positive number is allowed for offset value'
         });
     }
-
-    if (searchArray) {
-      searchArray.forEach((word) => {
-        terms.push(`%${word}%`);
-      });
-    }
     query.limit = limit;
     query.offset = offset;
     query.order = [['createdAt', order]];
@@ -436,10 +412,10 @@ const authenticate = {
       }
       query.where = {
         $or: [
-          { userName: { $iLike: { $any: terms } } },
-          { firstName: { $iLike: { $any: terms } } },
-          { lastName: { $iLike: { $any: terms } } },
-          { email: { $iLike: { $any: terms } } }
+          { userName: { $iLike: `%${searchTerm}%` } },
+          { firstName: { $iLike: `%${searchTerm}%` } },
+          { lastName: { $iLike: `%${searchTerm}%` } },
+          { email: { $iLike: `%${searchTerm}%` } }
         ]
       };
     }
@@ -449,13 +425,12 @@ const authenticate = {
         ? {}
         : { id: req.decoded.userId };
     }
-    if (`${req.baseUrl}${req.route.path}` === '/api/search/documents'
-    ) {
+    if (`${req.baseUrl}${req.route.path}` === '/api/search/documents') {
       if (Helper.isAdmin(req.decoded.roleId)) {
         query.where = {
           $or: [
-          { title: { $iLike: { $any: terms } } },
-          { content: { $iLike: { $any: terms } } },
+          { title: { $iLike: `%${searchTerm}%` } },
+          { content: { $iLike: `%${searchTerm}%` } },
           ]
         };
         query.include = [{
@@ -464,7 +439,8 @@ const authenticate = {
         }];
       } else {
         query.where = {
-          $and: [DocumentHelper.documentAccess(req), Helper.likeSearch(terms)]
+          $and: [DocumentHelper.documentAccess(req),
+            Helper.likeSearch(`%${searchTerm}%`)]
         };
         query.include = [{
           model: db.Users,
@@ -472,6 +448,31 @@ const authenticate = {
         }];
       }
     }
+
+    if (`${req.baseUrl}${req.route.path}` === '/api/search/user/documents') {
+      if (Helper.isOwner(req.decoded.roleId)) {
+        query.where = {
+          $or: [
+            { title: { $iLike: `%${searchTerm}%` } },
+            { content: { $iLike: `%${searchTerm}%` } },
+          ]
+        };
+        query.include = [{
+          model: db.Users,
+          attributes: { exclude: ['password'] }
+        }];
+      } else {
+        query.where = {
+          $and: [DocumentHelper.documentAccess(req),
+            Helper.likeSearch(`%${searchTerm}%`)]
+        };
+        query.include = [{
+          model: db.Users,
+          attributes: { exclude: ['password'] }
+        }];
+      }
+    }
+
     if (`${req.baseUrl}${req.route.path}` === '/api/documents/') {
       if (Helper.isAdmin(req.decoded.roleId)) {
         query.where = {};
@@ -484,9 +485,11 @@ const authenticate = {
       }
     }
     if (`${req.baseUrl}${req.route.path}` === '/api/users/:id/documents') {
-      const adminSearch = req.query.q ? Helper.likeSearch(terms) : { };
+      const adminSearch = req.query.q ?
+      Helper.likeSearch(`%${searchTerm}%`) : { };
       const userSearch = req.query.q
-        ? [DocumentHelper.documentAccess(req), Helper.likeSearch(terms)]
+        ? [DocumentHelper.documentAccess(req),
+          Helper.likeSearch(`%${searchTerm}%`)]
         : DocumentHelper.documentAccess(req);
       if (Helper.isAdmin(req.decoded.roleId)) {
         query.where = adminSearch;
@@ -541,10 +544,7 @@ const authenticate = {
    */
   validateDocumentSearch(req, res, next) {
     const query = {};
-    const terms = [];
-    const userQuery = req.query.q;
-    const searchArray =
-      userQuery ? userQuery.toLowerCase().match(/\w+/g) : null;
+    const searchTerm = req.query.q;
     const limit = req.query.limit || 10;
     const offset = req.query.offset || 0;
     const publishedDate = req.query.publishedDate;
@@ -563,32 +563,9 @@ const authenticate = {
           message: 'Only positive number is allowed for offset value'
         });
     }
-
-    if (searchArray) {
-      searchArray.forEach((word) => {
-        terms.push(`%${word}%`);
-      });
-    }
     query.limit = limit;
     query.offset = offset;
     query.order = [['createdAt', order]];
-
-    if (`${req.baseUrl}${req.route.path}` === '/api/search/users') {
-      if (!req.query.q) {
-        return res.status(400)
-          .send({
-            message: 'Please enter a search query'
-          });
-      }
-      query.where = {
-        $or: [
-          { userName: { $iLike: { $any: terms } } },
-          { firstName: { $iLike: { $any: terms } } },
-          { lastName: { $iLike: { $any: terms } } },
-          { email: { $iLike: { $any: terms } } }
-        ]
-      };
-    }
     if (`${req.baseUrl}${req.route.path}` === '/api/users/') {
       query.where = Helper.isAdmin(req.decoded.roleId) ||
        Helper.isRegular(req.decoded.roleId)
@@ -599,8 +576,8 @@ const authenticate = {
       if (Helper.isAdmin(req.decoded.roleId)) {
         query.where = {
           $or: [
-          { title: { $iLike: { $any: terms } } },
-          { content: { $iLike: { $any: terms } } },
+          { title: { $iLike: `%${searchTerm}%` } },
+          { content: { $iLike: `%${searchTerm}%` } },
           ]
         };
         query.include = [{
@@ -609,8 +586,12 @@ const authenticate = {
         }];
       } else {
         query.where = {
-          $and: [DocumentHelper.documentAccess(req), Helper.likeSearch(terms)]
+          $and: [{ title: {
+            $ilike: `%${searchTerm}%`,
+          }, }, { authorId: req.decoded.userId }]
         };
+
+
         query.include = [{
           model: db.Users,
           attributes: { exclude: ['password'] }
@@ -632,30 +613,6 @@ const authenticate = {
     db.Users
       .findOne({
         where: { id: req.params.id },
-      })
-      .then((user) => {
-        if (!user) {
-          return res.status(404)
-            .send({
-              message: 'This user does not exist'
-            });
-        }
-        req.getUser = user;
-        next();
-      })
-      .catch(err => res.status(500).send(err.errors));
-  },
-  /**
-   * Get a single user's profile
-   * @param {Object} req req object
-   * @param {Object} res response object
-   * @param {Object} next Move to next controller handler
-   * @returns {void|Object} response object or void
-   */
-  getUserName(req, res, next) {
-    db.Users
-      .findOne({
-        where: { userName: req.query.q },
       })
       .then((user) => {
         if (!user) {

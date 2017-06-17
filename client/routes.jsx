@@ -1,17 +1,21 @@
+// react route
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './container/App';
 import LandingPage from './components/common/LandingPage';
-import Login from './components/authentication/Login';
-import Register from './components/authentication/SignUp';
+import login from './components/authentication/Login';
+import register from './components/authentication/SignUp';
 import RolePage from './container/RolePage';
-import ManageRolePage from './container/ManageRolePage';
+import manageRolePage from './container/ManageRolePage';
 import UserPage from './container/UserPage';
-import ManageUserPage from './container/ManageUserPage';
-import DocumentContainer from '../client/container/DocumentContainer';
-import DocumentPage from '../client/container/DocumentPage';
-import OwnDocumentList from '../client/components/document/OwnDocumentList';
+import manageUserPage from './container/ManageUserPage';
+import documentContainer from '../client/container/DocumentContainer';
+import documentPage from '../client/container/DocumentPage';
+import myDocumentPage from '../client/container/MyDocumentPage';
 import EditUser from '../client/components/user/EditUser';
+import requiresAuthentication from './util/RequiresAuthentication';
+import alreadyAuthenticated from './util/AlreadyAuthenticated';
+
 
 const logUserOut = (nextState) => {
   localStorage.removeItem('dms-user');
@@ -20,20 +24,19 @@ const logUserOut = (nextState) => {
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={LandingPage} />
-    <Route path="signup" component={Register} />
-    <Route path="login" component={Login} />
+    <IndexRoute component={alreadyAuthenticated(LandingPage)} />
+    <Route path="signup" component={alreadyAuthenticated(register)} />
+    <Route path="login" component={login} />
     <Route path="roles" component={RolePage} />
-    <Route path="createdoc" component={DocumentContainer} />
-    <Route path="role" component={ManageRolePage} />
-    <Route path="role/:id" component={ManageRolePage} />
+    <Route path="createdoc" component={documentContainer} />
+    <Route path="role" component={manageRolePage} />
+    <Route path="role/:id" component={manageRolePage} />
     <Route path="users" component={UserPage} />
-    <Route path="signups" component={ManageUserPage} />
-    <Route path="user" component={ManageUserPage} />
+    <Route path="user" component={manageUserPage} />
     <Route path="logout" onEnter={logUserOut} />
-    <Route path="documents" component={DocumentPage} />
-    <Route path="documents/:id" component={DocumentContainer} />
-    <Route path="mydocuments" component={OwnDocumentList} />
+    <Route path="documents" component={documentPage} />
+    <Route path="documents/:id" component={documentContainer} />
+    <Route path="mydocuments" component={requiresAuthentication(myDocumentPage)} />
     <Route path="myprofile" component={EditUser} />
   </Route>
 );

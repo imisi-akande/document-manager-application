@@ -49,7 +49,7 @@ describe('Register component test', () => {
       wrapper = shallow(<Register {...props} />);
     });
 
-    test('submiting the form calls saveUser with the right data', () => {
+    test('submiting the form calls saveUser with the right value', () => {
       const form = wrapper.find('form');
       form.simulate('submit', event);
       expect(props.saveUser).toHaveBeenCalled();

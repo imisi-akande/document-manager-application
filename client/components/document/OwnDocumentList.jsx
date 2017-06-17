@@ -4,7 +4,6 @@ import TinyMCE from 'react-tinymce';
 import { Modal, Button, Row, Input, Pagination } from 'react-materialize';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import DocumentTitle from '../../components/document/DocumentListTitle';
 import DocumentContent from '../../components/document/DocumentContent';
 import * as DocumentAction from '../../actions/DocumentActions';
 import Prompt from '../../components/common/Prompt';
@@ -40,7 +39,7 @@ class OwnDocumentList extends React.Component {
   }
 
   /**
-   *
+   *ComponentDidMount
    *
    *@returns {object}object
    * @memberOf OwnDocumentList
@@ -52,7 +51,7 @@ class OwnDocumentList extends React.Component {
   /**
    *
    *
-   * @param {object} event
+   * @param {object} e
    * @returns {object} object
    *
    * @memberOf OwnDocumentList
@@ -89,6 +88,18 @@ class OwnDocumentList extends React.Component {
     const content = this.state.content;
     const documentDetails = { id: documentId, title, access, content };
     this.props.updateDocument(documentDetails);
+    if (content === ' ' ||
+    content === '') {
+      Materialize.toast('Content Field Cannot Be Empty', 2000);
+    } else if (
+    title === ' ' ||
+    title === '') {
+      Materialize.toast('Title Field Cannot Be Empty', 2000);
+    } else {
+      const documentDetails = { documentId, title, access, content };
+      this.props.updateDocument(documentDetails, true);
+      $(`#updateDocModal${documentDetails.documentId}`).modal('close');
+    }
   }
 
   /**
@@ -136,7 +147,10 @@ class OwnDocumentList extends React.Component {
     let totalCount = null;
     let doc = null;
     const deleteButton = (
-      <Button waves="light" id="deleteDocs" className="btn-floating red darken-2 left">
+      <Button
+        waves="light" id="deleteDocs"
+        className="btn-floating red darken-2 left"
+      >
         <i className="large material-icons">delete</i>
       </Button>
     );
@@ -168,12 +182,7 @@ class OwnDocumentList extends React.Component {
 
     return (
       <div>
-        <input
-          id="doc-search"
-          type="search"
-          placeholder="search for documents here..."
-          onChange={e => this.onSearch(e)} name="search"
-        />
+
 
         { noDoc }
 
@@ -225,6 +234,14 @@ class OwnDocumentList extends React.Component {
                               <Input
                                 s={6} name="title" defaultValue={document.title}
                                 onChange={e => this.fieldChange(e)}
+                              />
+                              <TinyMCE
+                                content={document.content}
+                                config={{
+                                  plugins: 'link image preview',
+                                  toolbar: 'undo redo | bold italic | alignleft aligncenter alignright  | code ' // eslint-disable-line max-len
+                                }}
+                                onChange={this.handleEditorChange}
                               />
                               <Input
                                 s={6} name="access" validate type="select"
@@ -317,6 +334,7 @@ OwnDocumentList.propTypes = {
   searchOwnDocuments: React.PropTypes.func.isRequired,
   updateDocument: React.PropTypes.func.isRequired,
   deleteDocument: React.PropTypes.func.isRequired,
+  documentDetails: React.PropTypes.obj,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -326,6 +344,7 @@ const mapDispatchToProps = dispatch => ({
   fetchOwnDocuments: offset =>
     dispatch(DocumentAction.fetchOwnDocuments(offset)),
   searchOwnDocuments: queryString => dispatch(searchOwnDocuments(queryString))
+
 });
 
 const mapStateToProps = state => ({

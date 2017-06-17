@@ -241,12 +241,12 @@ describe('User API', () => {
           });
 
       it('should return not found for invalid user id', (done) => {
-        const data = {
+        const value = {
           userName: 'Kingsley',
           lastname: 'Solomon'
         };
         superRequest.put('/api/users/4562')
-            .send(data)
+            .send(value)
             .set({
               'x-access-token': adminToken
             })
@@ -259,12 +259,12 @@ describe('User API', () => {
 
       it(`should return permission denied when regular user want to
           update another user's profile`, (done) => {
-        const data = {
+        const value = {
           username: 'Kingsley',
           lastname: 'Solomon'
         };
         superRequest.put(`/api/users/${newAdminUser.id}`)
-            .send(data)
+            .send(value)
             .set({
               'x-access-token': regularToken
             })
@@ -278,12 +278,12 @@ describe('User API', () => {
 
       it('should give admin permission to update any user(s) profile',
           (done) => {
-            const data = {
+            const value = {
               username: 'Kingsley',
               lastname: 'Solomon'
             };
             superRequest.put(`/api/users/${regularUser.id}`)
-              .send(data)
+              .send(value)
               .set({
                 'x-access-token': adminToken
               })

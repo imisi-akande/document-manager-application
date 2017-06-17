@@ -137,40 +137,6 @@ roleRoutes.route('/:id')
   /**
    * @swagger
    * /roles/{id}:
-   *   put:
-   *     description: Updates a role by id
-   *     tags:
-   *      - Update
-   *     produces:
-   *       - application/json
-   *     parameters:
-   *        - name: id
-   *          description: The role's id
-   *          in:  path
-   *          required: true
-   *          type: string
-   *        - name: x-access-token
-   *          in: header
-   *          description: an authorization header
-   *          required: true
-   *          type: string
-   *        - name: role
-   *          description: User object
-   *          in:  body
-   *          required: true
-   *          type: string
-   *          schema:
-   *            $ref: '#/definitions/NewRoleUpdate'
-   *     responses:
-   *       200:
-   *         description: roles
-   *         schema:
-   *           $ref: '#/definitions/RoleUpdate'
-   */
-
-  /**
-   * @swagger
-   * /roles/{id}:
    *    delete:
    *      description: Deletes the role with the id supplied as param
    *      tags:

@@ -117,8 +117,8 @@ class UserListRow extends React.Component {
   render() {
     const user = this.props.user;
     return (
-      <tr>
-        <td>{user.firstName}</td>
+      <tr className="user-rows">
+        <td className="firstName">{user.firstName}</td>
         <td>{user.lastName}</td>
         <td>{user.userName}</td>
         <td>{user.email}</td>
@@ -182,9 +182,9 @@ class UserListRow extends React.Component {
             trigger={
               <Button
                 waves="light"
-                className="btn-floating btn-large red darken-2 right"
+                className="btn-floating btn-small red darken-2"
               >
-                <i className="large material-icons">delete</i>
+                <i className="material-icons">delete</i>
               </Button>
                       }
             onClickFunction={
@@ -215,6 +215,5 @@ const mapStateToProps = state => ({
   userDetails: state.user,
   currentUser: state.user
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserListRow);
