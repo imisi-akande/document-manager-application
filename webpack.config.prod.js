@@ -27,10 +27,25 @@ module.exports = {
   ],
   module: {
     loaders: [
-      { test: /\.(js|jsx)$/, include: path.join(__dirname, 'client'), loaders: ['babel-loader'] },
-      { test: /\.scss$/i, loader: ExtractTextPlugin.extract(['css-loader', 'autoprefixer-loader', 'sass-loader']) },
+      { test: /\.(js|jsx)$/, include: path.join(__dirname, 'client'), loaders: ['babel-loader'], exclude: /node_modules/, },
+      {
+        test: /\.scss$/,
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /(\.css)$/,
+        loaders: ['style-loader', 'css-loader']
+      },
       { test: /\.json$/, loader: 'json-loader' },
-      { test: /\.(jpg|png|svg)$/, loader: 'url-loader' }
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file-loader'
+      },
+      { test: /\.(jpg|png|svg)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 25000,
+        } }
     ]
   },
   resolve: {
