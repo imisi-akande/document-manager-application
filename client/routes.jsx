@@ -36,7 +36,7 @@ export default (
     <Route path="logout" onEnter={logUserOut} />
     <Route path="documents" component={documentPage} />
     <Route path="documents/:id" component={documentContainer} />
-    <Route path="mydocuments" component={requiresAuthentication(myDocumentPage)} />
+    <Route path="mydocuments" component={myDocumentPage} />
     <Route path="myprofile" component={EditUser} />
   </Route>
 );

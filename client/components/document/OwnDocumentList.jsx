@@ -45,6 +45,7 @@ class OwnDocumentList extends React.Component {
    * @memberOf OwnDocumentList
    */
   componentDidMount() {
+    console.log('am here');
     this.props.fetchOwnDocuments();
   }
 
