@@ -1,3 +1,4 @@
+// react route
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './container/App';
@@ -36,6 +37,6 @@ export default (
     <Route path="documents" component={documentPage} />
     <Route path="documents/:id" component={documentContainer} />
     <Route path="mydocuments" component={requiresAuthentication(myDocumentPage)} />
-    <Route path="myprofile" component={requiresAuthentication(EditUser)} />
+    <Route path="myprofile" component={EditUser} />
   </Route>
 );

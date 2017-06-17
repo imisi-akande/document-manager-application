@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production webpack --config webpack.config.prod.js && NODE_ENV=production babel-watch ./server",
+    "start": "NODE_ENV=production webpack --config webpack.config.prod.js && NODE_ENV=production babel-watch ./server.js",
     "start:dev": "NODE_ENV=development babel-node ./server.js",
     "webpack:dev": "webpack -w",
     "mocha": "NODE_ENV=test mocha --compilers js:babel-core/register server/tests/**/*.js --timeout 15000",

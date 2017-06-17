@@ -9,10 +9,10 @@ const GLOBALS = {
 
 module.exports = {
   devtool: 'source-map',
-  entry: path.resolve(__dirname, 'client/index'),
+  entry: path.join(__dirname, './client/index.jsx'),
   target: 'web',
   output: {
-    path: path.join(__dirname, '/lib/client'),
+    path: path.join(__dirname, '/client/public'),
     publicPath: '/',
     filename: 'bundle.js'
   },
