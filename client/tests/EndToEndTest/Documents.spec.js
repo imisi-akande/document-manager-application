@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 import faker from 'faker';
 
 export default {
@@ -97,4 +98,5 @@ export default {
       })
       .end();
   }
-// };
+}
+;

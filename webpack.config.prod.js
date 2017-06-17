@@ -9,7 +9,7 @@ const GLOBALS = {
 
 module.exports = {
   devtool: 'source-map',
-  entry: path.join(__dirname, './client/index.jsx'),
+  entry: path.join(__dirname, './client/index'),
   target: 'web',
   output: {
     path: path.join(__dirname, '/client/public'),
@@ -17,7 +17,7 @@ module.exports = {
     filename: 'bundle.js'
   },
   devServer: {
-    contentBase: path.resolve(__dirname, './lib/client')
+    contentBase: path.resolve(__dirname, 'client')
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
