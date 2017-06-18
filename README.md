@@ -67,4 +67,4 @@ Ensure your codes follow the [AirBnB Javascript Styles Guide](https://github.com
 
 
 ## API Documentation Link
-[API Documentation](https://github.com/andela-iakande/document-manager-application.)
+[API Documentation](https://andela-iakande.github.io/API-documentation/)
