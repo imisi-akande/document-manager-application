@@ -69,7 +69,6 @@ The limitations to the **Document Management System API** are as follows:
 ### How to Contribute
 Contributors are welcome to further enhance the features of this API by contributing to its development. The following guidelines should guide you in contributing to this project:
 
-
 ## Technologies Used
 - JavaScript (ES6)
 - Node.js
