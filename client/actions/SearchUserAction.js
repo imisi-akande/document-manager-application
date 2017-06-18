@@ -6,7 +6,8 @@ import * as types from './ActionTypes';
 import getToken from '../actions/GetToken';
 
 /**
- * userSearchResult
+ * user search result
+ *
  * @param  {object} userSearchResult user reponse from api call
  * @return {object}      action type and action payload
  */
@@ -15,7 +16,8 @@ export function usersSearched(userSearchResult) {
 }
 
 /**
- * createUser,
+ * create new user
+ *
  * action dispatched on getting a user records from db
  * @param  {object} user user response fron api call in the thunk
  * @return {object}      reponse dispatched to reducer
@@ -23,8 +25,9 @@ export function usersSearched(userSearchResult) {
 export const getUserSuccess = user => ({ type: types.USER_SUCCESS, user });
 
 /**
- * search user function,
+ * search user function
  * GET /search/users/?term={queryString}
+ *
  * @param  {String} queryString search term
  * @param  {number} offset offset of user data
  * @param  {numebr} limit  limit of records to be returned

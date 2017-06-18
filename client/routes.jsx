@@ -13,11 +13,10 @@ import documentContainer from '../client/container/DocumentContainer';
 import documentPage from '../client/container/DocumentPage';
 import myDocumentPage from '../client/container/MyDocumentPage';
 import EditUser from '../client/components/user/EditUser';
-import requiresAuthentication from './util/RequiresAuthentication';
 import alreadyAuthenticated from './util/AlreadyAuthenticated';
 
 
-const logUserOut = (nextState) => {
+const logUserOut = () => {
   localStorage.removeItem('dms-user');
   window.location = '/';
 };
@@ -36,7 +35,7 @@ export default (
     <Route path="logout" onEnter={logUserOut} />
     <Route path="documents" component={documentPage} />
     <Route path="documents/:id" component={documentContainer} />
-    <Route path="mydocuments" component={myDocumentPage} />
+    <Route path="mydocuments" component={(myDocumentPage)} />
     <Route path="myprofile" component={EditUser} />
   </Route>
 );

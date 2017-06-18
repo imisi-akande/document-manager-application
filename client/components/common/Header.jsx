@@ -3,6 +3,12 @@ import { Dropdown, Button, NavItem } from 'react-materialize';
 import { Link, IndexLink } from 'react-router';
 import jwtDecode from 'jwt-decode';
 
+/**
+* render if logged in
+*
+* @param {Object} props { token, userRoleId, userButton }
+* @returns {Object} jsx object
+*/
 const renderIfLoggedIn = () => {
   const token = localStorage.getItem('dms-user');
   const userRoleId = token ? jwtDecode(token).roleId : null;
@@ -113,7 +119,12 @@ const renderIfLoggedIn = () => {
           </li>
 
           <li>
-            <Link to="/logout" activeClassName="active" className="right">
+            <Link
+              to="/logout"
+              id="logOut"
+              activeClassName="active"
+              className="right"
+            >
               Logout
             </Link>
           </li>

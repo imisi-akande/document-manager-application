@@ -31,7 +31,7 @@ class User extends React.Component {
   }
 
   /**
-   *
+   *redirect to user page
    *
    *@returns {object}object
    * @memberOf User

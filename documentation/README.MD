@@ -7,8 +7,8 @@ The application was developed with [NodeJs](http://nodejs.org) and [Express](htt
 Installation
 ------------
 1.  Ensure you have NodeJs and postgres installed
-2.  Clone the repository `https://github.com/andela-iakande/document-management-system`
-3.  Change your directory `cd document-management-system`
+2.  Clone the repository `https://github.com/andela-iakande/document-manager-application`
+3.  Change your directory `cd document-manager-application`
 4.  Install all dependencies `npm install`
 5.  Run tests  `npm test`
 6.  Run integration test `npm run e2e`

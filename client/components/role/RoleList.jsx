@@ -1,7 +1,12 @@
 import React from 'react';
 import RoleListRow from '../role/RoleListRow';
 
-
+/**
+ * Renders RoleForm component
+ *
+ * @param {Object} props { roles, deleteRole }
+ * @return {object} Role List
+ */
 const RoleList = ({ roles, deleteRole }) => (<table className="striped">
   <thead>
 

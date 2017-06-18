@@ -34,7 +34,7 @@ class DocumentList extends React.Component {
 
   /**
    * Creates an instance of DocumentList.
-   * @param {undefined} props
+   * @param {object} props
    *
    * @memberOf DocumentList
    */
@@ -54,6 +54,7 @@ class DocumentList extends React.Component {
     this.onSearch = this.onSearch.bind(this);
   }
   /**
+   *onChange event
    *
    * @param {object} event
    *@returns {nothing} undefined
@@ -66,7 +67,7 @@ class DocumentList extends React.Component {
   }
 
   /**
-   *
+   *onClick Button event
    *
    * @param {object} event
    * @returns {function} function
@@ -80,10 +81,10 @@ class DocumentList extends React.Component {
   }
 
   /**
-   *
+   *On select for pagination
    *
    * @param {number} pageNo
-   * @returns {object} function
+   * @returns {object} object
    *
    * @memberOf DocumentList
    */
@@ -179,7 +180,7 @@ class DocumentList extends React.Component {
   }
 
   /**
-   * Documents
+   * render Documents list
    *
    * @returns{object} object
    *
@@ -256,7 +257,10 @@ class DocumentList extends React.Component {
                           id="card-container"
                           style={{ opacity: 0.9 }}
                         >
-                          <h5 className="card-container2" style={{ color: '#26a69a' }}>{document.title}</h5>
+                          <h5
+                            className="card-container2"
+                            style={{ color: '#26a69a' }}
+                          >{document.title}</h5>
                           <h6
                             style={{ fontSize: '19px', marginTop: '7px' }}
                           >
@@ -402,7 +406,6 @@ DocumentList.propTypes = {
   searchDocuments: React.PropTypes.func.isRequired,
   searchOwnDocuments: React.PropTypes.func.isRequired,
   updateDocument: React.PropTypes.func.isRequired,
-  currentUser: React.PropTypes.object.isRequired,
   location: React.PropTypes.object.isRequired,
 
 };

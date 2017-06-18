@@ -5,6 +5,7 @@ import getToken from '../actions/GetToken';
 
 /**
  * create role action
+ * Route: POST: /roles/
  *
  * @param  {object} role [description]
  * @return {object}      [description]
@@ -16,6 +17,7 @@ export const createRole = role => ({
 
 /**
  * get role action
+ * Route: GET: /roles/
  *
  * @param {object} roles
  * @return {object} object of roles
@@ -27,6 +29,7 @@ export const getRoleSuccess = roles => ({
 
 /**
  * update from state the current selected role
+ * Route: PUT: /roles/:id
  *
  * @param {object} role
  * @return {object} updated role
@@ -38,6 +41,7 @@ export const updateRoleSuccess = role => ({
 
 /**
  * delete from state the current selected role
+ * Route: DELETE: /roles/:id
  *
  * @param {object} id
  * @return {object} object
@@ -49,6 +53,7 @@ export const deleteRoleSuccess = id => ({
 
 /**
  * create from state the current selected role
+ * POST /roles/
  *
  * @param {object} role
  * @return {object} new role

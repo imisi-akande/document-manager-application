@@ -105,7 +105,7 @@ const DocumentController = {
 
   /**
    * List all documents
-   * Route: GET: /documenta/
+   * Route: GET: /documents/
    *
    * @param {object} req
    * @param {object} res
