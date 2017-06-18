@@ -69,6 +69,7 @@ class Role extends React.Component {
           roles={roles} deleteRole={this.props.deleteRole}
         /> : ''}
         <input
+          id="addRole"
           type="submit"
           value="Add Role"
           className="btn green darken-4"
@@ -89,7 +90,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 /**
- *
+ * map state to props
  *
  * @param {object} state
  * @returns {object} -h

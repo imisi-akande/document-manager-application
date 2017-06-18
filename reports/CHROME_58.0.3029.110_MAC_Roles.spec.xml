@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="1">
+
+  <testsuite name="Roles.spec"
+    errors="0" failures="0" hostname="" id="" package="Roles.spec" skipped="0"
+    tests="1" time="9.238" timestamp="Sun, 18 Jun 2017 14:39:00 GMT">
+  
+    <testcase name="Admin Delete Role" classname="Roles.spec" time="9.238" assertions="10">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+  
+  </testsuite>
+</testsuites>

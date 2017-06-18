@@ -2,7 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as userActions from '../../actions/UserAction';
 
-
+/**
+* Register Component
+*
+* @param {Object} props { onSubmit, saveUser }
+* @returns {Object} jsx object
+*/
 const Register = (props) => {
   const { saveUser } = props;
   const onSubmit = (e) => {

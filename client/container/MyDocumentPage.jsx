@@ -68,7 +68,7 @@ class MyDocumentPage extends React.Component {
 }
 
 /**
- *
+ *map dispatch action to props
  *
  * @param {object} dispatch
  * @returns {object}object
@@ -84,7 +84,7 @@ MyDocumentPage.propTypes = {
   location: PropTypes.object.isRequired
 };
 /**
- *
+ * map state to props
  *
  * @param {object} state
  * @returns {object}object

@@ -57,6 +57,7 @@ export const updateUserSuccess = (user, userId) => ({
 
 /**
  * remove from state the currently selected user
+ *
  * @param  {object} user delete user details
  * @return {object} action [description]
  */
@@ -137,6 +138,7 @@ export const login = userCredentials =>
 
 /**
 * Edit and update user details
+* PUT /users/
 *
 * @param {String} userId
 * @param {String} userData
@@ -155,6 +157,7 @@ export const editUser = (userId, userData) => (dispatch) => {
 
 /**
  * User Profile
+ * GET /users/:id
  *
  * @export
  * @param {number} userId
@@ -197,6 +200,7 @@ export const updateUser = (user, userId) =>
 
 /**
  * Delete user action
+ * Route: DELETE: /users/:id
  *
  * @export getUser
  * @param {number} id
@@ -209,6 +213,6 @@ export const deleteUser = id => (dispatch) => {
         'x-access-token': getToken()
       })
       .end((err, res) => {
-        dispatch(deleteUserSuccess(res.body.document));
+        dispatch(deleteUserSuccess(res.body));
       });
 };

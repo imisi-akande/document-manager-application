@@ -1,20 +1,32 @@
 import React, { propTypes } from 'react';
-import { Modal, Button, Row, Input } from 'react-materialize';
+import { Button } from 'react-materialize';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import * as roleAction from '../../actions/RoleAction';
 
 import Prompt from '../common/Prompt';
 
+/**
+ * Renders RoleListRow component
+ *
+ * @param {Object} props {  role, deleteRoles }
+ * @return {object} RoleListRow
+ */
 const RoleListRow = (props) => {
   const { role, deleteRoles } = props;
+
+  /**
+ * get Deleted Roles
+ *
+ * @param {Object} roleId
+ * @return {object} RoleListRow
+ */
   const getDeleteRoles = (roleId) => {
     deleteRoles(roleId);
   };
 
-
   return (
-    <tr>
+    <tr className="roleTitle">
       <td className="role-title">{role.title}</td>
       <td>{moment(role.createdAt).format('MMMM Do YYYY')}</td>
       <td>{moment(role.updatedAt).format('MMMM Do YYYY')}</td>
@@ -24,11 +36,11 @@ const RoleListRow = (props) => {
             waves="light"
             className="btn-floating btn-large red darken-2 right"
           >
-            <i className="large material-icons">delete</i>
+            <i id="deleteRole" className="large material-icons">delete</i>
           </Button>
                   }
         onClickFunction={
-                    (e) => { getDeleteRoles(role.id); }
+                    () => { getDeleteRoles(role.id); }
                   }
       /> : ''}</td>
     </tr>

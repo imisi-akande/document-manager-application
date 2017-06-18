@@ -4,6 +4,14 @@ import { fetchDocuments, fetchOwnDocuments } from './DocumentActions';
 
 import getToken from '../actions/GetToken';
 
+/**
+ * getowndocumentsuccess
+ * Route: GET: /documents
+ *
+ * @export
+ * @param {object} documents  returned all documents from api call
+ * @returns {object} action and action types
+ */
 export const getDocumentSuccess = documents => ({
   type: types.LOAD_DOCUMENT_SUCCESS,
   documents
@@ -11,9 +19,10 @@ export const getDocumentSuccess = documents => ({
 
 /**
  * getowndocumentsuccess
+ * Route: GET: /documents/:id
  *
  * @export
- * @param {object} documents  returned documents from api call
+ * @param {object} documents  return own documents from api call
  * @returns {object} action and action types
  */
 export const getOwnDocumentSuccess = documents => ({
@@ -22,11 +31,12 @@ export const getOwnDocumentSuccess = documents => ({
 });
 
 /**
- * searchDocuments - description
+ * search for all Documents
+ * Route: GET: /search?query={}
  *
- * @param  {type} queryString description
- * @param  {type} offset = 0  description
- * @return {type}             description
+ * @param  {object} queryString input query
+ * @param  {number} offset = 0  offset
+ * @return {object}           object
  */
 export function searchDocuments(queryString, offset = 0) {
   getToken();
@@ -45,10 +55,12 @@ export function searchDocuments(queryString, offset = 0) {
 
 /**
  * search own documents
+ * Route: GET: /search?query={}
  *
  * @export
  * @param {object} queryString
  * @param {number} [offset=0]
+ * @param {object} userId
  * @returns {object}} object
  */
 export function searchOwnDocuments(queryString, offset = 0, userId) {

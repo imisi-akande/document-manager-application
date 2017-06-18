@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as userActions from '../../actions/UserAction';
 
-
 /**
  *
  * @class Login
@@ -29,6 +28,8 @@ class Login extends React.Component {
   }
 
   /**
+   * onEmail change event
+   *
    * @param {object} event
    * @returns {object} object
    * @memberOf Login function
@@ -41,6 +42,7 @@ class Login extends React.Component {
 
 
   /**
+   *onPassword change event
    *
    * @param {object} event
    * @return {undefined} nothing
@@ -53,6 +55,7 @@ class Login extends React.Component {
   }
 
   /**
+   *onClick save event for login
    *
    * @param {onClickSave} event
    * @return {undefined} nothing
@@ -67,6 +70,7 @@ class Login extends React.Component {
   }
   /**
      * renders the Login component
+     *
      * @returns {void}
      * @memberOf Login
      */

@@ -108,7 +108,7 @@ class UserListRow extends React.Component {
   }
 
   /**
-   *List of users profile
+   * List of users profile
    *
    * @returns {object} object
    *

@@ -25,6 +25,7 @@ export const createDocument = document => ({
 
 /**
  * get all accessible documents
+ *  Route: GET: /documents/
  *
  * @export
  * @param {object} documents  returned documents from api call
@@ -37,6 +38,7 @@ export const getDocumentSuccess = documents => ({
 
 /**
  * get accessible documents only
+ * Route: GET: /users/:id/documents
  *
  * @export
  * @param {object} documents  returned documents from api call
@@ -48,7 +50,8 @@ export const getOwnDocumentSuccess = documents => ({
 });
 
 /**
- * update documents to database using PUT api route /documents/:id
+ * update documents to database
+ * PUT api route /documents/:id
  *
  * @export
  * @param {object} document
@@ -73,7 +76,8 @@ export const createDocumentSuccess = document => ({
 });
 
 /**
- * delete document from database using DELETE api route /documents/:id
+ * delete document from database
+ * DELETE api route /documents/:id
  *
  * @export
  * @param {number} id

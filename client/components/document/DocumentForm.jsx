@@ -2,7 +2,12 @@ import { Input } from 'react-materialize';
 import React from 'react';
 import TextInput from '../../components/document/TextInput';
 
-
+/**
+ * Renders DocumentForm component
+ *
+ * @param {Object} props { document, onChange, errors }
+ * @return {object} Document Form
+ */
 const DocumentForm = ({ document, onChange, errors }) => (
   <form>
     <div className="row container">

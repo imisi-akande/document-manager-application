@@ -44,7 +44,7 @@ class ManageRolePage extends React.Component {
   }
 
   /**
-   *Save role
+   * Save role
    *
    * @param {object} event
    * @returns{object} object
@@ -58,7 +58,7 @@ class ManageRolePage extends React.Component {
   }
 
   /**
-   *
+   * render method
    *
    * @returns{object} object
    *
@@ -85,7 +85,6 @@ ManageRolePage.contextTypes = {
 
 ManageRolePage.propTypes = {
   saveRole: React.PropTypes.func.isRequired,
-  role: React.PropTypes.func.isRequired,
 };
 /**
  *

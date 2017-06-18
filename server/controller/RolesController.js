@@ -1,8 +1,6 @@
 import db from '../models';
 import Helper from '../Helper/utility';
 
-
-
 const RoleController = {
 
  /**

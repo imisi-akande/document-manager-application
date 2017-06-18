@@ -80,10 +80,10 @@ class EditUsers extends React.Component {
   }
 
   /**
-   *
+   *onSubmit event
    *
    * @param {object} event
-   *@returns{object}object
+   * @returns{object}object
    * @memberOf EditUsers
    */
   onSubmit(event) {
@@ -100,7 +100,7 @@ class EditUsers extends React.Component {
   }
 
   /**
-   *Edit user
+   *isEditing event
    *
    *@param {object} event
    *@returns{object}object
@@ -188,6 +188,7 @@ class EditUsers extends React.Component {
                 <th>lastName</th>
                 <th>userName</th>
                 <th>email</th>
+                <th>role</th>
               </tr>
             </thead>
             <tbody>
