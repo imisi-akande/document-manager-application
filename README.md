@@ -61,21 +61,6 @@ The following features make up the Document Management System API:
 ## API Documentation
 - View API endpoints and their functions [here](https://andela-iakande.github.io/API-documentation/)
 
-### **Installation Steps**
-* Ensure you have `node` installed or install [Node](https://nodejs.org/en/download/)
-* Clone the project repository from your terminal `git clone https://github.com/andela-moseni/document-mgt-system.git`
-* Change directory into the `document-mgt-system` directory
-* Run `npm install` to install the dependencies in the `package.json` file
-* Run `npm run start:nodemon` to start the project
-* Run `npm test` to run the server-side(api) tests
-* Run `npm run test-e2e` to run the e2e tests
-* Run `npm run client:test` to run the client-side(React) tests
-* Use [Postman](https://www.getpostman.com/) or any API testing tool of your choice to access the endpoints
-
-### **Endpoints**
-**N/B:** For all endpoints that require authentication, use \
-`'x-access-token': <token>` or `authorization: <token>`
-
 #### Limitations:
 The limitations to the **Document Management System API** are as follows:
 * Users cannot upload documents
@@ -94,14 +79,15 @@ Contributors are welcome to further enhance the features of this API by contribu
 - Sequelize ORM  
 
 ### **Installation Steps**
+* Ensure you have `node` installed or install [Node](https://nodejs.org/en/download/)
 * Clone the project repository from your terminal `git clone https://github.com/andela-iakande/document-manager-application`
-* Change directory into the `document-mgt-system` directory
+* Change directory into the `document-manager-application` directory
 * Run `npm install` to install the dependencies in the `package.json` file
 * Run `npm run start` to start the project
 * Run `npm test` to run the server-side(api) tests
-* Run `npm run e2e` to run the e2e tests
-* Run `npm run frontend-test` to run the client-side(React) tests
-* Use *Postman* or any API testing tool of your choice to access the endpoints
+* Run `npm run test-e2e` to run the e2e tests
+* Run `npm run test-fe` to run the client-side(React) tests
+* Use [Postman](https://www.getpostman.com/) or any API testing tool of your choice to access the endpoints
 
 ### **Endpoints**
 **N/B:** For all endpoints that require authentication, use \
