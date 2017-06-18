@@ -13,12 +13,19 @@ const Prompt = ({ trigger, onClickFunction }) =>
   (
     <Modal
       actions={[
-        <Button id="noDelete" waves="light" modal="close" flat>
+        <Button
+          id="noDelete"
+          waves="light"
+          modal="close" flat
+        >
           NO
         </Button>,
         <Button
-          onClick={onClickFunction} waves="light" modal="close"
-          id="promptDelete" flat className="red white-text"
+          onClick={onClickFunction}
+          waves="light"
+          modal="close"
+          id="promptDelete" flat
+          className="red white-text"
         >
         YES
         </Button>

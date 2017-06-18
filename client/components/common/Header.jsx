@@ -120,8 +120,10 @@ const renderIfLoggedIn = () => {
 
           <li>
             <Link
-              to="/logout" id="logOut"
-              activeClassName="active" className="right"
+              to="/logout"
+              id="logOut"
+              activeClassName="active"
+              className="right"
             >
               Logout
             </Link>
